@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probeklausur 2 — Statistik</title>
+<script>
+MathJax = { tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] } };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Georgia,serif;background:#f5f5f0;color:#222;line-height:1.65}
+header{position:sticky;top:0;z-index:100;background:#1a1a2e;color:#fff;padding:10px 24px;display:flex;align-items:center;gap:20px}
+header h1{font-size:1rem;flex:1}
+#timer{font-size:1.4rem;font-family:monospace;font-weight:bold;letter-spacing:2px}
+#timer.warn{color:#ff6b6b}
+.prog-wrap{background:#333;height:4px}
+.prog-bar{background:#4caf50;height:4px;width:0%;transition:width .3s}
+main{max-width:760px;margin:0 auto;padding:20px 16px 110px}
+.card{background:#fff;border:2px solid #e0e0e0;border-radius:8px;margin-bottom:18px;overflow:hidden;transition:border-color .3s}
+.card.ok{border-color:#4caf50}
+.card.err{border-color:#e53935}
+.qhead{display:flex;align-items:center;gap:10px;padding:10px 16px;background:#f8f8f8;border-bottom:1px solid #e8e8e8;font-size:.88rem;font-family:sans-serif}
+.qnum{font-weight:700;font-size:.95rem}
+.tag{font-size:.72rem;padding:2px 8px;border-radius:10px}
+.konzept{background:#e3f2fd;color:#1565c0}
+.rechnen{background:#fce4ec;color:#b71c1c}
+.qst{margin-left:auto;font-size:1.1rem}
+.qbody{padding:16px}
+.qtext{margin-bottom:14px;font-size:.97rem}
+.qtext p{margin-bottom:6px}
+table.dt{border-collapse:collapse;margin:10px 0;font-size:.9rem;font-family:sans-serif}
+table.dt th,table.dt td{border:1px solid #ccc;padding:5px 12px;text-align:center}
+table.dt th{background:#f0f0f0;font-weight:600}
+table.dt td:first-child{text-align:left}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border:1px solid #e0e0e0;border-radius:6px;cursor:pointer;transition:background .15s;font-size:.94rem;line-height:1.5}
+.opt:hover{background:#f5f5f5}
+.opt input[type=radio]{margin-top:3px;flex-shrink:0;accent-color:#1a1a2e}
+.opt.sel{background:#e8eaf6;border-color:#3949ab}
+.opt.right{background:#e8f5e9!important;border-color:#43a047!important;font-weight:600}
+.opt.struck{background:#ffebee!important;border-color:#e53935!important;color:#aaa;text-decoration:line-through}
+.hint{display:none;margin-top:12px;padding:9px 14px;background:#fff8e1;border-left:3px solid #ffc107;font-size:.86rem;font-family:sans-serif;line-height:1.55}
+footer.bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e0e0e0;padding:12px 24px;display:flex;align-items:center;gap:16px;box-shadow:0 -2px 8px rgba(0,0,0,.07)}
+.btn{padding:9px 22px;border:none;border-radius:6px;font-size:.95rem;cursor:pointer;font-family:sans-serif;font-weight:600}
+.btn-p{background:#1a1a2e;color:#fff}
+.btn-p:hover{background:#2d2d4e}
+.btn-s{background:#e0e0e0;color:#333}
+.btn-s:hover{background:#d0d0d0}
+#ans-count{font-family:sans-serif;font-size:.88rem;color:#666;margin-left:auto}
+#score{display:none;border-radius:8px;padding:16px 20px;margin-bottom:20px;font-family:sans-serif}
+#score.pass{background:#e8f5e9;border:1px solid #4caf50}
+#score.fail{background:#ffebee;border:1px solid #e53935}
+#score .num{font-size:2rem;font-weight:700;margin:4px 0}
+#score.pass .num{color:#2e7d32}
+#score.fail .num{color:#c62828}
+</style>
+</head>
+<body>
+<header>
+  <h1>Probeklausur 2 — Einführung in die sozialwissenschaftliche Statistik</h1>
+  <span id="ptxt" style="font-size:.82rem;color:#aaa">0/30</span>
+  <span id="timer">60:00</span>
+</header>
+<div class="prog-wrap"><div class="prog-bar" id="pbar"></div></div>
+
+<main>
+<div id="score"></div>
+
+<!-- Q1 -->
+<div class="card" id="c1"><div class="qhead"><span class="qnum">1</span><span class="tag konzept">Konzept</span><span class="qst" id="s1"></span></div>
+<div class="qbody"><div class="qtext"><p>Welche der folgenden Aussagen zur Nominalskala ist richtig?</p></div>
+<div class="opts" id="o1">
+<label class="opt"><input type="radio" name="q1" value="a">a)&nbsp;Die Rangfolge der Ausprägungen lässt sich sinnvoll interpretieren.</label>
+<label class="opt"><input type="radio" name="q1" value="b">b)&nbsp;Quotienten der Messwerte sind sinnvoll interpretierbar.</label>
+<label class="opt"><input type="radio" name="q1" value="c">c)&nbsp;Die Ausprägungen lassen sich in Kategorien einteilen, ohne dass eine Rangordnung zwischen ihnen besteht.</label>
+<label class="opt"><input type="radio" name="q1" value="d">d)&nbsp;Ein natürlicher Nullpunkt ist vorhanden.</label>
+</div><div class="hint" id="h1">Nominalskala: nur Kategorisierung — keine Rangordnung, keine Abstände, kein Nullpunkt.</div></div></div>
+
+<!-- Q2 -->
+<div class="card" id="c2"><div class="qhead"><span class="qnum">2</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s2"></span></div>
+<div class="qbody"><div class="qtext"><p>Geordnete Urliste: 2, 3, 3, 4, 4, 4, 5, 5, 7, 8</p><p>Berechnen Sie Modus, Median und arithmetisches Mittel.</p></div>
+<div class="opts" id="o2">
+<label class="opt"><input type="radio" name="q2" value="a">a)&nbsp;Modus = 4 &nbsp;·&nbsp; Median = 4 &nbsp;·&nbsp; Mittelwert = 4,5</label>
+<label class="opt"><input type="radio" name="q2" value="b">b)&nbsp;Modus = 4 &nbsp;·&nbsp; Median = 4,5 &nbsp;·&nbsp; Mittelwert = 4,0</label>
+<label class="opt"><input type="radio" name="q2" value="c">c)&nbsp;Modus = 5 &nbsp;·&nbsp; Median = 4 &nbsp;·&nbsp; Mittelwert = 4,5</label>
+<label class="opt"><input type="radio" name="q2" value="d">d)&nbsp;Modus = 4 &nbsp;·&nbsp; Median = 4 &nbsp;·&nbsp; Mittelwert = 4,2</label>
+</div><div class="hint" id="h2">Modus = 4 (3×) · Median: n=10, gerade → (x₅+x₆)/2 = (4+4)/2 = 4 · x̄ = 45/10 = 4,5</div></div></div>
+
+<!-- Q3 -->
+<div class="card" id="c3"><div class="qhead"><span class="qnum">3</span><span class="tag konzept">Konzept</span><span class="qst" id="s3"></span></div>
+<div class="qbody"><div class="qtext"><p>Was beschreibt die empirische Varianz $S^2$?</p></div>
+<div class="opts" id="o3">
+<label class="opt"><input type="radio" name="q3" value="a">a)&nbsp;Den Durchschnitt der absoluten Abweichungen vom Mittelwert.</label>
+<label class="opt"><input type="radio" name="q3" value="b">b)&nbsp;Den Durchschnitt der quadrierten Abweichungen vom Mittelwert, geteilt durch $n$.</label>
+<label class="opt"><input type="radio" name="q3" value="c">c)&nbsp;Den Durchschnitt der quadrierten Abweichungen vom Mittelwert, geteilt durch $n-1$.</label>
+<label class="opt"><input type="radio" name="q3" value="d">d)&nbsp;Den Abstand zwischen dem 75%- und dem 25%-Quantil.</label>
+</div><div class="hint" id="h3">Empirische Varianz (deskriptiv): s²=(1/n)·Σ(xᵢ−x̄)² — Nenner n. Option c) ist der inferentielle Schätzer S² (Kapitel 9, Nenner n−1). Option a) ist die mittlere absolute Abweichung (MAD).</div></div></div>
+
+<!-- Q4 -->
+<div class="card" id="c4"><div class="qhead"><span class="qnum">4</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s4"></span></div>
+<div class="qbody"><div class="qtext"><p>Urliste: 2, 4, 6, 6, 8, 10</p><p>Berechnen Sie die empirische Varianz $s^2$ und die Standardabweichung $s$.</p></div>
+<div class="opts" id="o4">
+<label class="opt"><input type="radio" name="q4" value="a">a)&nbsp;$s^2 \approx 6{,}67$ &nbsp;·&nbsp; $s \approx 2{,}58$</label>
+<label class="opt"><input type="radio" name="q4" value="b">b)&nbsp;$s^2 = 8{,}00$ &nbsp;·&nbsp; $s \approx 2{,}83$</label>
+<label class="opt"><input type="radio" name="q4" value="c">c)&nbsp;$s^2 = 4{,}00$ &nbsp;·&nbsp; $s = 2{,}00$</label>
+<label class="opt"><input type="radio" name="q4" value="d">d)&nbsp;$s^2 = 5{,}00$ &nbsp;·&nbsp; $s \approx 2{,}24$</label>
+</div><div class="hint" id="h4">x̄=6 · Σ(xᵢ−x̄)²=40 · s²=40/6≈6,67 · s=√6,67≈2,58 · Nenner ist n=6 (empirische Varianz, deskriptiv) — n−1 gilt nur für den inferentiellen Schätzer in Kapitel 9!</div></div></div>
+
+<!-- Q5 -->
+<div class="card" id="c5"><div class="qhead"><span class="qnum">5</span><span class="tag konzept">Konzept</span><span class="qst" id="s5"></span></div>
+<div class="qbody"><div class="qtext"><p>Welchen Wert nimmt der Gini-Koeffizient $G$ an, wenn das Einkommen perfekt gleichmäßig auf alle Personen verteilt ist?</p></div>
+<div class="opts" id="o5">
+<label class="opt"><input type="radio" name="q5" value="a">a)&nbsp;$G = 1$</label>
+<label class="opt"><input type="radio" name="q5" value="b">b)&nbsp;$G = 0{,}5$</label>
+<label class="opt"><input type="radio" name="q5" value="c">c)&nbsp;$G = 0$</label>
+<label class="opt"><input type="radio" name="q5" value="d">d)&nbsp;$G = \frac{n-1}{n}$</label>
+</div><div class="hint" id="h5">G=0: perfekte Gleichverteilung (Lorenzkurve = Diagonale). G=1 wäre maximale Konzentration.</div></div></div>
+
+<!-- Q6 -->
+<div class="card" id="c6"><div class="qhead"><span class="qnum">6</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s6"></span></div>
+<div class="qbody"><div class="qtext"><p>Fünf Personen (aufsteigend sortiert): 500, 1.000, 1.500, 2.000, 5.000 Euro. Gesamt: 10.000 Euro.</p>
+<p>$$G = \frac{2\sum_{i=1}^{n} i \cdot x_i}{n \sum_{i=1}^{n} x_i} - \frac{n+1}{n}$$</p></div>
+<div class="opts" id="o6">
+<label class="opt"><input type="radio" name="q6" value="a">a)&nbsp;$G = 0{,}28$</label>
+<label class="opt"><input type="radio" name="q6" value="b">b)&nbsp;$G = 0{,}32$</label>
+<label class="opt"><input type="radio" name="q6" value="c">c)&nbsp;$G = 0{,}40$</label>
+<label class="opt"><input type="radio" name="q6" value="d">d)&nbsp;$G = 0{,}52$</label>
+</div><div class="hint" id="h6">∑i·xᵢ = 1·500+2·1000+3·1500+4·2000+5·5000 = 40.000 · G = 2·40000/(5·10000) − 6/5 = 1,6−1,2 = 0,40</div></div></div>
+
+<!-- Q7 -->
+<div class="card" id="c7"><div class="qhead"><span class="qnum">7</span><span class="tag konzept">Konzept</span><span class="qst" id="s7"></span></div>
+<div class="qbody"><div class="qtext"><p>Was versteht man unter Spaltenprozenten in einer Kreuztabelle?</p></div>
+<div class="opts" id="o7">
+<label class="opt"><input type="radio" name="q7" value="a">a)&nbsp;Die relative Häufigkeit einer Zelle bezogen auf die Gesamtzahl der Beobachtungen.</label>
+<label class="opt"><input type="radio" name="q7" value="b">b)&nbsp;Die relative Häufigkeit einer Zelle bezogen auf die Zeilensumme.</label>
+<label class="opt"><input type="radio" name="q7" value="c">c)&nbsp;Die relative Häufigkeit einer Zelle bezogen auf die Spaltensumme.</label>
+<label class="opt"><input type="radio" name="q7" value="d">d)&nbsp;Der Anteil der Spaltensumme an der Gesamtzahl der Beobachtungen.</label>
+</div><div class="hint" id="h7">Spaltenprozent = Zellhäufigkeit / Spaltensumme. Wichtig für die Prozentsatzdifferenz: immer Spaltensumme als Nenner!</div></div></div>
+
+<!-- Q8 -->
+<div class="card" id="c8"><div class="qhead"><span class="qnum">8</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s8"></span></div>
+<div class="qbody"><div class="qtext">
+<table class="dt"><thead><tr><th>Bildungsabschluss</th><th>Eltern: Kein Abi</th><th>Eltern: Abi</th><th>Gesamt</th></tr></thead>
+<tbody><tr><td>Kein Abitur</td><td>180</td><td>60</td><td>240</td></tr>
+<tr><td>Abitur</td><td>120</td><td>240</td><td>360</td></tr>
+<tr><td><strong>Gesamt</strong></td><td><strong>300</strong></td><td><strong>300</strong></td><td><strong>600</strong></td></tr></tbody></table>
+<p>Wie groß ist die Prozentsatzdifferenz in der Kategorie <em>Kein Abitur</em> zwischen Personen, deren Eltern kein Abitur haben, und Personen, deren Eltern das Abitur haben?</p>
+</div>
+<div class="opts" id="o8">
+<label class="opt"><input type="radio" name="q8" value="a">a)&nbsp;25 Prozentpunkte</label>
+<label class="opt"><input type="radio" name="q8" value="b">b)&nbsp;30 Prozentpunkte</label>
+<label class="opt"><input type="radio" name="q8" value="c">c)&nbsp;40 Prozentpunkte</label>
+<label class="opt"><input type="radio" name="q8" value="d">d)&nbsp;50 Prozentpunkte</label>
+</div><div class="hint" id="h8">Spaltenprozente! Eltern kein Abi: 180/300 = 60% · Eltern mit Abi: 60/300 = 20% · PSD = 60%−20% = 40 PP (Nenner = Spaltensumme 300, nicht Gesamtzahl 600!)</div></div></div>
+
+<!-- Q9 -->
+<div class="card" id="c9"><div class="qhead"><span class="qnum">9</span><span class="tag konzept">Konzept</span><span class="qst" id="s9"></span></div>
+<div class="qbody"><div class="qtext"><p>Welche der folgenden Aussagen zu Cramér's V ist richtig?</p></div>
+<div class="opts" id="o9">
+<label class="opt"><input type="radio" name="q9" value="a">a)&nbsp;Cramér's V kann Werte zwischen −1 und 1 annehmen.</label>
+<label class="opt"><input type="radio" name="q9" value="b">b)&nbsp;Cramér's V ist nur für 2×2-Tabellen geeignet; für größere Tabellen wird Phi verwendet.</label>
+<label class="opt"><input type="radio" name="q9" value="c">c)&nbsp;Cramér's V nimmt den Wert 0 an, wenn die Variablen statistisch unabhängig sind.</label>
+<label class="opt"><input type="radio" name="q9" value="d">d)&nbsp;Cramér's V misst den linearen Zusammenhang zwischen zwei metrischen Variablen.</label>
+</div><div class="hint" id="h9">V ∈ [0,1], nie negativ. V=0 bei Unabhängigkeit, V=1 bei perfektem Zusammenhang. Geeignet für alle Tabellengrößen (Phi ist Sonderfall für 2×2).</div></div></div>
+
+<!-- Q10 -->
+<div class="card" id="c10"><div class="qhead"><span class="qnum">10</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s10"></span></div>
+<div class="qbody"><div class="qtext">
+<table class="dt"><thead><tr><th></th><th>Ja</th><th>Nein</th><th>Gesamt</th></tr></thead>
+<tbody><tr><td>Gruppe A</td><td>40</td><td>60</td><td>100</td></tr>
+<tr><td>Gruppe B</td><td>60</td><td>40</td><td>100</td></tr>
+<tr><td><strong>Gesamt</strong></td><td><strong>100</strong></td><td><strong>100</strong></td><td><strong>200</strong></td></tr></tbody></table>
+<p>Berechnen Sie $\chi^2$ und $\varphi$.</p>
+</div>
+<div class="opts" id="o10">
+<label class="opt"><input type="radio" name="q10" value="a">a)&nbsp;$\chi^2 = 8{,}0$ &nbsp;·&nbsp; $\varphi = 0{,}20$</label>
+<label class="opt"><input type="radio" name="q10" value="b">b)&nbsp;$\chi^2 = 4{,}0$ &nbsp;·&nbsp; $\varphi = 0{,}14$</label>
+<label class="opt"><input type="radio" name="q10" value="c">c)&nbsp;$\chi^2 = 8{,}0$ &nbsp;·&nbsp; $\varphi = 0{,}04$</label>
+<label class="opt"><input type="radio" name="q10" value="d">d)&nbsp;$\chi^2 = 6{,}0$ &nbsp;·&nbsp; $\varphi = 0{,}17$</label>
+</div><div class="hint" id="h10">Erwartet: alle 4 Zellen = 50 · χ²=(10²/50)×4=8 · φ=√(8/200)=√0,04=0,20</div></div></div>
+
+<!-- Q11 -->
+<div class="card" id="c11"><div class="qhead"><span class="qnum">11</span><span class="tag konzept">Konzept</span><span class="qst" id="s11"></span></div>
+<div class="qbody"><div class="qtext"><p>Welche der folgenden Aussagen zum Pearson-Korrelationskoeffizienten $r$ ist richtig?</p></div>
+<div class="opts" id="o11">
+<label class="opt"><input type="radio" name="q11" value="a">a)&nbsp;$r = 0{,}8$ bedeutet, dass $x$ 80 % der Varianz von $y$ erklärt.</label>
+<label class="opt"><input type="radio" name="q11" value="b">b)&nbsp;Ein $r = {-0{,}9}$ zeigt einen stärkeren linearen Zusammenhang als $r = 0{,}7$.</label>
+<label class="opt"><input type="radio" name="q11" value="c">c)&nbsp;$r$ kann nur positive Werte annehmen.</label>
+<label class="opt"><input type="radio" name="q11" value="d">d)&nbsp;$r$ misst auch nichtlineare Zusammenhänge.</label>
+</div><div class="hint" id="h11">Stärke = |r|. r=−0,9 → |r|=0,9 > 0,7. Das Vorzeichen zeigt nur die Richtung. r² (nicht r) ist der Varianzanteil.</div></div></div>
+
+<!-- Q12 -->
+<div class="card" id="c12"><div class="qhead"><span class="qnum">12</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s12"></span></div>
+<div class="qbody"><div class="qtext">
+<p>Fünf Länder — Demokratieindex ($x$) und Pressefreiheitsindex ($y$):</p>
+<table class="dt" style="margin-bottom:10px"><thead><tr><th>$x$</th><th>$y$</th></tr></thead>
+<tbody><tr><td>3</td><td>2</td></tr><tr><td>5</td><td>4</td></tr><tr><td>6</td><td>5</td></tr><tr><td>7</td><td>7</td></tr><tr><td>9</td><td>7</td></tr></tbody></table>
+<p>$\bar{x}=6$, $\bar{y}=5$, $\sum(x_i{-}\bar{x})(y_i{-}\bar{y})=18$, $\sum(x_i{-}\bar{x})^2=20$, $\sum(y_i{-}\bar{y})^2=18$</p>
+<p>Berechnen Sie $r$.</p>
+</div>
+<div class="opts" id="o12">
+<label class="opt"><input type="radio" name="q12" value="a">a)&nbsp;$r \approx 0{,}65$</label>
+<label class="opt"><input type="radio" name="q12" value="b">b)&nbsp;$r \approx 0{,}75$</label>
+<label class="opt"><input type="radio" name="q12" value="c">c)&nbsp;$r \approx 0{,}85$</label>
+<label class="opt"><input type="radio" name="q12" value="d">d)&nbsp;$r \approx 0{,}95$</label>
+</div><div class="hint" id="h12">r = 18 / √(20·18) = 18 / √360 = 18 / 18,97 ≈ 0,95</div></div></div>
+
+<!-- Q13 -->
+<div class="card" id="c13"><div class="qhead"><span class="qnum">13</span><span class="tag konzept">Konzept</span><span class="qst" id="s13"></span></div>
+<div class="qbody"><div class="qtext"><p>Was versteht man unter dem Erwartungswert $E(X)$ einer diskreten Zufallsvariable?</p></div>
+<div class="opts" id="o13">
+<label class="opt"><input type="radio" name="q13" value="a">a)&nbsp;Den am häufigsten vorkommenden Wert.</label>
+<label class="opt"><input type="radio" name="q13" value="b">b)&nbsp;Den mittleren Wert der Stichprobe.</label>
+<label class="opt"><input type="radio" name="q13" value="c">c)&nbsp;Den gewichteten Durchschnitt aller möglichen Ausprägungen, gewichtet mit ihren Wahrscheinlichkeiten.</label>
+<label class="opt"><input type="radio" name="q13" value="d">d)&nbsp;Den Wert, den die Zufallsvariable mit der höchsten Wahrscheinlichkeit annimmt.</label>
+</div><div class="hint" id="h13">E(X)=∑xᵢ·P(X=xᵢ). Der Modus wäre Antwort d), der Stichprobenmittelwert ist x̄, nicht E(X).</div></div></div>
+
+<!-- Q14 -->
+<div class="card" id="c14"><div class="qhead"><span class="qnum">14</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s14"></span></div>
+<div class="qbody"><div class="qtext">
+<p>Eine Partei erzielt bei einer Wahl mit Wahrscheinlichkeit 0,3 einen Stimmenanteil von 35 %, mit Wahrscheinlichkeit 0,5 einen Anteil von 25 %, mit Wahrscheinlichkeit 0,2 einen Anteil von 15 %.</p>
+<p>Berechnen Sie $E(X)$ und $\text{Var}(X)$.</p>
+</div>
+<div class="opts" id="o14">
+<label class="opt"><input type="radio" name="q14" value="a">a)&nbsp;$E(X) = 25{,}0$ &nbsp;·&nbsp; $\text{Var}(X) = 42{,}5$</label>
+<label class="opt"><input type="radio" name="q14" value="b">b)&nbsp;$E(X) = 26{,}0$ &nbsp;·&nbsp; $\text{Var}(X) = 49{,}0$</label>
+<label class="opt"><input type="radio" name="q14" value="c">c)&nbsp;$E(X) = 26{,}0$ &nbsp;·&nbsp; $\text{Var}(X) = 54{,}2$</label>
+<label class="opt"><input type="radio" name="q14" value="d">d)&nbsp;$E(X) = 27{,}5$ &nbsp;·&nbsp; $\text{Var}(X) = 49{,}0$</label>
+</div><div class="hint" id="h14">E(X)=0,3·35+0,5·25+0,2·15=10,5+12,5+3=26 · Var=0,3·(35−26)²+0,5·(25−26)²+0,2·(15−26)²=24,3+0,5+24,2=49</div></div></div>
+
+<!-- Q15 -->
+<div class="card" id="c15"><div class="qhead"><span class="qnum">15</span><span class="tag konzept">Konzept</span><span class="qst" id="s15"></span></div>
+<div class="qbody"><div class="qtext"><p>Was besagt der Zentrale Grenzwertsatz?</p></div>
+<div class="opts" id="o15">
+<label class="opt"><input type="radio" name="q15" value="a">a)&nbsp;Mit wachsendem $n$ konvergiert der Stichprobenmittelwert gegen den wahren Mittelwert der Grundgesamtheit.</label>
+<label class="opt"><input type="radio" name="q15" value="b">b)&nbsp;Die Verteilung des Stichprobenmittelwerts nähert sich mit zunehmendem $n$ einer Normalverteilung an — unabhängig von der Verteilung der Grundgesamtheit.</label>
+<label class="opt"><input type="radio" name="q15" value="c">c)&nbsp;Die Varianz der Stichprobenverteilung ist gleich der Varianz der Grundgesamtheit.</label>
+<label class="opt"><input type="radio" name="q15" value="d">d)&nbsp;Bei normalverteilten Grundgesamtheiten ist der Stichprobenmittelwert immer normalverteilt.</label>
+</div><div class="hint" id="h15">Antwort a) beschreibt das Gesetz der großen Zahlen. Der ZGS sagt etwas über die FORM der Stichprobenverteilung aus (→ Normalverteilung), nicht nur über den Wert.</div></div></div>
+
+<!-- Q16 -->
+<div class="card" id="c16"><div class="qhead"><span class="qnum">16</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s16"></span></div>
+<div class="qbody"><div class="qtext"><p>Stichprobe: $n = 400$, $\bar{x} = 3.200$, $S = 800$.</p><p>Bestimmen Sie das 95%-Konfidenzintervall des Mittelwerts.</p></div>
+<div class="opts" id="o16">
+<label class="opt"><input type="radio" name="q16" value="a">a)&nbsp;[3.121,6 &nbsp;·&nbsp; 3.278,4]</label>
+<label class="opt"><input type="radio" name="q16" value="b">b)&nbsp;[3.136,0 &nbsp;·&nbsp; 3.264,0]</label>
+<label class="opt"><input type="radio" name="q16" value="c">c)&nbsp;[3.108,4 &nbsp;·&nbsp; 3.291,6]</label>
+<label class="opt"><input type="radio" name="q16" value="d">d)&nbsp;[3.148,0 &nbsp;·&nbsp; 3.252,0]</label>
+</div><div class="hint" id="h16">SE=800/√400=800/20=40 · KI=3200±1,96·40=3200±78,4 → [3121,6; 3278,4] · z=1,96 für 95% (nicht 1,64!)</div></div></div>
+
+<!-- Q17 -->
+<div class="card" id="c17"><div class="qhead"><span class="qnum">17</span><span class="tag konzept">Konzept</span><span class="qst" id="s17"></span></div>
+<div class="qbody"><div class="qtext"><p>Was versteht man unter dem Signifikanzniveau $\alpha$ in einem statistischen Test?</p></div>
+<div class="opts" id="o17">
+<label class="opt"><input type="radio" name="q17" value="a">a)&nbsp;Die Wahrscheinlichkeit, dass die Alternativhypothese wahr ist.</label>
+<label class="opt"><input type="radio" name="q17" value="b">b)&nbsp;Die maximale Irrtumswahrscheinlichkeit, mit der man $H_0$ irrtümlich ablehnt (Fehler 1. Art).</label>
+<label class="opt"><input type="radio" name="q17" value="c">c)&nbsp;Die Wahrscheinlichkeit, dass $H_0$ korrekt ist.</label>
+<label class="opt"><input type="radio" name="q17" value="d">d)&nbsp;Der Anteil der Stichproben, bei denen $H_1$ zutrifft.</label>
+</div><div class="hint" id="h17">α ist die Fehler-1.-Art-Wahrscheinlichkeit: Wahrscheinlichkeit, H₀ abzulehnen, obwohl sie wahr ist. Typisch: α=0,05.</div></div></div>
+
+<!-- Q18 -->
+<div class="card" id="c18"><div class="qhead"><span class="qnum">18</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s18"></span></div>
+<div class="qbody"><div class="qtext"><p>Stichprobe: $n = 64$, $\bar{x} = 48$, $\sigma = 16$ (bekannt). Forschungshypothese: $\mu > 45$.</p>
+<p>Führen Sie einen rechtsseitigen z-Test mit $\alpha = 0{,}05$ durch. Kritischer Wert: $z_{0{,}95} = 1{,}64$.</p></div>
+<div class="opts" id="o18">
+<label class="opt"><input type="radio" name="q18" value="a">a)&nbsp;$H_0$ wird verworfen; $z = 1{,}50$; kritischer Wert $= 1{,}64$</label>
+<label class="opt"><input type="radio" name="q18" value="b">b)&nbsp;$H_0$ wird nicht verworfen; $z = 1{,}50$; kritischer Wert $= 1{,}64$</label>
+<label class="opt"><input type="radio" name="q18" value="c">c)&nbsp;$H_0$ wird verworfen; $z = 3{,}00$; kritischer Wert $= 1{,}96$</label>
+<label class="opt"><input type="radio" name="q18" value="d">d)&nbsp;$H_0$ wird nicht verworfen; $z = 1{,}50$; kritischer Wert $= 1{,}96$</label>
+</div><div class="hint" id="h18">z=(48−45)/(16/√64)=3/(16/8)=3/2=1,5 · rechtsseitig → krit=1,64 · 1,5 &lt; 1,64 → H₀ wird NICHT verworfen</div></div></div>
+
+<!-- Q19 -->
+<div class="card" id="c19"><div class="qhead"><span class="qnum">19</span><span class="tag konzept">Konzept</span><span class="qst" id="s19"></span></div>
+<div class="qbody"><div class="qtext"><p>Was versteht man unter einem Fehler 2. Art ($\beta$-Fehler)?</p></div>
+<div class="opts" id="o19">
+<label class="opt"><input type="radio" name="q19" value="a">a)&nbsp;Man lehnt $H_0$ ab, obwohl sie wahr ist.</label>
+<label class="opt"><input type="radio" name="q19" value="b">b)&nbsp;Man lehnt $H_0$ nicht ab, obwohl $H_1$ wahr ist.</label>
+<label class="opt"><input type="radio" name="q19" value="c">c)&nbsp;Man akzeptiert $H_1$, obwohl $H_0$ wahr ist — identisch mit dem Fehler 1. Art.</label>
+<label class="opt"><input type="radio" name="q19" value="d">d)&nbsp;Der $p$-Wert liegt unterhalb des Signifikanzniveaus.</label>
+</div><div class="hint" id="h19">Fehler 1. Art (α): H₀ ablehnen, obwohl wahr. Fehler 2. Art (β): H₀ NICHT ablehnen, obwohl H₁ wahr. Merke: α=Richter verurteilt Unschuldigen, β=Richter spricht Schuldigen frei.</div></div></div>
+
+<!-- Q20 -->
+<div class="card" id="c20"><div class="qhead"><span class="qnum">20</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s20"></span></div>
+<div class="qbody"><div class="qtext"><p>Stichprobe: $n = 36$, $\bar{x} = 7{,}2$ Punkte (Skala 0–15), $S = 3{,}6$. Historischer Durchschnitt: $\mu_0 = 8{,}0$.</p>
+<p>Forschungshypothese: $\mu &lt; 8{,}0$. Linksseitiger Test, $\alpha = 0{,}05$. Da $n \geq 30$: z-Approximation, kritischer Wert $= -1{,}64$.</p></div>
+<div class="opts" id="o20">
+<label class="opt"><input type="radio" name="q20" value="a">a)&nbsp;$H_0$ wird verworfen; $T = -1{,}333$; kritischer Wert $= -1{,}64$</label>
+<label class="opt"><input type="radio" name="q20" value="b">b)&nbsp;$H_0$ wird nicht verworfen; $T = -1{,}333$; kritischer Wert $= -1{,}64$</label>
+<label class="opt"><input type="radio" name="q20" value="c">c)&nbsp;$H_0$ wird verworfen; $T = -0{,}800$; kritischer Wert $= -1{,}96$</label>
+<label class="opt"><input type="radio" name="q20" value="d">d)&nbsp;$H_0$ wird nicht verworfen; $T = -1{,}333$; kritischer Wert $= -1{,}96$</label>
+</div><div class="hint" id="h20">T=(7,2−8,0)/(3,6/6)=−0,8/0,6=−1,333 · linksseitig: krit=−1,64 · −1,333 &gt; −1,64 → H₀ nicht verworfen (Wert liegt RECHTS vom kritischen Wert)</div></div></div>
+
+<!-- Q21 -->
+<div class="card" id="c21"><div class="qhead"><span class="qnum">21</span><span class="tag konzept">Konzept</span><span class="qst" id="s21"></span></div>
+<div class="qbody"><div class="qtext"><p>Was minimiert die OLS-Methode bei der Schätzung der Regressionsgerade?</p></div>
+<div class="opts" id="o21">
+<label class="opt"><input type="radio" name="q21" value="a">a)&nbsp;Die Summe der Residuen $\sum e_i$.</label>
+<label class="opt"><input type="radio" name="q21" value="b">b)&nbsp;Die Summe der absoluten Residuen $\sum |e_i|$.</label>
+<label class="opt"><input type="radio" name="q21" value="c">c)&nbsp;Die Summe der quadrierten Residuen $\sum e_i^2$.</label>
+<label class="opt"><input type="radio" name="q21" value="d">d)&nbsp;Die Summe der quadrierten Koeffizienten $\hat{\alpha}^2 + \hat{\beta}^2$.</label>
+</div><div class="hint" id="h21">OLS = Ordinary Least Squares = kleinste Quadrate. Minimiert ∑eᵢ². Die Summe der Residuen ∑eᵢ ist bei OLS immer = 0, aber das ist ein Resultat, kein Ziel.</div></div></div>
+
+<!-- Q22 -->
+<div class="card" id="c22"><div class="qhead"><span class="qnum">22</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s22"></span></div>
+<div class="qbody"><div class="qtext">
+<p>Fünf Beobachtungen (Bildungsjahre $x$, Einkommen $y$ in Tsd. Euro):</p>
+<table class="dt" style="margin-bottom:10px"><thead><tr><th>$x$</th><th>$y$</th></tr></thead>
+<tbody><tr><td>8</td><td>20</td></tr><tr><td>10</td><td>25</td></tr><tr><td>12</td><td>30</td></tr><tr><td>14</td><td>38</td></tr><tr><td>16</td><td>47</td></tr></tbody></table>
+<p>$\bar{x} = 12$, $\bar{y} = 32$, $\sum(x_i{-}\bar{x})(y_i{-}\bar{y}) = 134$, $\sum(x_i{-}\bar{x})^2 = 40$</p>
+<p>Berechnen Sie $\hat{\beta}$ und $\hat{\alpha}$.</p>
+</div>
+<div class="opts" id="o22">
+<label class="opt"><input type="radio" name="q22" value="a">a)&nbsp;$\hat{y} = -8{,}2 + 3{,}35 \cdot x$</label>
+<label class="opt"><input type="radio" name="q22" value="b">b)&nbsp;$\hat{y} = 8{,}2 + 2{,}35 \cdot x$</label>
+<label class="opt"><input type="radio" name="q22" value="c">c)&nbsp;$\hat{y} = -4{,}0 + 3{,}50 \cdot x$</label>
+<label class="opt"><input type="radio" name="q22" value="d">d)&nbsp;$\hat{y} = -8{,}2 + 2{,}90 \cdot x$</label>
+</div><div class="hint" id="h22">β̂=134/40=3,35 · α̂=ȳ−β̂·x̄=32−3,35·12=32−40,2=−8,2 → ŷ=−8,2+3,35x</div></div></div>
+
+<!-- Q23 -->
+<div class="card" id="c23"><div class="qhead"><span class="qnum">23</span><span class="tag konzept">Konzept</span><span class="qst" id="s23"></span></div>
+<div class="qbody"><div class="qtext">
+<p>Gegeben ist folgende Regressionsgleichung (abhängige Variable: monatliches Einkommen in Euro):</p>
+<p>$$\hat{y} = 1.200 + 250 \cdot \text{Bildung} + 800 \cdot \text{Mann}$$</p>
+<p>($\text{Mann}$: Dummyvariable, 1 = männlich, 0 = weiblich; Bildung in Jahren)</p>
+<p>Wie ist der Koeffizient 250 zu interpretieren?</p>
+</div>
+<div class="opts" id="o23">
+<label class="opt"><input type="radio" name="q23" value="a">a)&nbsp;Männer verdienen im Durchschnitt 250 Euro mehr als Frauen.</label>
+<label class="opt"><input type="radio" name="q23" value="b">b)&nbsp;Pro zusätzlichem Bildungsjahr steigt das Einkommen um 250 Euro — unabhängig vom Geschlecht.</label>
+<label class="opt"><input type="radio" name="q23" value="c">c)&nbsp;Bei 250 Jahren Bildung beträgt das prognostizierte Einkommen 1.200 Euro.</label>
+<label class="opt"><input type="radio" name="q23" value="d">d)&nbsp;Der Mittelwert des Einkommens in der Stichprobe beträgt 250 Euro.</label>
+</div><div class="hint" id="h23">Jeder Koeffizient misst den PARTIELLEN Effekt seiner Variable — ceteris paribus. 250 = Effekt von Bildung bei konstantem Geschlecht. 800 = Effekt von Geschlecht bei konstanter Bildung.</div></div></div>
+
+<!-- Q24 -->
+<div class="card" id="c24"><div class="qhead"><span class="qnum">24</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s24"></span></div>
+<div class="qbody"><div class="qtext">
+<p>Verwenden Sie die Regressionsgleichung aus Frage 22: $\hat{y} = -8{,}2 + 3{,}35 \cdot x$.</p>
+<p>a) Berechnen Sie die Prognose für eine Person mit 15 Bildungsjahren.</p>
+<p>b) Berechnen Sie $R^2$, wenn gilt: $SS_{\text{Model}} = 448{,}9$ und $SS_{\text{Residual}} = 9{,}1$.</p>
+</div>
+<div class="opts" id="o24">
+<label class="opt"><input type="radio" name="q24" value="a">a)&nbsp;$\hat{y}(15) = 39{,}05$ &nbsp;·&nbsp; $R^2 = 0{,}98$</label>
+<label class="opt"><input type="radio" name="q24" value="b">b)&nbsp;$\hat{y}(15) = 42{,}05$ &nbsp;·&nbsp; $R^2 = 0{,}98$</label>
+<label class="opt"><input type="radio" name="q24" value="c">c)&nbsp;$\hat{y}(15) = 42{,}05$ &nbsp;·&nbsp; $R^2 = 0{,}90$</label>
+<label class="opt"><input type="radio" name="q24" value="d">d)&nbsp;$\hat{y}(15) = 44{,}15$ &nbsp;·&nbsp; $R^2 = 0{,}98$</label>
+</div><div class="hint" id="h24">ŷ(15)=−8,2+3,35·15=−8,2+50,25=42,05 · SS_Total=448,9+9,1=458 · R²=448,9/458≈0,98</div></div></div>
+
+<!-- Q25 -->
+<div class="card" id="c25"><div class="qhead"><span class="qnum">25</span><span class="tag konzept">Konzept</span><span class="qst" id="s25"></span></div>
+<div class="qbody"><div class="qtext"><p>Warum darf man bei einer kategorialen Variable mit $k$ Ausprägungen maximal $k-1$ Dummy-Variablen in eine OLS-Regression aufnehmen?</p></div>
+<div class="opts" id="o25">
+<label class="opt"><input type="radio" name="q25" value="a">a)&nbsp;Weil OLS sonst rechenintensiv wird und keine Lösung findet.</label>
+<label class="opt"><input type="radio" name="q25" value="b">b)&nbsp;Weil $k$ Dummies plus eine Konstante perfekte Multikollinearität erzeugen — das Modell ist dann nicht identifiziert.</label>
+<label class="opt"><input type="radio" name="q25" value="c">c)&nbsp;Weil die Referenzkategorie immer die häufigste Ausprägung sein muss.</label>
+<label class="opt"><input type="radio" name="q25" value="d">d)&nbsp;Weil sonst die Exogenitätsannahme verletzt wird.</label>
+</div><div class="hint" id="h25">k Dummies summieren sich für jede Beobachtung zu genau 1 — identisch mit der Konstanten → perfekte Multikollinearität → Gleichungssystem nicht lösbar (Dummy-Variable-Trap).</div></div></div>
+
+<!-- Q26 -->
+<div class="card" id="c26"><div class="qhead"><span class="qnum">26</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s26"></span></div>
+<div class="qbody"><div class="qtext">
+<p>Regressionsoutput (AV: Lebenszufriedenheit, Skala 0–10):</p>
+<table class="dt" style="margin-bottom:10px"><thead><tr><th>Variable</th><th>Koeffizient</th></tr></thead>
+<tbody><tr><td>Konstante</td><td>3,50</td></tr>
+<tr><td>Einkommen (Tsd. Euro)</td><td>0,08</td></tr>
+<tr><td>Hochschulbildung (Dummy, 1=ja)</td><td>0,60</td></tr></tbody></table>
+<p>Welchen Wert prognostiziert das Modell für eine Person <strong>mit</strong> Hochschulabschluss und einem Einkommen von 30 Tsd. Euro?</p>
+</div>
+<div class="opts" id="o26">
+<label class="opt"><input type="radio" name="q26" value="a">a)&nbsp;5,90</label>
+<label class="opt"><input type="radio" name="q26" value="b">b)&nbsp;6,10</label>
+<label class="opt"><input type="radio" name="q26" value="c">c)&nbsp;6,50</label>
+<label class="opt"><input type="radio" name="q26" value="d">d)&nbsp;7,10</label>
+</div><div class="hint" id="h26">ŷ=3,50+0,08·30+0,60·1=3,50+2,40+0,60=6,50 · Mit Hochschulabschluss: Dummy=1, also 0,60 wird addiert.</div></div></div>
+
+<!-- Q27 -->
+<div class="card" id="c27"><div class="qhead"><span class="qnum">27</span><span class="tag konzept">Konzept</span><span class="qst" id="s27"></span></div>
+<div class="qbody"><div class="qtext"><p>Was bedeutet die Exogenitätsannahme in der OLS-Regression?</p></div>
+<div class="opts" id="o27">
+<label class="opt"><input type="radio" name="q27" value="a">a)&nbsp;Die abhängige Variable muss normalverteilt sein.</label>
+<label class="opt"><input type="radio" name="q27" value="b">b)&nbsp;Der Fehlerterm darf nicht mit den unabhängigen Variablen korreliert sein.</label>
+<label class="opt"><input type="radio" name="q27" value="c">c)&nbsp;Die unabhängigen Variablen müssen normalverteilt sein.</label>
+<label class="opt"><input type="radio" name="q27" value="d">d)&nbsp;Die Residuen müssen eine Varianz von genau 1 haben.</label>
+</div><div class="hint" id="h27">Exogenität: Cov(xᵢ, eᵢ)=0. Bei Verletzung (z.B. durch weggelassene Drittvariable) werden die Koeffizienten verzerrt geschätzt (Omitted Variable Bias).</div></div></div>
+
+<!-- Q28 -->
+<div class="card" id="c28"><div class="qhead"><span class="qnum">28</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s28"></span></div>
+<div class="qbody"><div class="qtext">
+<p>Aus einem Regressionsoutput: $SS_{\text{Model}} = 320{,}0$, $SS_{\text{Residual}} = 1.280{,}0$.</p>
+<p>a) Berechnen Sie $R^2$. &nbsp;&nbsp; b) Wie viel Prozent der Varianz der AV wird <strong>nicht</strong> erklärt?</p>
+</div>
+<div class="opts" id="o28">
+<label class="opt"><input type="radio" name="q28" value="a">a)&nbsp;$R^2 = 0{,}25$ &nbsp;·&nbsp; nicht erklärt: 75 %</label>
+<label class="opt"><input type="radio" name="q28" value="b">b)&nbsp;$R^2 = 0{,}20$ &nbsp;·&nbsp; nicht erklärt: 80 %</label>
+<label class="opt"><input type="radio" name="q28" value="c">c)&nbsp;$R^2 = 0{,}20$ &nbsp;·&nbsp; nicht erklärt: 75 %</label>
+<label class="opt"><input type="radio" name="q28" value="d">d)&nbsp;$R^2 = 0{,}25$ &nbsp;·&nbsp; nicht erklärt: 80 %</label>
+</div><div class="hint" id="h28">SS_Total=320+1280=1600 · R²=320/1600=0,20 · nicht erklärt=1−R²=0,80=80%</div></div></div>
+
+<!-- Q29 -->
+<div class="card" id="c29"><div class="qhead"><span class="qnum">29</span><span class="tag konzept">Konzept</span><span class="qst" id="s29"></span></div>
+<div class="qbody"><div class="qtext"><p>Was bedeutet ein $p$-Wert von 0,03 bei einem Test mit $\alpha = 0{,}05$?</p></div>
+<div class="opts" id="o29">
+<label class="opt"><input type="radio" name="q29" value="a">a)&nbsp;Mit 3 % Wahrscheinlichkeit ist $H_1$ wahr.</label>
+<label class="opt"><input type="radio" name="q29" value="b">b)&nbsp;$H_0$ wird nicht verworfen, weil 0,03 kleiner als 0,05 ist.</label>
+<label class="opt"><input type="radio" name="q29" value="c">c)&nbsp;Der Unterschied ist so groß, dass er praktisch bedeutsam ist.</label>
+<label class="opt"><input type="radio" name="q29" value="d">d)&nbsp;Wenn $H_0$ wahr wäre, würde man das beobachtete (oder ein extremeres) Ergebnis nur in 3 % der Stichproben sehen — da 3 % &lt; 5 %, wird $H_0$ verworfen.</label>
+</div><div class="hint" id="h29">p-Wert = Wahrscheinlichkeit des beobachteten (oder extremeren) Ergebnisses UNTER H₀. Kein Aussage über Wahrscheinlichkeit von H₁. p&lt;α → verwerfen.</div></div></div>
+
+<!-- Q30 -->
+<div class="card" id="c30"><div class="qhead"><span class="qnum">30</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s30"></span></div>
+<div class="qbody"><div class="qtext">
+<p>West: $n_1=100$, $\bar{x}_1=3.400$ Euro, $S_1=600$ &nbsp;·&nbsp; Ost: $n_2=100$, $\bar{x}_2=2.900$ Euro, $S_2=500$</p>
+<p>Forschungshypothese: Einkommen West &gt; Ost. $\alpha=0{,}05$, rechtsseitig, z-Approximation.</p>
+<p>$$T = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{S_1^2/n_1 + S_2^2/n_2}} \qquad \text{kritischer Wert: } z_{0{,}95}=1{,}64$$</p>
+</div>
+<div class="opts" id="o30">
+<label class="opt"><input type="radio" name="q30" value="a">a)&nbsp;$H_0$ wird verworfen; $T = 6{,}40$; kritischer Wert $= 1{,}64$</label>
+<label class="opt"><input type="radio" name="q30" value="b">b)&nbsp;$H_0$ wird nicht verworfen; $T = 6{,}40$; kritischer Wert $= 1{,}96$</label>
+<label class="opt"><input type="radio" name="q30" value="c">c)&nbsp;$H_0$ wird verworfen; $T = 3{,}20$; kritischer Wert $= 1{,}64$</label>
+<label class="opt"><input type="radio" name="q30" value="d">d)&nbsp;$H_0$ wird verworfen; $T = 6{,}40$; kritischer Wert $= 2{,}33$</label>
+</div><div class="hint" id="h30">√(600²/100+500²/100)=√(3600+2500)=√6100≈78,10 · T=500/78,10≈6,40 · 6,40&gt;1,64 → verwerfen · Varianz durch n teilen, dann addieren, dann Wurzel — nicht einfach SEs addieren!</div></div></div>
+
+</main>
+
+<footer class="bar">
+  <button class="btn btn-p" id="btn-submit" onclick="evaluate()">Klausur auswerten</button>
+  <button class="btn btn-s" id="btn-reset" style="display:none" onclick="resetQuiz()">Nochmal versuchen</button>
+  <span id="ans-count">0 / 30 beantwortet</span>
+</footer>
+
+<script>
+const ANSWERS = {
+  1:'c',2:'a',3:'b',4:'a',5:'c',6:'c',7:'c',8:'c',9:'c',10:'a',
+  11:'b',12:'d',13:'c',14:'b',15:'b',16:'a',17:'b',18:'b',19:'b',20:'b',
+  21:'c',22:'a',23:'b',24:'b',25:'b',26:'c',27:'b',28:'b',29:'d',30:'a'
+};
+
+// Timer
+let secs = 60*60, timerInt;
+function startTimer(){
+  timerInt = setInterval(()=>{
+    secs--;
+    const m=Math.floor(secs/60), s=secs%60;
+    const el=document.getElementById('timer');
+    el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+    if(secs<=600) el.classList.add('warn');
+    if(secs<=0){clearInterval(timerInt);evaluate();}
+  },1000);
+}
+startTimer();
+
+// Progress
+function updateProgress(){
+  const n=document.querySelectorAll('input[type=radio]:checked').length;
+  document.getElementById('ptxt').textContent=n+'/30';
+  document.getElementById('pbar').style.width=(n/30*100)+'%';
+  document.getElementById('ans-count').textContent=n+' / 30 beantwortet';
+}
+
+// Option highlighting
+document.querySelectorAll('input[type=radio]').forEach(r=>{
+  r.addEventListener('change',function(){
+    document.querySelectorAll(`input[name="${this.name}"]`)
+      .forEach(x=>x.parentElement.classList.remove('sel'));
+    this.parentElement.classList.add('sel');
+    updateProgress();
+  });
+});
+
+// Evaluate
+function evaluate(){
+  clearInterval(timerInt);
+  let correct=0, answered=0;
+  for(let i=1;i<=30;i++){
+    const sel=document.querySelector(`input[name="q${i}"]:checked`);
+    const card=document.getElementById('c'+i);
+    const opts=document.querySelectorAll(`input[name="q${i}"]`);
+    opts.forEach(o=>o.disabled=true);
+    if(!sel) continue;
+    answered++;
+    const correctEl=document.querySelector(`input[name="q${i}"][value="${ANSWERS[i]}"]`);
+    correctEl.parentElement.classList.add('right');
+    if(sel.value===ANSWERS[i]){
+      correct++;
+      card.classList.add('ok');
+      document.getElementById('s'+i).textContent='✓';
+    } else {
+      card.classList.add('err');
+      sel.parentElement.classList.remove('sel');
+      sel.parentElement.classList.add('struck');
+      document.getElementById('s'+i).textContent='✗';
+      const h=document.getElementById('h'+i);
+      if(h) h.style.display='block';
+    }
+  }
+  // Re-render MathJax in shown hints
+  if(typeof MathJax!=='undefined') MathJax.typesetPromise();
+
+  const pct=Math.round(correct/30*100);
+  const pass=pct>=50;
+  const banner=document.getElementById('score');
+  banner.className=pass?'pass':'fail';
+  banner.innerHTML=`<strong>Ergebnis</strong><div class="num">${correct}/30 &nbsp;(${pct}&thinsp;%)</div>`+
+    `<div style="font-size:.9rem;margin-top:4px">${pass?'✓ Bestanden':'✗ Nicht bestanden'} &nbsp;·&nbsp; ${answered} von 30 Fragen beantwortet</div>`;
+  banner.style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('btn-submit').style.display='none';
+  document.getElementById('btn-reset').style.display='block';
+}
+
+// Reset
+function resetQuiz(){
+  document.querySelectorAll('input[type=radio]').forEach(r=>{
+    r.checked=false; r.disabled=false;
+    r.parentElement.classList.remove('sel','right','struck');
+  });
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('ok','err'));
+  for(let i=1;i<=30;i++){
+    document.getElementById('s'+i).textContent='';
+    const h=document.getElementById('h'+i);
+    if(h) h.style.display='none';
+  }
+  const b=document.getElementById('score');
+  b.style.display='none'; b.className='';
+  secs=60*60;
+  document.getElementById('timer').textContent='60:00';
+  document.getElementById('timer').classList.remove('warn');
+  startTimer();
+  document.getElementById('btn-submit').style.display='block';
+  document.getElementById('btn-reset').style.display='none';
+  updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
