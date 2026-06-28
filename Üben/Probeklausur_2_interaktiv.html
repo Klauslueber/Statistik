@@ -475,9 +475,6 @@ document.getElementById('btn-reset').addEventListener('click', resetQuiz);
 
 // Evaluate
 function evaluate(){
-  // Sofort sichtbarer Indikator: Timer zeigt, dass die Funktion läuft
-  var timerEl = document.getElementById('timer');
-  if(timerEl) timerEl.textContent = 'LÄUFT...';
   try {
     clearInterval(timerInt);
     let correct=0, answered=0;
@@ -512,21 +509,18 @@ function evaluate(){
     banner.innerHTML='<strong>Ergebnis</strong><div class="num">'+correct+'/30 &nbsp;('+pct+'&thinsp;%)</div>'+
       '<div style="font-size:.9rem;margin-top:4px">'+(pass?'✓ Bestanden':'✗ Nicht bestanden')+' &nbsp;·&nbsp; '+answered+' von 30 Fragen beantwortet</div>';
     banner.style.display='block';
-    window.scrollTo({top:0,behavior:'smooth'});
+    window.scrollTo({top:0,behavior:'auto'});
     document.getElementById('btn-submit').style.display='none';
     document.getElementById('btn-reset').style.display='block';
-    if(timerEl) timerEl.textContent = 'FERTIG';
   } catch(e) {
     var msg = e ? (e.message || String(e)) : 'Unbekannt';
-    var timerEl2 = document.getElementById('timer');
-    if(timerEl2) timerEl2.textContent = 'FEHLER';
     var scoreEl = document.getElementById('score');
     if(scoreEl){
       scoreEl.className = 'fail';
-      scoreEl.innerHTML = '<strong>JavaScript-Fehler (bitte melden):</strong><br>' + msg;
+      scoreEl.innerHTML = '<strong>Fehler bei Auswertung:</strong><br>' + msg;
       scoreEl.style.display = 'block';
     }
-    window.scrollTo({top:0,behavior:'smooth'});
+    window.scrollTo({top:0,behavior:'auto'});
   }
 }
 
@@ -544,6 +538,7 @@ function resetQuiz(){
   }
   const b=document.getElementById('score');
   b.style.display='none'; b.className='';
+  clearInterval(timerInt);
   secs=60*60;
   document.getElementById('timer').textContent='60:00';
   document.getElementById('timer').classList.remove('warn');
@@ -551,7 +546,7 @@ function resetQuiz(){
   document.getElementById('btn-submit').style.display='block';
   document.getElementById('btn-reset').style.display='none';
   updateProgress();
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({top:0,behavior:'auto'});
 }
 </script>
 </body>
