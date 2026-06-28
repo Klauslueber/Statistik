@@ -424,8 +424,8 @@ footer.bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px
 </main>
 
 <footer class="bar">
-  <button class="btn btn-p" id="btn-submit" onclick="evaluate()">Klausur auswerten</button>
-  <button class="btn btn-s" id="btn-reset" style="display:none" onclick="resetQuiz()">Nochmal versuchen</button>
+  <button class="btn btn-p" id="btn-submit">Klausur auswerten</button>
+  <button class="btn btn-s" id="btn-reset" style="display:none">Nochmal versuchen</button>
   <span id="ans-count">0 / 30 beantwortet</span>
 </footer>
 
@@ -468,8 +468,16 @@ document.querySelectorAll('input[type=radio]').forEach(r=>{
   });
 });
 
+// Wire up buttons via addEventListener (robuster als onclick-Attribut)
+// Script-Tag steht am Ende des Body → DOM ist bereits geladen
+document.getElementById('btn-submit').addEventListener('click', evaluate);
+document.getElementById('btn-reset').addEventListener('click', resetQuiz);
+
 // Evaluate
 function evaluate(){
+  // Sofort sichtbarer Indikator: Timer zeigt, dass die Funktion läuft
+  var timerEl = document.getElementById('timer');
+  if(timerEl) timerEl.textContent = 'LÄUFT...';
   try {
     clearInterval(timerInt);
     let correct=0, answered=0;
