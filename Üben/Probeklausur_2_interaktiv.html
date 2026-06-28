@@ -494,9 +494,6 @@ function evaluate(){
       if(h) h.style.display='block';
     }
   }
-  // Re-render MathJax in shown hints
-  if(typeof MathJax!=='undefined') MathJax.typesetPromise();
-
   const pct=Math.round(correct/30*100);
   const pass=pct>=50;
   const banner=document.getElementById('score');
