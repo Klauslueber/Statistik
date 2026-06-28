@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probeklausur 3 — Statistik</title>
+<script>
+MathJax = { tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] } };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Georgia,serif;background:#f5f5f0;color:#222;line-height:1.65}
+header{position:sticky;top:0;z-index:100;background:#1a1a2e;color:#fff;padding:10px 24px;display:flex;align-items:center;gap:20px}
+header h1{font-size:1rem;flex:1}
+#timer{font-size:1.4rem;font-family:monospace;font-weight:bold;letter-spacing:2px}
+#timer.warn{color:#ff6b6b}
+.prog-wrap{background:#333;height:4px}
+.prog-bar{background:#4caf50;height:4px;width:0%;transition:width .3s}
+main{max-width:760px;margin:0 auto;padding:20px 16px 110px}
+.card{background:#fff;border:2px solid #e0e0e0;border-radius:8px;margin-bottom:18px;overflow:hidden;transition:border-color .3s}
+.card.ok{border-color:#4caf50}
+.card.err{border-color:#e53935}
+.qhead{display:flex;align-items:center;gap:10px;padding:10px 16px;background:#f8f8f8;border-bottom:1px solid #e8e8e8;font-size:.88rem;font-family:sans-serif}
+.qnum{font-weight:700;font-size:.95rem}
+.tag{font-size:.72rem;padding:2px 8px;border-radius:10px}
+.verstaendnis{background:#e3f2fd;color:#1565c0}
+.rechnen{background:#fce4ec;color:#b71c1c}
+.qst{margin-left:auto;font-size:1.1rem}
+.qbody{padding:16px}
+.qtext{margin-bottom:14px;font-size:.97rem}
+.qtext p{margin-bottom:6px}
+table.dt{border-collapse:collapse;margin:10px 0;font-size:.9rem;font-family:sans-serif}
+table.dt th,table.dt td{border:1px solid #ccc;padding:5px 12px;text-align:center}
+table.dt th{background:#f0f0f0;font-weight:600}
+table.dt td:first-child{text-align:left}
+pre.stata{background:#1e1e1e;color:#d4d4d4;padding:12px 14px;border-radius:6px;font-size:.78rem;font-family:'Courier New',monospace;overflow-x:auto;margin:10px 0;line-height:1.5;white-space:pre}
+.stata-note{font-size:.83rem;font-family:sans-serif;color:#555;margin:4px 0 10px;font-style:italic}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border:1px solid #e0e0e0;border-radius:6px;cursor:pointer;transition:background .15s;font-size:.94rem;line-height:1.5}
+.opt:hover{background:#f5f5f5}
+.opt input[type=radio]{margin-top:3px;flex-shrink:0;accent-color:#1a1a2e}
+.opt.sel{background:#e8eaf6;border-color:#3949ab}
+.opt.right{background:#e8f5e9!important;border-color:#43a047!important;font-weight:600}
+.opt.struck{background:#ffebee!important;border-color:#e53935!important;color:#aaa;text-decoration:line-through}
+.hint{display:none;margin-top:12px;padding:9px 14px;background:#fff8e1;border-left:3px solid #ffc107;font-size:.86rem;font-family:sans-serif;line-height:1.55}
+footer.bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e0e0e0;padding:12px 24px;display:flex;align-items:center;gap:16px;box-shadow:0 -2px 8px rgba(0,0,0,.07)}
+.btn{padding:9px 22px;border:none;border-radius:6px;font-size:.95rem;cursor:pointer;font-family:sans-serif;font-weight:600}
+.btn-p{background:#1a1a2e;color:#fff}
+.btn-p:hover{background:#2d2d4e}
+.btn-s{background:#e0e0e0;color:#333}
+.btn-s:hover{background:#d0d0d0}
+#ans-count{font-family:sans-serif;font-size:.88rem;color:#666;margin-left:auto}
+#score{display:none;border-radius:8px;padding:16px 20px;margin-bottom:20px;font-family:sans-serif}
+#score.pass{background:#e8f5e9;border:1px solid #4caf50}
+#score.fail{background:#ffebee;border:1px solid #e53935}
+#score .num{font-size:2rem;font-weight:700;margin:4px 0}
+#score.pass .num{color:#2e7d32}
+#score.fail .num{color:#c62828}
+.stata-header{font-size:.82rem;font-family:sans-serif;font-weight:700;color:#444;margin:14px 0 4px;padding:6px 10px;background:#f0f4ff;border-left:3px solid #3949ab;border-radius:0 4px 4px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>Probeklausur 3 — Einführung in die sozialwissenschaftliche Statistik</h1>
+  <span id="ptxt" style="font-size:.82rem;color:#aaa">0/30</span>
+  <span id="timer">60:00</span>
+</header>
+<div class="prog-wrap"><div class="prog-bar" id="pbar"></div></div>
+
+<main>
+<div id="score"></div>
+
+<!-- Q1 -->
+<div class="card" id="c1"><div class="qhead"><span class="qnum">1</span><span class="tag verstaendnis">Verständnis</span><span class="qst" id="s1"></span></div>
+<div class="qbody"><div class="qtext"><p>Die Variable „Parteizugehörigkeit" (CDU, SPD, Grüne, AfD, keine) ist auf welchem Skalenniveau gemessen?</p></div>
+<div class="opts" id="o1">
+<label class="opt"><input type="radio" name="q1" value="a">a)&nbsp;Metrisch (Verhältnisskala)</label>
+<label class="opt"><input type="radio" name="q1" value="b">b)&nbsp;Ordinal</label>
+<label class="opt"><input type="radio" name="q1" value="c">c)&nbsp;Nominal</label>
+<label class="opt"><input type="radio" name="q1" value="d">d)&nbsp;Metrisch (Intervallskala)</label>
+</div><div class="hint" id="h1">Parteizugehörigkeit ist eine Kategorienvariable ohne natürliche Rangordnung → nominal. Ordinal würde eine sinnvolle Reihenfolge voraussetzen.</div></div></div>
+
+<!-- Q2 -->
+<div class="card" id="c2"><div class="qhead"><span class="qnum">2</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s2"></span></div>
+<div class="qbody"><div class="qtext"><p>In einer Befragung von 200 Personen geben 48 an, der SPD nahestehend zu sein. Wie groß ist die relative Häufigkeit dieser Gruppe?</p></div>
+<div class="opts" id="o2">
+<label class="opt"><input type="radio" name="q2" value="a">a)&nbsp;0,24</label>
+<label class="opt"><input type="radio" name="q2" value="b">b)&nbsp;0,48</label>
+<label class="opt"><input type="radio" name="q2" value="c">c)&nbsp;0,12</label>
+<label class="opt"><input type="radio" name="q2" value="d">d)&nbsp;2,40</label>
+</div><div class="hint" id="h2">48 / 200 = 0,24. Option b) wäre 48/100 — Verwechslung des Nenners.</div></div></div>
+
+<!-- Q3 -->
+<div class="card" id="c3"><div class="qhead"><span class="qnum">3</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s3"></span></div>
+<div class="qbody"><div class="qtext"><p>Die Nettoeinkommen (in Tsd. Euro) von $n = 7$ Befragten lauten aufsteigend sortiert:</p><p>$$1{,}2 \quad 1{,}8 \quad 2{,}1 \quad 2{,}4 \quad 3{,}0 \quad 4{,}2 \quad 6{,}8$$</p><p>Wie groß ist der Median?</p></div>
+<div class="opts" id="o3">
+<label class="opt"><input type="radio" name="q3" value="a">a)&nbsp;2,1</label>
+<label class="opt"><input type="radio" name="q3" value="b">b)&nbsp;3,07 (arithmetisches Mittel)</label>
+<label class="opt"><input type="radio" name="q3" value="c">c)&nbsp;1,8</label>
+<label class="opt"><input type="radio" name="q3" value="d">d)&nbsp;2,4</label>
+</div><div class="hint" id="h3">Bei n=7 (ungerade) liegt der Median an Position (7+1)/2 = 4. Der 4. Wert ist 2,4. Das arithmetische Mittel (3,07) ist nicht der Median.</div></div></div>
+
+<!-- Q4 -->
+<div class="card" id="c4"><div class="qhead"><span class="qnum">4</span><span class="tag verstaendnis">Verständnis</span><span class="qst" id="s4"></span></div>
+<div class="qbody"><div class="qtext"><p>Welche Aussage zur Nullhypothese $H_0$ ist korrekt?</p></div>
+<div class="opts" id="o4">
+<label class="opt"><input type="radio" name="q4" value="a">a)&nbsp;Die Nullhypothese enthält stets die Forschungsvermutung des Wissenschaftlers.</label>
+<label class="opt"><input type="radio" name="q4" value="b">b)&nbsp;Eine verworfene Nullhypothese gilt als endgültig widerlegt.</label>
+<label class="opt"><input type="radio" name="q4" value="c">c)&nbsp;Die Nullhypothese wird verworfen, wenn die Teststatistik in den Ablehnungsbereich fällt.</label>
+<label class="opt"><input type="radio" name="q4" value="d">d)&nbsp;Wird $H_0$ nicht verworfen, ist $H_0$ bewiesen.</label>
+</div><div class="hint" id="h4">a) falsch: Die Forschungsvermutung steht in H1. b) falsch: Verwerfen bedeutet nicht endgültig widerlegt (Fehler 1. Art möglich). d) falsch: Nicht-Verwerfen bedeutet nur fehlende Evidenz gegen H0, kein Beweis.</div></div></div>
+
+<!-- Q5 -->
+<div class="card" id="c5"><div class="qhead"><span class="qnum">5</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s5"></span></div>
+<div class="qbody"><div class="qtext"><p>Vier Studierende erzielten folgende Punktzahlen: 4, 6, 8, 10.</p><p>Berechne die empirische Varianz $s^2$ (Nenner: $n$).</p></div>
+<div class="opts" id="o5">
+<label class="opt"><input type="radio" name="q5" value="a">a)&nbsp;3,33</label>
+<label class="opt"><input type="radio" name="q5" value="b">b)&nbsp;5,00</label>
+<label class="opt"><input type="radio" name="q5" value="c">c)&nbsp;6,67</label>
+<label class="opt"><input type="radio" name="q5" value="d">d)&nbsp;7,50</label>
+</div><div class="hint" id="h5">x̄ = 7 · Quadratsumme: (4-7)²+(6-7)²+(8-7)²+(10-7)² = 9+1+1+9 = 20 · s² = 20/4 = 5,00. Option c) (6,67) wäre die Stichprobenvarianz mit Nenner n-1 = 3.</div></div></div>
+
+<!-- Q6 -->
+<div class="card" id="c6"><div class="qhead"><span class="qnum">6</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s6"></span></div>
+<div class="qbody"><div class="qtext"><p>Gegeben sind die aufsteigend sortierten Werte: 2, 5, 7, 9, 12, 14, 18.</p><p>Berechne den Interquartilsabstand $\text{IQR} = Q_3 - Q_1$.</p></div>
+<div class="opts" id="o6">
+<label class="opt"><input type="radio" name="q6" value="a">a)&nbsp;9</label>
+<label class="opt"><input type="radio" name="q6" value="b">b)&nbsp;16</label>
+<label class="opt"><input type="radio" name="q6" value="c">c)&nbsp;11</label>
+<label class="opt"><input type="radio" name="q6" value="d">d)&nbsp;7</label>
+</div><div class="hint" id="h6">n=7: Q1-Position = (7+1)/4 = 2 → Q1 = x₍₂₎ = 5. Q3-Position = 3·(7+1)/4 = 6 → Q3 = x₍₆₎ = 14. IQR = 14 - 5 = 9.</div></div></div>
+
+<!-- Q7 -->
+<div class="card" id="c7"><div class="qhead"><span class="qnum">7</span><span class="tag verstaendnis">Verständnis</span><span class="qst" id="s7"></span></div>
+<div class="qbody"><div class="qtext"><p>Welche Aussage zu Cramér's V ist korrekt?</p></div>
+<div class="opts" id="o7">
+<label class="opt"><input type="radio" name="q7" value="a">a)&nbsp;Cramér's V kann negative Werte annehmen.</label>
+<label class="opt"><input type="radio" name="q7" value="b">b)&nbsp;Cramér's V = 1 bedeutet statistische Unabhängigkeit.</label>
+<label class="opt"><input type="radio" name="q7" value="c">c)&nbsp;Cramér's V = 0 tritt genau dann auf, wenn $\chi^2 = 0$, also wenn die Variablen statistisch unabhängig sind.</label>
+<label class="opt"><input type="radio" name="q7" value="d">d)&nbsp;Cramér's V setzt Intervallskalenniveau voraus.</label>
+</div><div class="hint" id="h7">V = √(χ²/(n·k)) ≥ 0 immer. V=0 ↔ χ²=0 ↔ statistische Unabhängigkeit. V=1 bedeutet perfekter Zusammenhang (nicht Unabhängigkeit). Cramér's V ist für nominale Variablen konzipiert.</div></div></div>
+
+<!-- Q8 -->
+<div class="card" id="c8"><div class="qhead"><span class="qnum">8</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s8"></span></div>
+<div class="qbody"><div class="qtext"><p>Gegeben ist folgende 2×2-Tabelle (Geschlecht × Parteisympathie):</p>
+<table class="dt"><tr><th></th><th>Partei A</th><th>Partei B</th><th>Gesamt</th></tr>
+<tr><td>Männer</td><td>40</td><td>60</td><td>100</td></tr>
+<tr><td>Frauen</td><td>50</td><td>50</td><td>100</td></tr>
+<tr><td><strong>Gesamt</strong></td><td>90</td><td>110</td><td>200</td></tr></table>
+<p>Welcher $\chi^2$-Wert ergibt sich?</p></div>
+<div class="opts" id="o8">
+<label class="opt"><input type="radio" name="q8" value="a">a)&nbsp;1,01</label>
+<label class="opt"><input type="radio" name="q8" value="b">b)&nbsp;3,84</label>
+<label class="opt"><input type="radio" name="q8" value="c">c)&nbsp;4,05</label>
+<label class="opt"><input type="radio" name="q8" value="d">d)&nbsp;2,02</label>
+</div><div class="hint" id="h8">Erwartete Häufigkeiten: E(M,A)=45, E(M,B)=55, E(F,A)=45, E(F,B)=55. χ² = 25/45 + 25/55 + 25/45 + 25/55 = 0,556+0,455+0,556+0,455 = 2,02. Option b) (3,84) ist der kritische Wert bei df=1, α=0,05.</div></div></div>
+
+<!-- Q9 -->
+<div class="card" id="c9"><div class="qhead"><span class="qnum">9</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s9"></span></div>
+<div class="qbody"><div class="qtext"><p>Berechne Cramér's V für die Tabelle aus Frage 8 ($\chi^2 = 2{,}02$, $n = 200$, $k = 1$):</p><p>$$V = \sqrt{\frac{\chi^2}{n \cdot k}}$$</p></div>
+<div class="opts" id="o9">
+<label class="opt"><input type="radio" name="q9" value="a">a)&nbsp;0,20</label>
+<label class="opt"><input type="radio" name="q9" value="b">b)&nbsp;0,10</label>
+<label class="opt"><input type="radio" name="q9" value="c">c)&nbsp;0,50</label>
+<label class="opt"><input type="radio" name="q9" value="d">d)&nbsp;0,05</label>
+</div><div class="hint" id="h9">V = √(2,02 / (200·1)) = √0,0101 = 0,1005 ≈ 0,10. Schwacher Zusammenhang (k=min(r-1,c-1)=min(1,1)=1 bei 2×2-Tabelle).</div></div></div>
+
+<!-- Q10 -->
+<div class="card" id="c10"><div class="qhead"><span class="qnum">10</span><span class="tag verstaendnis">Verständnis</span><span class="qst" id="s10"></span></div>
+<div class="qbody"><div class="qtext"><p>Was minimiert die Methode der kleinsten Quadrate (OLS)?</p></div>
+<div class="opts" id="o10">
+<label class="opt"><input type="radio" name="q10" value="a">a)&nbsp;Die Summe der absoluten Residuen $\sum |e_i|$</label>
+<label class="opt"><input type="radio" name="q10" value="b">b)&nbsp;Die Summe der quadrierten Residuen $\sum e_i^2$</label>
+<label class="opt"><input type="radio" name="q10" value="c">c)&nbsp;Die Summe der standardisierten Residuen</label>
+<label class="opt"><input type="radio" name="q10" value="d">d)&nbsp;Den Korrelationskoeffizienten $r$</label>
+</div><div class="hint" id="h10">OLS = Ordinary Least Squares → kleinste Quadrate → minimiert Σeᵢ². Die Quadrierung bestraft große Abweichungen überproportional und macht das Problem analytisch lösbar.</div></div></div>
+
+<!-- Q11 -->
+<div class="card" id="c11"><div class="qhead"><span class="qnum">11</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s11"></span></div>
+<div class="qbody"><div class="qtext"><p>Fünf Haushalte haben folgende Jahreseinkommen (in Tsd. Euro, aufsteigend): 10, 20, 30, 40, 50.</p><p>Berechne den Gini-Koeffizienten:</p><p>$$G = \frac{2 \cdot \sum_{i=1}^{n} i \cdot x_i}{n \cdot \sum_{i=1}^{n} x_i} - \frac{n+1}{n}$$</p></div>
+<div class="opts" id="o11">
+<label class="opt"><input type="radio" name="q11" value="a">a)&nbsp;0,17</label>
+<label class="opt"><input type="radio" name="q11" value="b">b)&nbsp;0,37</label>
+<label class="opt"><input type="radio" name="q11" value="c">c)&nbsp;0,50</label>
+<label class="opt"><input type="radio" name="q11" value="d">d)&nbsp;0,27</label>
+</div><div class="hint" id="h11">Σxᵢ = 150 · Σi·xᵢ = 1·10+2·20+3·30+4·40+5·50 = 550 · G = (2·550)/(5·150) − 6/5 = 1,467 − 1,2 = 0,267 ≈ 0,27</div></div></div>
+
+<!-- Q12 -->
+<div class="card" id="c12"><div class="qhead"><span class="qnum">12</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s12"></span></div>
+<div class="qbody"><div class="qtext"><p>Eine Zufallsvariable $X$ hat folgende Verteilung:</p>
+<table class="dt"><tr><th>$x$</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
+<tr><td>$P(X=x)$</td><td>0,1</td><td>0,3</td><td>0,4</td><td>0,2</td></tr></table>
+<p>Berechne $E(X)$.</p></div>
+<div class="opts" id="o12">
+<label class="opt"><input type="radio" name="q12" value="a">a)&nbsp;1,5</label>
+<label class="opt"><input type="radio" name="q12" value="b">b)&nbsp;2,0</label>
+<label class="opt"><input type="radio" name="q12" value="c">c)&nbsp;1,7</label>
+<label class="opt"><input type="radio" name="q12" value="d">d)&nbsp;1,2</label>
+</div><div class="hint" id="h12">E(X) = 0·0,1 + 1·0,3 + 2·0,4 + 3·0,2 = 0 + 0,3 + 0,8 + 0,6 = 1,7. Option a) (1,5) wäre das arithmetische Mittel der x-Werte ohne Gewichtung.</div></div></div>
+
+<!-- Q13 -->
+<div class="card" id="c13"><div class="qhead"><span class="qnum">13</span><span class="tag verstaendnis">Verständnis</span><span class="qst" id="s13"></span></div>
+<div class="qbody"><div class="qtext"><p>Welche Aussage zum 95%-Konfidenzintervall ist korrekt?</p></div>
+<div class="opts" id="o13">
+<label class="opt"><input type="radio" name="q13" value="a">a)&nbsp;Das 95%-KI enthält den wahren Parameter mit einer Wahrscheinlichkeit von 95%.</label>
+<label class="opt"><input type="radio" name="q13" value="b">b)&nbsp;95% der Beobachtungen liegen innerhalb des 95%-KI.</label>
+<label class="opt"><input type="radio" name="q13" value="c">c)&nbsp;In 95% aller wiederholten Stichproben würde das berechnete KI den wahren Parameter enthalten.</label>
+<label class="opt"><input type="radio" name="q13" value="d">d)&nbsp;Ein 99%-KI ist schmaler als ein 95%-KI.</label>
+</div><div class="hint" id="h13">Der wahre Parameter ist fest (kein Zufall) — das Intervall ist zufällig. Option a) klingt richtig, ist aber falsch formuliert. Richtig: Die Methode erzeugt in 95% der Fälle ein Intervall, das den wahren Wert enthält. Option d) ist falsch: 99%-KI ist breiter.</div></div></div>
+
+<!-- Q14 -->
+<div class="card" id="c14"><div class="qhead"><span class="qnum">14</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s14"></span></div>
+<div class="qbody"><div class="qtext"><p>Berechne $\text{Var}(X)$ für die Verteilung aus Frage 12 ($E(X) = 1{,}7$).</p><p>Nutze: $\text{Var}(X) = E(X^2) - [E(X)]^2$</p></div>
+<div class="opts" id="o14">
+<label class="opt"><input type="radio" name="q14" value="a">a)&nbsp;0,81</label>
+<label class="opt"><input type="radio" name="q14" value="b">b)&nbsp;0,51</label>
+<label class="opt"><input type="radio" name="q14" value="c">c)&nbsp;1,30</label>
+<label class="opt"><input type="radio" name="q14" value="d">d)&nbsp;2,89</label>
+</div><div class="hint" id="h14">E(X²) = 0·0,1 + 1·0,3 + 4·0,4 + 9·0,2 = 0+0,3+1,6+1,8 = 3,7 · Var(X) = 3,7 − 1,7² = 3,7 − 2,89 = 0,81. Option d) (2,89) ist nur [E(X)]² — Subtrahieren nicht vergessen.</div></div></div>
+
+<!-- Q15 -->
+<div class="card" id="c15"><div class="qhead"><span class="qnum">15</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s15"></span></div>
+<div class="qbody"><div class="qtext"><p>Eine Partei behauptet, ihre Zustimmung liege bei mindestens 30%. In einer Stichprobe von $n = 400$ stimmen 104 Personen zu ($\hat{p} = 0{,}26$).</p><p>$H_0: \pi \geq 0{,}30$ vs. $H_1: \pi < 0{,}30$</p><p>Berechne die Teststatistik: $z = \dfrac{\hat{p} - \pi_0}{\sqrt{\pi_0(1-\pi_0)/n}}$</p></div>
+<div class="opts" id="o15">
+<label class="opt"><input type="radio" name="q15" value="a">a)&nbsp;−1,00</label>
+<label class="opt"><input type="radio" name="q15" value="b">b)&nbsp;−1,43</label>
+<label class="opt"><input type="radio" name="q15" value="c">c)&nbsp;−2,33</label>
+<label class="opt"><input type="radio" name="q15" value="d">d)&nbsp;−1,75</label>
+</div><div class="hint" id="h15">SE = √(0,30·0,70/400) = √0,000525 = 0,02291 · z = (0,26−0,30)/0,02291 = −0,04/0,02291 ≈ −1,75. Wichtig: SE mit π₀ berechnen, nicht mit p̂.</div></div></div>
+
+<!-- Q16 -->
+<div class="card" id="c16"><div class="qhead"><span class="qnum">16</span><span class="tag verstaendnis">Verständnis</span><span class="qst" id="s16"></span></div>
+<div class="qbody"><div class="qtext"><p>Was misst der Gini-Koeffizient?</p></div>
+<div class="opts" id="o16">
+<label class="opt"><input type="radio" name="q16" value="a">a)&nbsp;Den durchschnittlichen Abstand der Beobachtungen vom Median</label>
+<label class="opt"><input type="radio" name="q16" value="b">b)&nbsp;Den Grad der Ungleichverteilung einer quantitativen Variable</label>
+<label class="opt"><input type="radio" name="q16" value="c">c)&nbsp;Den Zusammenhang zwischen zwei nominalen Variablen</label>
+<label class="opt"><input type="radio" name="q16" value="d">d)&nbsp;Die Steigung der Lorenzkurve an einem Punkt</label>
+</div><div class="hint" id="h16">Gini-Koeffizient: G=0 → vollständige Gleichverteilung; G→1 → maximale Konzentration. Er quantifiziert Ungleichheit, nicht Zusammenhang (c) und nicht einen punktuellen Wert der Lorenzkurve (d).</div></div></div>
+
+<!-- Q17 -->
+<div class="card" id="c17"><div class="qhead"><span class="qnum">17</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s17"></span></div>
+<div class="qbody"><div class="qtext"><p>In einer Befragung ($n = 100$) zur Lebenszufriedenheit (Skala 0–10) ergibt sich $\bar{x} = 6{,}4$ und $\sigma = 2{,}0$ (bekannt). Berechne das 95%-Konfidenzintervall ($z_{0{,}975} = 1{,}96$, zweiseitig).</p></div>
+<div class="opts" id="o17">
+<label class="opt"><input type="radio" name="q17" value="a">a)&nbsp;$[5{,}73;\; 7{,}07]$</label>
+<label class="opt"><input type="radio" name="q17" value="b">b)&nbsp;$[6{,}01;\; 6{,}79]$</label>
+<label class="opt"><input type="radio" name="q17" value="c">c)&nbsp;$[6{,}07;\; 6{,}73]$</label>
+<label class="opt"><input type="radio" name="q17" value="d">d)&nbsp;$[5{,}97;\; 6{,}83]$</label>
+</div><div class="hint" id="h17">KI = 6,4 ± 1,96 · (2,0/√100) = 6,4 ± 1,96 · 0,2 = 6,4 ± 0,392 → [6,008; 6,792] ≈ [6,01; 6,79]. Option a) wäre 1,96·σ ohne √n-Teilung.</div></div></div>
+
+<!-- Stata Block 1 Header -->
+<div style="margin:24px 0 10px;padding:10px 16px;background:#1a1a2e;color:#fff;border-radius:8px;font-family:sans-serif;font-size:.9rem">
+  <strong>Fragen 18–21:</strong> Stata-Output (einfache OLS-Regression)
+</div>
+<div style="background:#fff;border:2px solid #3949ab;border-radius:8px;padding:16px;margin-bottom:18px">
+<pre class="stata">. reg demokratievertrauen bildungsjahre
+
+      Source |       SS           df       MS      Number of obs =     150
+-------------+----------------------------------   F(1, 148)     =   18.76
+       Model |  148.23000         1  148.23000   Prob > F      = 0.0000
+    Residual | 1168.77000       148    7.89709   R-squared     = 0.1127
+-------------+----------------------------------   Adj R-squared = 0.1067
+       Total | 1317.00000       149    8.83893   Root MSE      = 2.8102
+
+demokratievertr~n |      Coef.   Std. Err.      t    P>|t|   [95% Conf. Interval]
+------------------+--------------------------------------------------------------
+   bildungsjahre  |   0.34200    0.07900     4.33   0.000     0.18593    0.49807
+           _cons  |   2.91000    1.05000     2.77   0.006     0.83392    4.98608</pre>
+<p style="font-size:.83rem;color:#555;margin-top:8px;font-family:sans-serif">AV: demokratievertrauen (Skala 0–10) &nbsp;·&nbsp; UV: bildungsjahre (Anzahl Schuljahre) &nbsp;·&nbsp; n = 150</p>
+</div>
+
+<!-- Q18 -->
+<div class="card" id="c18"><div class="qhead"><span class="qnum">18</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s18"></span></div>
+<div class="qbody"><div class="qtext"><p>Welchen Wert sagt das Modell für eine Person mit 10 Bildungsjahren voraus? ($\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 \cdot x$)</p></div>
+<div class="opts" id="o18">
+<label class="opt"><input type="radio" name="q18" value="a">a)&nbsp;4,23</label>
+<label class="opt"><input type="radio" name="q18" value="b">b)&nbsp;5,91</label>
+<label class="opt"><input type="radio" name="q18" value="c">c)&nbsp;6,33</label>
+<label class="opt"><input type="radio" name="q18" value="d">d)&nbsp;7,01</label>
+</div><div class="hint" id="h18">ŷ = 2,91 + 0,342 · 10 = 2,91 + 3,42 = 6,33. Option d) (7,01) wäre das Ergebnis für 12 Bildungsjahre.</div></div></div>
+
+<!-- Q19 -->
+<div class="card" id="c19"><div class="qhead"><span class="qnum">19</span><span class="tag verstaendnis">Verständnis</span><span class="qst" id="s19"></span></div>
+<div class="qbody"><div class="qtext"><p>Welche Aussage zu empirischer und Stichprobenvarianz ist korrekt?</p></div>
+<div class="opts" id="o19">
+<label class="opt"><input type="radio" name="q19" value="a">a)&nbsp;$s^2 = \tfrac{1}{n-1}\sum(x_i - \bar{x})^2$ ist eine unverzerrte Schätzung der Populationsvarianz.</label>
+<label class="opt"><input type="radio" name="q19" value="b">b)&nbsp;$S^2 = \tfrac{1}{n}\sum(x_i - \bar{x})^2$ ist eine unverzerrte Schätzung der Populationsvarianz.</label>
+<label class="opt"><input type="radio" name="q19" value="c">c)&nbsp;$s^2 = \tfrac{1}{n}\sum(x_i - \bar{x})^2$ ist ein deskriptives Streuungsmaß für die vorliegende Stichprobe.</label>
+<label class="opt"><input type="radio" name="q19" value="d">d)&nbsp;Empirische Varianz und Stichprobenvarianz sind dasselbe Maß mit demselben Nenner.</label>
+</div><div class="hint" id="h19">Die empirische Varianz s² (Nenner n) ist deskriptiv und verzerrt als Schätzer von σ². Die unverzerrte Schätzfunktion ist S² mit Nenner n-1. In der Formelsammlung dieser Vorlesung steht s² mit Nenner n.</div></div></div>
+
+<!-- Q20 -->
+<div class="card" id="c20"><div class="qhead"><span class="qnum">20</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s20"></span></div>
+<div class="qbody"><div class="qtext"><p>Wie viel Prozent der Varianz in demokratievertrauen werden durch bildungsjahre erklärt? (Stata-Output oben)</p></div>
+<div class="opts" id="o20">
+<label class="opt"><input type="radio" name="q20" value="a">a)&nbsp;11,3%</label>
+<label class="opt"><input type="radio" name="q20" value="b">b)&nbsp;14,8%</label>
+<label class="opt"><input type="radio" name="q20" value="c">c)&nbsp;88,7%</label>
+<label class="opt"><input type="radio" name="q20" value="d">d)&nbsp;18,8%</label>
+</div><div class="hint" id="h20">R² = 0,1127 direkt aus dem Output ablesen → 11,27% ≈ 11,3%. Probe: SS_Model/SS_Total = 148,23/1317,00 = 0,1126. Option c) (88,7%) wäre 1−R², also der unerklärte Anteil.</div></div></div>
+
+<!-- Q21 -->
+<div class="card" id="c21"><div class="qhead"><span class="qnum">21</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s21"></span></div>
+<div class="qbody"><div class="qtext"><p>Eine Person hat 12 Bildungsjahre und einen tatsächlichen demokratievertrauen-Wert von 8,0. Wie groß ist das Residuum $e = y - \hat{y}$?</p></div>
+<div class="opts" id="o21">
+<label class="opt"><input type="radio" name="q21" value="a">a)&nbsp;−1,01</label>
+<label class="opt"><input type="radio" name="q21" value="b">b)&nbsp;0,99</label>
+<label class="opt"><input type="radio" name="q21" value="c">c)&nbsp;1,89</label>
+<label class="opt"><input type="radio" name="q21" value="d">d)&nbsp;0,57</label>
+</div><div class="hint" id="h21">ŷ = 2,91 + 0,342·12 = 2,91 + 4,104 = 7,014 · e = 8,0 − 7,014 = 0,986 ≈ 0,99. Positives Residuum: Modell unterschätzt den tatsächlichen Wert.</div></div></div>
+
+<!-- Q22 -->
+<div class="card" id="c22"><div class="qhead"><span class="qnum">22</span><span class="tag verstaendnis">Verständnis</span><span class="qst" id="s22"></span></div>
+<div class="qbody"><div class="qtext"><p>Welche Aussage zu Fehler 1. und 2. Art ist korrekt?</p></div>
+<div class="opts" id="o22">
+<label class="opt"><input type="radio" name="q22" value="a">a)&nbsp;Der Fehler 2. Art ($\beta$) tritt auf, wenn $H_0$ fälschlicherweise verworfen wird.</label>
+<label class="opt"><input type="radio" name="q22" value="b">b)&nbsp;Der Fehler 1. Art ($\alpha$) entspricht dem Signifikanzniveau; ein kleineres $\alpha$ erhöht die Wahrscheinlichkeit des Fehlers 2. Art.</label>
+<label class="opt"><input type="radio" name="q22" value="c">c)&nbsp;Durch Vergrößerung der Stichprobe können Fehler 1. und 2. Art vollständig eliminiert werden.</label>
+<label class="opt"><input type="radio" name="q22" value="d">d)&nbsp;Das Signifikanzniveau $\alpha$ gibt an, mit welcher Wahrscheinlichkeit $H_1$ korrekt angenommen wird.</label>
+</div><div class="hint" id="h22">a) falsch: Fehler 2. Art = H0 nicht verworfen, obwohl falsch. b) korrekt: Strengeres α → seltener verwerfen → mehr Fehler 2. Art. c) falsch: Größeres n reduziert Fehler, eliminiert sie aber nicht. d) falsch: α ist Wahrscheinlichkeit, H0 fälschlich zu verwerfen.</div></div></div>
+
+<!-- Q23 -->
+<div class="card" id="c23"><div class="qhead"><span class="qnum">23</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s23"></span></div>
+<div class="qbody"><div class="qtext"><p>Gegeben sind $n = 5$ Beobachtungen ($\bar{x} = 5{,}0$, $\bar{y} = 7{,}0$):</p>
+<table class="dt"><tr><th>Person</th><th>$x$ (Bildungsjahre)</th><th>$y$ (Eink. Tsd. Euro)</th></tr>
+<tr><td>1</td><td>2</td><td>4</td></tr>
+<tr><td>2</td><td>4</td><td>7</td></tr>
+<tr><td>3</td><td>6</td><td>8</td></tr>
+<tr><td>4</td><td>8</td><td>11</td></tr>
+<tr><td>5</td><td>5</td><td>5</td></tr></table>
+<p>Berechne die empirische Kovarianz $s_{xy} = \tfrac{1}{n}\sum(x_i - \bar{x})(y_i - \bar{y})$.</p></div>
+<div class="opts" id="o23">
+<label class="opt"><input type="radio" name="q23" value="a">a)&nbsp;2,20</label>
+<label class="opt"><input type="radio" name="q23" value="b">b)&nbsp;3,30</label>
+<label class="opt"><input type="radio" name="q23" value="c">c)&nbsp;5,50</label>
+<label class="opt"><input type="radio" name="q23" value="d">d)&nbsp;4,40</label>
+</div><div class="hint" id="h23">Produkte (xᵢ−x̄)(yᵢ−ȳ): (−3)(−3)=9, (−1)(0)=0, (1)(1)=1, (3)(4)=12, (0)(−2)=0. Summe=22. s_xy = 22/5 = 4,40.</div></div></div>
+
+<!-- Q24 -->
+<div class="card" id="c24"><div class="qhead"><span class="qnum">24</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s24"></span></div>
+<div class="qbody"><div class="qtext"><p>Berechne den Korrelationskoeffizienten $r$ für die Daten aus Frage 23.</p><p>$$r = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i - \bar{x})^2 \cdot \sum(y_i - \bar{y})^2}}$$</p><p>Hilfswerte: $\sum(x_i - \bar{x})^2 = 20$, $\quad \sum(y_i - \bar{y})^2 = 30$.</p></div>
+<div class="opts" id="o24">
+<label class="opt"><input type="radio" name="q24" value="a">a)&nbsp;0,90</label>
+<label class="opt"><input type="radio" name="q24" value="b">b)&nbsp;0,73</label>
+<label class="opt"><input type="radio" name="q24" value="c">c)&nbsp;0,84</label>
+<label class="opt"><input type="radio" name="q24" value="d">d)&nbsp;0,96</label>
+</div><div class="hint" id="h24">r = 22 / √(20·30) = 22 / √600 = 22 / 24,495 = 0,898 ≈ 0,90. Starker positiver Zusammenhang. Kovarianz ist nicht r — Dimensionslosigkeit kommt durch Division durch die Standardabweichungen.</div></div></div>
+
+<!-- Q25 -->
+<div class="card" id="c25"><div class="qhead"><span class="qnum">25</span><span class="tag verstaendnis">Verständnis</span><span class="qst" id="s25"></span></div>
+<div class="qbody"><div class="qtext"><p>Welche Aussage zur Dummy-Codierung in der OLS-Regression ist korrekt?</p></div>
+<div class="opts" id="o25">
+<label class="opt"><input type="radio" name="q25" value="a">a)&nbsp;Bei einer nominalen Variable mit $k$ Kategorien müssen alle $k$ Dummies ins Modell aufgenommen werden.</label>
+<label class="opt"><input type="radio" name="q25" value="b">b)&nbsp;Dummy-Variablen dürfen nicht gemeinsam mit metrischen Prädiktoren in einem Modell stehen.</label>
+<label class="opt"><input type="radio" name="q25" value="c">c)&nbsp;Der Koeffizient eines Dummies gibt den absoluten Mittelwert der AV für diese Gruppe an.</label>
+<label class="opt"><input type="radio" name="q25" value="d">d)&nbsp;Bei einer nominalen Variable mit $k$ Kategorien werden maximal $k-1$ Dummies aufgenommen.</label>
+</div><div class="hint" id="h25">Mit Konstante im Modell führen k Dummies für k Kategorien zu perfekter Multikollinearität (Dummy-Variable Trap): Alle k Dummies summieren sich auf 1 = Konstante. Lösung: eine Referenzkategorie weglassen → maximal k−1 Dummies.</div></div></div>
+
+<!-- Stata Block 2 Header -->
+<div style="margin:24px 0 10px;padding:10px 16px;background:#1a1a2e;color:#fff;border-radius:8px;font-family:sans-serif;font-size:.9rem">
+  <strong>Fragen 26–28:</strong> Stata-Output (multiple OLS-Regression)
+</div>
+<div style="background:#fff;border:2px solid #3949ab;border-radius:8px;padding:16px;margin-bottom:18px">
+<pre class="stata">. reg zufriedenheit einkommen alter weiblich
+
+      Source |       SS           df       MS      Number of obs =     250
+-------------+----------------------------------   F(3, 246)     =   14.23
+       Model |  312.48000         3  104.16000   Prob > F      = 0.0000
+    Residual | 1800.32000       246    7.31837   R-squared     = 0.1479
+-------------+----------------------------------   Adj R-squared = 0.1371
+       Total | 2112.80000       249    8.48514   Root MSE      = 2.7052
+
+zufriedenheit |      Coef.   Std. Err.      t    P>|t|   [95% Conf. Interval]
+--------------+--------------------------------------------------------------
+    einkommen |   0.52000    0.14800     3.51   0.001     0.22843    0.81157
+        alter |   0.01800    0.01200     1.50   0.135    -0.00563    0.04163
+     weiblich |   0.42000    0.35000     1.20   0.231    -0.26949    1.10949
+       _cons  |   3.85000    0.98000     3.93   0.000     1.92029    5.77971</pre>
+<p style="font-size:.83rem;color:#555;margin-top:8px;font-family:sans-serif">AV: Lebenszufriedenheit (Skala 0–10) &nbsp;·&nbsp; einkommen in Tsd. Euro &nbsp;·&nbsp; weiblich = 1 (Frau), 0 (Mann) &nbsp;·&nbsp; n = 250</p>
+</div>
+
+<!-- Q26 -->
+<div class="card" id="c26"><div class="qhead"><span class="qnum">26</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s26"></span></div>
+<div class="qbody"><div class="qtext"><p>Welche Prädiktor-Koeffizienten sind auf dem 5%-Niveau ($\alpha = 0{,}05$, zweiseitig) statistisch signifikant?</p></div>
+<div class="opts" id="o26">
+<label class="opt"><input type="radio" name="q26" value="a">a)&nbsp;alter und weiblich</label>
+<label class="opt"><input type="radio" name="q26" value="b">b)&nbsp;Alle drei Prädiktoren</label>
+<label class="opt"><input type="radio" name="q26" value="c">c)&nbsp;Nur einkommen</label>
+<label class="opt"><input type="radio" name="q26" value="d">d)&nbsp;Keiner der Prädiktoren</label>
+</div><div class="hint" id="h26">Signifikanzregel: P>|t| < 0,05 → signifikant. einkommen: p=0,001 (signifikant). alter: p=0,135 (nicht signifikant). weiblich: p=0,231 (nicht signifikant). Nur einkommen übersteht das 5%-Niveau.</div></div></div>
+
+<!-- Q27 -->
+<div class="card" id="c27"><div class="qhead"><span class="qnum">27</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s27"></span></div>
+<div class="qbody"><div class="qtext"><p>Wie groß ist der vorhergesagte Zufriedenheitswert für eine 45-jährige Frau mit einkommen = 3 (Tsd. Euro)?</p></div>
+<div class="opts" id="o27">
+<label class="opt"><input type="radio" name="q27" value="a">a)&nbsp;5,84</label>
+<label class="opt"><input type="radio" name="q27" value="b">b)&nbsp;6,64</label>
+<label class="opt"><input type="radio" name="q27" value="c">c)&nbsp;7,06</label>
+<label class="opt"><input type="radio" name="q27" value="d">d)&nbsp;6,22</label>
+</div><div class="hint" id="h27">ŷ = 3,85 + 0,52·3 + 0,018·45 + 0,42·1 = 3,85 + 1,56 + 0,81 + 0,42 = 6,64. weiblich=1 (Frau), alle vier Terme addieren.</div></div></div>
+
+<!-- Q28 -->
+<div class="card" id="c28"><div class="qhead"><span class="qnum">28</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s28"></span></div>
+<div class="qbody"><div class="qtext"><p>Eine Person hat einkommen = 2, alter = 40, weiblich = 0 und einen tatsächlichen Zufriedenheitswert von 5,0. Wie groß ist das Residuum $e = y - \hat{y}$?</p></div>
+<div class="opts" id="o28">
+<label class="opt"><input type="radio" name="q28" value="a">a)&nbsp;−0,61</label>
+<label class="opt"><input type="radio" name="q28" value="b">b)&nbsp;0,61</label>
+<label class="opt"><input type="radio" name="q28" value="c">c)&nbsp;−0,39</label>
+<label class="opt"><input type="radio" name="q28" value="d">d)&nbsp;0,39</label>
+</div><div class="hint" id="h28">ŷ = 3,85 + 0,52·2 + 0,018·40 + 0,42·0 = 3,85+1,04+0,72+0 = 5,61 · e = 5,0 − 5,61 = −0,61. Negatives Residuum: Modell überschätzt. e = y−ŷ, nicht ŷ−y.</div></div></div>
+
+<!-- Q29 -->
+<div class="card" id="c29"><div class="qhead"><span class="qnum">29</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s29"></span></div>
+<div class="qbody"><div class="qtext"><p>In einer Kreuztabelle mit 4 Zeilen und 3 Spalten: Wie viele Freiheitsgrade hat der Chi²-Test auf Unabhängigkeit?</p><p>$$df = (r-1)(c-1)$$</p></div>
+<div class="opts" id="o29">
+<label class="opt"><input type="radio" name="q29" value="a">a)&nbsp;4</label>
+<label class="opt"><input type="radio" name="q29" value="b">b)&nbsp;12</label>
+<label class="opt"><input type="radio" name="q29" value="c">c)&nbsp;6</label>
+<label class="opt"><input type="radio" name="q29" value="d">d)&nbsp;8</label>
+</div><div class="hint" id="h29">df = (4−1)·(3−1) = 3·2 = 6. Option b) (12) wäre r·c = 4·3 — Zeilen und Spalten multipliziert ohne die Minus-1-Korrektur.</div></div></div>
+
+<!-- Q30 -->
+<div class="card" id="c30"><div class="qhead"><span class="qnum">30</span><span class="tag rechnen">Rechnen</span><span class="qst" id="s30"></span></div>
+<div class="qbody"><div class="qtext"><p>Eine Variable $X$ ist normalverteilt mit $\mu = 100$ und $\sigma = 15$. Welcher z-Wert entspricht dem Beobachtungswert $x = 130$?</p><p>$$z = \frac{x - \mu}{\sigma}$$</p></div>
+<div class="opts" id="o30">
+<label class="opt"><input type="radio" name="q30" value="a">a)&nbsp;1,50</label>
+<label class="opt"><input type="radio" name="q30" value="b">b)&nbsp;0,50</label>
+<label class="opt"><input type="radio" name="q30" value="c">c)&nbsp;2,50</label>
+<label class="opt"><input type="radio" name="q30" value="d">d)&nbsp;2,00</label>
+</div><div class="hint" id="h30">z = (130−100)/15 = 30/15 = 2,0. Option a) (1,50) wäre 30/20 — falsche σ. Option c) (2,50) wäre 30/12.</div></div></div>
+
+</main>
+
+<footer class="bar">
+  <button class="btn btn-p" id="btn-submit" onclick="evaluate()">Auswerten</button>
+  <button class="btn btn-s" id="btn-reset" style="display:none" onclick="resetQuiz()">Neu starten</button>
+  <span id="ans-count">0 / 30 beantwortet</span>
+</footer>
+
+<script>
+const ANSWERS = {
+  1:'c',2:'a',3:'d',4:'c',5:'b',6:'a',7:'c',8:'d',9:'b',10:'b',
+  11:'d',12:'c',13:'c',14:'a',15:'d',16:'b',17:'b',18:'c',19:'c',20:'a',
+  21:'b',22:'b',23:'d',24:'a',25:'d',26:'c',27:'b',28:'a',29:'c',30:'d'
+};
+
+let secs = 60*60, timerInt;
+function startTimer(){
+  timerInt = setInterval(()=>{
+    secs--;
+    const m=Math.floor(secs/60), s=secs%60;
+    const el=document.getElementById('timer');
+    el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+    if(secs<=600) el.classList.add('warn');
+    if(secs<=0){clearInterval(timerInt);evaluate();}
+  },1000);
+}
+startTimer();
+
+function updateProgress(){
+  const n=document.querySelectorAll('input[type=radio]:checked').length;
+  document.getElementById('ptxt').textContent=n+'/30';
+  document.getElementById('pbar').style.width=(n/30*100)+'%';
+  document.getElementById('ans-count').textContent=n+' / 30 beantwortet';
+}
+
+document.querySelectorAll('input[type=radio]').forEach(r=>{
+  r.addEventListener('change',function(){
+    document.querySelectorAll(`input[name="${this.name}"]`)
+      .forEach(x=>x.parentElement.classList.remove('sel'));
+    this.parentElement.classList.add('sel');
+    updateProgress();
+  });
+});
+
+function evaluate(){
+  clearInterval(timerInt);
+  let correct=0, answered=0;
+  for(let i=1;i<=30;i++){
+    const sel=document.querySelector(`input[name="q${i}"]:checked`);
+    const card=document.getElementById('c'+i);
+    const opts=document.querySelectorAll(`input[name="q${i}"]`);
+    opts.forEach(o=>o.disabled=true);
+    if(!sel) continue;
+    answered++;
+    const correctEl=document.querySelector(`input[name="q${i}"][value="${ANSWERS[i]}"]`);
+    correctEl.parentElement.classList.add('right');
+    if(sel.value===ANSWERS[i]){
+      correct++;
+      card.classList.add('ok');
+      document.getElementById('s'+i).textContent='✓';
+    } else {
+      card.classList.add('err');
+      sel.parentElement.classList.remove('sel');
+      sel.parentElement.classList.add('struck');
+      document.getElementById('s'+i).textContent='✗';
+      const h=document.getElementById('h'+i);
+      if(h) h.style.display='block';
+    }
+  }
+  const pct=Math.round(correct/30*100);
+  const pass=pct>=50;
+  const banner=document.getElementById('score');
+  banner.className=pass?'pass':'fail';
+  banner.innerHTML=`<strong>Ergebnis</strong><div class="num">${correct}/30 &nbsp;(${pct}&thinsp;%)</div>`+
+    `<div style="font-size:.9rem;margin-top:4px">${pass?'✓ Bestanden':'✗ Nicht bestanden'} &nbsp;·&nbsp; ${answered} von 30 Fragen beantwortet</div>`;
+  banner.style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('btn-submit').style.display='none';
+  document.getElementById('btn-reset').style.display='block';
+}
+
+function resetQuiz(){
+  document.querySelectorAll('input[type=radio]').forEach(r=>{
+    r.checked=false; r.disabled=false;
+    r.parentElement.classList.remove('sel','right','struck');
+  });
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('ok','err'));
+  for(let i=1;i<=30;i++){
+    document.getElementById('s'+i).textContent='';
+    const h=document.getElementById('h'+i);
+    if(h) h.style.display='none';
+  }
+  const b=document.getElementById('score');
+  b.style.display='none'; b.className='';
+  secs=60*60;
+  document.getElementById('timer').textContent='60:00';
+  document.getElementById('timer').classList.remove('warn');
+  startTimer();
+  document.getElementById('btn-submit').style.display='block';
+  document.getElementById('btn-reset').style.display='none';
+  updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
