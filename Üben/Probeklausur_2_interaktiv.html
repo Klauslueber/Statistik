@@ -470,40 +470,46 @@ document.querySelectorAll('input[type=radio]').forEach(r=>{
 
 // Evaluate
 function evaluate(){
-  clearInterval(timerInt);
-  let correct=0, answered=0;
-  for(let i=1;i<=30;i++){
-    const sel=document.querySelector(`input[name="q${i}"]:checked`);
-    const card=document.getElementById('c'+i);
-    const opts=document.querySelectorAll(`input[name="q${i}"]`);
-    opts.forEach(o=>o.disabled=true);
-    if(!sel) continue;
-    answered++;
-    const correctEl=document.querySelector(`input[name="q${i}"][value="${ANSWERS[i]}"]`);
-    correctEl.parentElement.classList.add('right');
-    if(sel.value===ANSWERS[i]){
-      correct++;
-      card.classList.add('ok');
-      document.getElementById('s'+i).textContent='✓';
-    } else {
-      card.classList.add('err');
-      sel.parentElement.classList.remove('sel');
-      sel.parentElement.classList.add('struck');
-      document.getElementById('s'+i).textContent='✗';
-      const h=document.getElementById('h'+i);
-      if(h) h.style.display='block';
+  try {
+    clearInterval(timerInt);
+    let correct=0, answered=0;
+    for(let i=1;i<=30;i++){
+      const sel=document.querySelector('input[name="q'+i+'"]:checked');
+      const card=document.getElementById('c'+i);
+      const opts=document.querySelectorAll('input[name="q'+i+'"]');
+      opts.forEach(function(o){o.disabled=true;});
+      if(!sel) continue;
+      answered++;
+      const correctEl=document.querySelector('input[name="q'+i+'"][value="'+ANSWERS[i]+'"]');
+      if(correctEl) correctEl.parentElement.classList.add('right');
+      if(sel.value===ANSWERS[i]){
+        correct++;
+        if(card) card.classList.add('ok');
+        const si=document.getElementById('s'+i);
+        if(si) si.textContent='✓';
+      } else {
+        if(card) card.classList.add('err');
+        sel.parentElement.classList.remove('sel');
+        sel.parentElement.classList.add('struck');
+        const si=document.getElementById('s'+i);
+        if(si) si.textContent='✗';
+        const h=document.getElementById('h'+i);
+        if(h) h.style.display='block';
+      }
     }
+    const pct=Math.round(correct/30*100);
+    const pass=pct>=50;
+    const banner=document.getElementById('score');
+    banner.className=pass?'pass':'fail';
+    banner.innerHTML='<strong>Ergebnis</strong><div class="num">'+correct+'/30 &nbsp;('+pct+'&thinsp;%)</div>'+
+      '<div style="font-size:.9rem;margin-top:4px">'+(pass?'✓ Bestanden':'✗ Nicht bestanden')+' &nbsp;·&nbsp; '+answered+' von 30 Fragen beantwortet</div>';
+    banner.style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+    document.getElementById('btn-submit').style.display='none';
+    document.getElementById('btn-reset').style.display='block';
+  } catch(e) {
+    alert('Auswertungsfehler: '+e.message+'\n\nBitte Seite neu laden (Cmd+Shift+R) und erneut versuchen.');
   }
-  const pct=Math.round(correct/30*100);
-  const pass=pct>=50;
-  const banner=document.getElementById('score');
-  banner.className=pass?'pass':'fail';
-  banner.innerHTML=`<strong>Ergebnis</strong><div class="num">${correct}/30 &nbsp;(${pct}&thinsp;%)</div>`+
-    `<div style="font-size:.9rem;margin-top:4px">${pass?'✓ Bestanden':'✗ Nicht bestanden'} &nbsp;·&nbsp; ${answered} von 30 Fragen beantwortet</div>`;
-  banner.style.display='block';
-  window.scrollTo({top:0,behavior:'smooth'});
-  document.getElementById('btn-submit').style.display='none';
-  document.getElementById('btn-reset').style.display='block';
 }
 
 // Reset
