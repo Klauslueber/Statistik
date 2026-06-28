@@ -515,8 +515,18 @@ function evaluate(){
     window.scrollTo({top:0,behavior:'smooth'});
     document.getElementById('btn-submit').style.display='none';
     document.getElementById('btn-reset').style.display='block';
+    if(timerEl) timerEl.textContent = 'FERTIG';
   } catch(e) {
-    alert('Auswertungsfehler: '+e.message+'\n\nBitte Seite neu laden (Cmd+Shift+R) und erneut versuchen.');
+    var msg = e ? (e.message || String(e)) : 'Unbekannt';
+    var timerEl2 = document.getElementById('timer');
+    if(timerEl2) timerEl2.textContent = 'FEHLER';
+    var scoreEl = document.getElementById('score');
+    if(scoreEl){
+      scoreEl.className = 'fail';
+      scoreEl.innerHTML = '<strong>JavaScript-Fehler (bitte melden):</strong><br>' + msg;
+      scoreEl.style.display = 'block';
+    }
+    window.scrollTo({top:0,behavior:'smooth'});
   }
 }
 
