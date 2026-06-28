@@ -433,8 +433,8 @@ zufriedenheit |      Coef.   Std. Err.      t    P>|t|   [95% Conf. Interval]
 </main>
 
 <footer class="bar">
-  <button class="btn btn-p" id="btn-submit" onclick="evaluate()">Auswerten</button>
-  <button class="btn btn-s" id="btn-reset" style="display:none" onclick="resetQuiz()">Neu starten</button>
+  <button class="btn btn-p" id="btn-submit">Auswerten</button>
+  <button class="btn btn-s" id="btn-reset" style="display:none">Neu starten</button>
   <span id="ans-count">0 / 30 beantwortet</span>
 </footer>
 
@@ -474,41 +474,57 @@ document.querySelectorAll('input[type=radio]').forEach(r=>{
   });
 });
 
+document.getElementById('btn-submit').addEventListener('click', evaluate);
+document.getElementById('btn-reset').addEventListener('click', resetQuiz);
+
 function evaluate(){
-  clearInterval(timerInt);
-  let correct=0, answered=0;
-  for(let i=1;i<=30;i++){
-    const sel=document.querySelector(`input[name="q${i}"]:checked`);
-    const card=document.getElementById('c'+i);
-    const opts=document.querySelectorAll(`input[name="q${i}"]`);
-    opts.forEach(o=>o.disabled=true);
-    if(!sel) continue;
-    answered++;
-    const correctEl=document.querySelector(`input[name="q${i}"][value="${ANSWERS[i]}"]`);
-    correctEl.parentElement.classList.add('right');
-    if(sel.value===ANSWERS[i]){
-      correct++;
-      card.classList.add('ok');
-      document.getElementById('s'+i).textContent='✓';
-    } else {
-      card.classList.add('err');
-      sel.parentElement.classList.remove('sel');
-      sel.parentElement.classList.add('struck');
-      document.getElementById('s'+i).textContent='✗';
-      const h=document.getElementById('h'+i);
-      if(h) h.style.display='block';
+  try {
+    clearInterval(timerInt);
+    let correct=0, answered=0;
+    for(let i=1;i<=30;i++){
+      const sel=document.querySelector('input[name="q'+i+'"]:checked');
+      const card=document.getElementById('c'+i);
+      const opts=document.querySelectorAll('input[name="q'+i+'"]');
+      opts.forEach(function(o){o.disabled=true;});
+      if(!sel) continue;
+      answered++;
+      const correctEl=document.querySelector('input[name="q'+i+'"][value="'+ANSWERS[i]+'"]');
+      if(correctEl) correctEl.parentElement.classList.add('right');
+      if(sel.value===ANSWERS[i]){
+        correct++;
+        if(card) card.classList.add('ok');
+        const si=document.getElementById('s'+i);
+        if(si) si.textContent='✓';
+      } else {
+        if(card) card.classList.add('err');
+        sel.parentElement.classList.remove('sel');
+        sel.parentElement.classList.add('struck');
+        const si=document.getElementById('s'+i);
+        if(si) si.textContent='✗';
+        const h=document.getElementById('h'+i);
+        if(h) h.style.display='block';
+      }
     }
+    const pct=Math.round(correct/30*100);
+    const pass=pct>=50;
+    const banner=document.getElementById('score');
+    banner.className=pass?'pass':'fail';
+    banner.innerHTML='<strong>Ergebnis</strong><div class="num">'+correct+'/30 &nbsp;('+pct+'&thinsp;%)</div>'+
+      '<div style="font-size:.9rem;margin-top:4px">'+(pass?'✓ Bestanden':'✗ Nicht bestanden')+' &nbsp;·&nbsp; '+answered+' von 30 Fragen beantwortet</div>';
+    banner.style.display='block';
+    window.scrollTo({top:0,behavior:'auto'});
+    document.getElementById('btn-submit').style.display='none';
+    document.getElementById('btn-reset').style.display='block';
+  } catch(e) {
+    var msg = e ? (e.message || String(e)) : 'Unbekannt';
+    var scoreEl = document.getElementById('score');
+    if(scoreEl){
+      scoreEl.className = 'fail';
+      scoreEl.innerHTML = '<strong>Fehler bei Auswertung:</strong><br>' + msg;
+      scoreEl.style.display = 'block';
+    }
+    window.scrollTo({top:0,behavior:'auto'});
   }
-  const pct=Math.round(correct/30*100);
-  const pass=pct>=50;
-  const banner=document.getElementById('score');
-  banner.className=pass?'pass':'fail';
-  banner.innerHTML=`<strong>Ergebnis</strong><div class="num">${correct}/30 &nbsp;(${pct}&thinsp;%)</div>`+
-    `<div style="font-size:.9rem;margin-top:4px">${pass?'✓ Bestanden':'✗ Nicht bestanden'} &nbsp;·&nbsp; ${answered} von 30 Fragen beantwortet</div>`;
-  banner.style.display='block';
-  window.scrollTo({top:0,behavior:'smooth'});
-  document.getElementById('btn-submit').style.display='none';
-  document.getElementById('btn-reset').style.display='block';
 }
 
 function resetQuiz(){
@@ -524,6 +540,7 @@ function resetQuiz(){
   }
   const b=document.getElementById('score');
   b.style.display='none'; b.className='';
+  clearInterval(timerInt);
   secs=60*60;
   document.getElementById('timer').textContent='60:00';
   document.getElementById('timer').classList.remove('warn');
@@ -531,7 +548,7 @@ function resetQuiz(){
   document.getElementById('btn-submit').style.display='block';
   document.getElementById('btn-reset').style.display='none';
   updateProgress();
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({top:0,behavior:'auto'});
 }
 </script>
 </body>
