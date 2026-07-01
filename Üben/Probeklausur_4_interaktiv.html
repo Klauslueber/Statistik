@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probeklausur 4 — Statistik (35 Fragen, 70 min)</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$']] },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6f8;color:#222;font-size:15px;line-height:1.55}
+header{background:#1a3a5c;color:#fff;padding:16px 24px;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+header h1{font-size:1.05rem;font-weight:700;flex:1}
+#timer{font-size:1.1rem;font-weight:700;background:#0d2540;padding:6px 14px;border-radius:6px;min-width:70px;text-align:center}
+#timer.warn{background:#b00020;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+#progress-bar-wrap{width:100%;height:6px;background:#0d2540;border-radius:3px}
+#progress-bar{height:6px;background:#4caf50;border-radius:3px;transition:width .3s}
+#progress-text{font-size:.8rem;color:#cdd}
+main{max-width:860px;margin:0 auto;padding:20px 16px}
+.card{background:#fff;border-radius:8px;padding:18px 20px;margin-bottom:18px;border-left:4px solid #1a3a5c;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.card.ok{border-left-color:#2e7d32;background:#f1f8f2}
+.card.err{border-left-color:#b71c1c;background:#fff5f5}
+.q-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.q-num{font-size:.75rem;font-weight:700;background:#1a3a5c;color:#fff;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.q-type{font-size:.7rem;background:#e8edf3;color:#555;padding:2px 7px;border-radius:10px}
+.q-text{font-weight:600;font-size:.97rem;margin-bottom:4px}
+.q-note{font-size:.85rem;color:#444;margin-bottom:10px}
+.options label{display:flex;align-items:flex-start;gap:9px;padding:7px 10px;border-radius:6px;cursor:pointer;margin-bottom:3px;transition:background .15s}
+.options label:hover{background:#f0f4f8}
+.options label.sel{background:#e3edf9}
+.options label.right{background:#e8f5e9;font-weight:600}
+.options label.struck{background:#ffebee;text-decoration:line-through;color:#999}
+input[type=radio]{margin-top:3px;flex-shrink:0}
+.hint{display:none;margin-top:10px;padding:10px 14px;background:#fff3cd;border-left:3px solid #f9a825;border-radius:0 6px 6px 0;font-size:.87rem;color:#444}
+.status{font-size:.8rem;font-weight:700;margin-left:auto;padding:3px 8px;border-radius:4px}
+.status.ok-s{background:#e8f5e9;color:#2e7d32}
+.status.err-s{background:#ffebee;color:#b71c1c}
+table.kt{border-collapse:collapse;margin:10px 0;font-size:.88rem}
+table.kt th,table.kt td{border:1px solid #bbb;padding:5px 10px;text-align:center}
+table.kt th{background:#e8edf3;font-weight:600}
+#score{display:none;max-width:860px;margin:0 auto 20px;padding:22px 28px;border-radius:8px;text-align:center;font-size:1.05rem}
+#score.pass{background:#e8f5e9;border:2px solid #2e7d32;color:#1b5e20}
+#score.fail{background:#ffebee;border:2px solid #b71c1c;color:#7f0000}
+#score .num{font-size:2.4rem;font-weight:800;margin:8px 0}
+.btn-wrap{text-align:center;margin:10px 0 30px}
+button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radius:8px;cursor:pointer}
+#btn-submit{background:#1a3a5c;color:#fff}
+#btn-submit:hover{background:#0d2540}
+#btn-reset{display:none;background:#2e7d32;color:#fff}
+#btn-reset:hover{background:#1b5e20}
+</style>
+</head>
+<body>
+<header>
+  <h1>Probeklausur 4 &mdash; Einführung in die sozialwissenschaftliche Statistik</h1>
+  <div id="timer">70:00</div>
+  <div style="flex-basis:100%">
+    <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+      <span id="progress-text">0 / 35 beantwortet</span>
+      <span style="font-size:.8rem;color:#cdd">35 Fragen &middot; 70 Minuten</span>
+    </div>
+    <div id="progress-bar-wrap"><div id="progress-bar" style="width:0%"></div></div>
+  </div>
+</header>
+
+<main>
+<div id="score"></div>
+
+<!-- Q1 -->
+<div class="card" id="c1">
+  <div class="q-head">
+    <span class="q-num">1</span><span class="q-type">Verständnis</span>
+    <span class="status" id="s1"></span>
+  </div>
+  <div class="q-text">Was gilt für die <strong>Intervallskala</strong>?</div>
+  <div class="options">
+    <label><input type="radio" name="q1" value="a"> a) Abstände zwischen Werten sind nicht sinnvoll interpretierbar</label>
+    <label><input type="radio" name="q1" value="b"> b) Sie erlaubt Verhältnisaussagen wie „doppelt so viel"</label>
+    <label><input type="radio" name="q1" value="c"> c) Sie hat keinen absoluten Nullpunkt — Verhältnisaussagen sind nicht erlaubt</label>
+    <label><input type="radio" name="q1" value="d"> d) Sie ist das niedrigste aller Messniveaus</label>
+  </div>
+  <div class="hint" id="h1">Korrekt: <strong>c</strong>. Intervallskalen (z.&nbsp;B. Celsius, Kalenderzeit) haben einen willkürlichen Nullpunkt. Abstände sind interpretierbar, Verhältnisse nicht: „20&nbsp;°C ist nicht doppelt so warm wie 10&nbsp;°C."</div>
+</div>
+
+<!-- Q2 -->
+<div class="card" id="c2">
+  <div class="q-head">
+    <span class="q-num">2</span><span class="q-type">Verständnis</span>
+    <span class="status" id="s2"></span>
+  </div>
+  <div class="q-text">Welches Skalenniveau hat das Merkmal <strong>„Gründungsjahr einer Partei"</strong>?</div>
+  <div class="options">
+    <label><input type="radio" name="q2" value="a"> a) Ordinalskala</label>
+    <label><input type="radio" name="q2" value="b"> b) Intervallskala</label>
+    <label><input type="radio" name="q2" value="c"> c) Verhältnisskala</label>
+    <label><input type="radio" name="q2" value="d"> d) Nominalskala</label>
+  </div>
+  <div class="hint" id="h2">Korrekt: <strong>b</strong>. Jahresangaben sind Intervallskala: Der Abstand 1949&ndash;1968 ist sinnvoll, aber die Aussage „SPD ist doppelt so alt wie FDP" ist sinnlos (kein absoluter Nullpunkt).</div>
+</div>
+
+<!-- Q3 -->
+<div class="card" id="c3">
+  <div class="q-head">
+    <span class="q-num">3</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s3"></span>
+  </div>
+  <div class="q-text">Welches Skalenniveau hat das Merkmal <strong>„Anzahl der Bundestagsmandate einer Partei"</strong>?</div>
+  <div class="options">
+    <label><input type="radio" name="q3" value="a"> a) Nominalskala</label>
+    <label><input type="radio" name="q3" value="b"> b) Ordinalskala</label>
+    <label><input type="radio" name="q3" value="c"> c) Intervallskala</label>
+    <label><input type="radio" name="q3" value="d"> d) Verhältnisskala</label>
+  </div>
+  <div class="hint" id="h3">Korrekt: <strong>d</strong>. Mandate sind ganzzahlig zählbar und haben einen natürlichen Nullpunkt (0 Mandate). „200 Mandate = doppelt so viele wie 100" ist sinnvoll.</div>
+</div>
+
+<!-- Q4 -->
+<div class="card" id="c4">
+  <div class="q-head">
+    <span class="q-num">4</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s4"></span>
+  </div>
+  <div class="q-text">Zehn Beobachtungen: <strong>2, 5, 3, 8, 4, 6, 1, 7, 3, 5</strong>. Wie lautet der Mittelwert $\bar{x}$?</div>
+  <div class="options">
+    <label><input type="radio" name="q4" value="a"> a) 4,0</label>
+    <label><input type="radio" name="q4" value="b"> b) 4,4</label>
+    <label><input type="radio" name="q4" value="c"> c) 4,5</label>
+    <label><input type="radio" name="q4" value="d"> d) 5,0</label>
+  </div>
+  <div class="hint" id="h4">Korrekt: <strong>b</strong>. Summe: 2+5+3+8+4+6+1+7+3+5 = 44. $\bar{x} = 44/10 = 4{,}4$.</div>
+</div>
+
+<!-- Q5 -->
+<div class="card" id="c5">
+  <div class="q-head">
+    <span class="q-num">5</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s5"></span>
+  </div>
+  <div class="q-text">$n = 9$ sortierte Werte: <strong>18, 22, 27, 31, 35, 42, 51, 64, 89</strong>. Wie lautet das 0,25-Quantil $Q_1$?</div>
+  <div class="q-note">Verwende die Interpolationsformel: Position $= p \cdot (n+1)$; bei nicht-ganzzahliger Position linear interpolieren.</div>
+  <div class="options">
+    <label><input type="radio" name="q5" value="a"> a) 24,5</label>
+    <label><input type="radio" name="q5" value="b"> b) 22,0</label>
+    <label><input type="radio" name="q5" value="c"> c) 27,0</label>
+    <label><input type="radio" name="q5" value="d"> d) 26,0</label>
+  </div>
+  <div class="hint" id="h5">Korrekt: <strong>a</strong>. Position = $0{,}25 \cdot (9+1) = 2{,}5$. Interpolation: $x_2 + 0{,}5 \cdot (x_3 - x_2) = 22 + 0{,}5 \cdot (27-22) = 24{,}5$.</div>
+</div>
+
+<!-- Q6 -->
+<div class="card" id="c6">
+  <div class="q-head">
+    <span class="q-num">6</span><span class="q-type">Verständnis</span>
+    <span class="status" id="s6"></span>
+  </div>
+  <div class="q-text">Bei einer Verteilung gilt: $\bar{x} > \text{Median}$. Was lässt sich daraus schließen?</div>
+  <div class="options">
+    <label><input type="radio" name="q6" value="a"> a) Die Verteilung ist linksschief</label>
+    <label><input type="radio" name="q6" value="b"> b) Die Verteilung ist symmetrisch</label>
+    <label><input type="radio" name="q6" value="c"> c) Mittelwert und Median stimmen immer überein</label>
+    <label><input type="radio" name="q6" value="d"> d) Die Verteilung ist rechtsschief — hohe Ausreißer ziehen den Mittelwert nach oben</label>
+  </div>
+  <div class="hint" id="h6">Korrekt: <strong>d</strong>. Rechtsschiefe Verteilungen haben einen langen rechten Schwanz. Wenige sehr hohe Werte heben den Mittelwert über den Median. Beispiel: Einkommensverteilung.</div>
+</div>
+
+<!-- Q7 -->
+<div class="card" id="c7">
+  <div class="q-head">
+    <span class="q-num">7</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s7"></span>
+  </div>
+  <div class="q-text">Fünf Beobachtungen: <strong>2, 4, 6, 8, 10</strong>. Wie groß ist die <strong>empirische Varianz</strong> $s^2$?</div>
+  <div class="q-note">Empirische Varianz: $s^2 = \frac{1}{n} \sum_{i=1}^n (x_i - \bar{x})^2$</div>
+  <div class="options">
+    <label><input type="radio" name="q7" value="a"> a) 8,0</label>
+    <label><input type="radio" name="q7" value="b"> b) 10,0</label>
+    <label><input type="radio" name="q7" value="c"> c) 6,4</label>
+    <label><input type="radio" name="q7" value="d"> d) 4,0</label>
+  </div>
+  <div class="hint" id="h7">Korrekt: <strong>a</strong>. $\bar{x}=6$. Abweichungen: $(-4)^2+(-2)^2+0^2+2^2+4^2 = 16+4+0+4+16=40$. $s^2 = 40/5 = 8{,}0$.</div>
+</div>
+
+<!-- Q8 -->
+<div class="card" id="c8">
+  <div class="q-head">
+    <span class="q-num">8</span><span class="q-type">Verständnis</span>
+    <span class="status" id="s8"></span>
+  </div>
+  <div class="q-text">Was bedeutet eine Standardabweichung von $s = 0$?</div>
+  <div class="options">
+    <label><input type="radio" name="q8" value="a"> a) Alle Werte liegen über dem Mittelwert</label>
+    <label><input type="radio" name="q8" value="b"> b) Der Datensatz enthält nur negative Werte</label>
+    <label><input type="radio" name="q8" value="c"> c) Alle Beobachtungen haben denselben Wert</label>
+    <label><input type="radio" name="q8" value="d"> d) Die Verteilung ist normalverteilt</label>
+  </div>
+  <div class="hint" id="h8">Korrekt: <strong>c</strong>. $s = 0$ bedeutet keine Streuung — alle Beobachtungen sind identisch. Die Varianz ist die Summe quadrierter Abweichungen; wenn kein Wert vom Mittelwert abweicht, ist $s = 0$.</div>
+</div>
+
+<!-- Q9 -->
+<div class="card" id="c9">
+  <div class="q-head">
+    <span class="q-num">9</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s9"></span>
+  </div>
+  <div class="q-text">Vier Parteien erhalten folgende Stimmanteile: <strong>40 %, 30 %, 20 %, 10 %</strong>. Wie lautet der <strong>Herfindahl-Index</strong> $H$?</div>
+  <div class="q-note">$H = \sum_{i=1}^k p_i^2$ (Anteile als Dezimalzahlen)</div>
+  <div class="options">
+    <label><input type="radio" name="q9" value="a"> a) 0,10</label>
+    <label><input type="radio" name="q9" value="b"> b) 0,20</label>
+    <label><input type="radio" name="q9" value="c"> c) 0,25</label>
+    <label><input type="radio" name="q9" value="d"> d) 0,30</label>
+  </div>
+  <div class="hint" id="h9">Korrekt: <strong>d</strong>. $H = 0{,}4^2 + 0{,}3^2 + 0{,}2^2 + 0{,}1^2 = 0{,}16 + 0{,}09 + 0{,}04 + 0{,}01 = 0{,}30$.</div>
+</div>
+
+<!-- Q10 -->
+<div class="card" id="c10">
+  <div class="q-head">
+    <span class="q-num">10</span><span class="q-type">Verständnis</span>
+    <span class="status" id="s10"></span>
+  </div>
+  <div class="q-text">Was zeigt die <strong>Lorenzkurve</strong>?</div>
+  <div class="options">
+    <label><input type="radio" name="q10" value="a"> a) Die kumulierten absoluten Häufigkeiten in einem Histogramm</label>
+    <label><input type="radio" name="q10" value="b"> b) Kumulierte Bevölkerungsanteile (x-Achse) gegen kumulierte Einkommensanteile (y-Achse)</label>
+    <label><input type="radio" name="q10" value="c"> c) Den linearen Zusammenhang zwischen zwei metrischen Variablen</label>
+    <label><input type="radio" name="q10" value="d"> d) Die Verteilung von Stichprobenmittelwerten</label>
+  </div>
+  <div class="hint" id="h10">Korrekt: <strong>b</strong>. Die Lorenzkurve bildet kumulierte Bevölkerungsanteile auf kumulierte Einkommensanteile ab. Je weiter sie von der Diagonalen (Gleichverteilung) entfernt ist, desto ungleicher die Verteilung.</div>
+</div>
+
+<!-- Q11 -->
+<div class="card" id="c11">
+  <div class="q-head">
+    <span class="q-num">11</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s11"></span>
+  </div>
+  <div class="q-text">Vier Haushalte mit aufsteigend sortierten Einkommen: <strong>10, 20, 30, 40</strong> (Tsd. Euro). Wie lautet der <strong>Gini-Koeffizient</strong> $G$?</div>
+  <div class="q-note">$G = \dfrac{2 \cdot \sum_{i=1}^n i \cdot x_i}{n \cdot \sum_{i=1}^n x_i} - \dfrac{n+1}{n}$</div>
+  <div class="options">
+    <label><input type="radio" name="q11" value="a"> a) 0,25</label>
+    <label><input type="radio" name="q11" value="b"> b) 0,40</label>
+    <label><input type="radio" name="q11" value="c"> c) 0,50</label>
+    <label><input type="radio" name="q11" value="d"> d) 0,15</label>
+  </div>
+  <div class="hint" id="h11">Korrekt: <strong>a</strong>. $\sum x_i=100$; $\sum i \cdot x_i = 1\cdot10+2\cdot20+3\cdot30+4\cdot40=300$. $G = 2\cdot300/(4\cdot100) - 5/4 = 1{,}5 - 1{,}25 = 0{,}25$.</div>
+</div>
+
+<!-- Q12 -->
+<div class="card" id="c12">
+  <div class="q-head">
+    <span class="q-num">12</span><span class="q-type">Verständnis</span>
+    <span class="status" id="s12"></span>
+  </div>
+  <div class="q-text">In einer Kreuztabelle soll der Einfluss der <strong>unabhängigen Variable (UV)</strong> auf die abhängige Variable (AV) untersucht werden. Wie sind Prozentuierung und Leserichtung korrekt?</div>
+  <div class="options">
+    <label><input type="radio" name="q12" value="a"> a) Zeilenprozente berechnen, innerhalb der Spalten vergleichen</label>
+    <label><input type="radio" name="q12" value="b"> b) Spaltenprozente berechnen, innerhalb der Zeilen vergleichen</label>
+    <label><input type="radio" name="q12" value="c"> c) Spaltenprozente berechnen (UV im Spaltenkopf), innerhalb der Spalten vergleichen</label>
+    <label><input type="radio" name="q12" value="d"> d) Zeilenprozente berechnen, innerhalb der Zeilen vergleichen</label>
+  </div>
+  <div class="hint" id="h12">Korrekt: <strong>c</strong>. Faustregel: Prozentuiere in Richtung der UV (UV im Nenner). Wenn die UV die Spalte bildet, rechnet man Spaltenprozente und vergleicht spaltenweise.</div>
+</div>
+
+<!-- Q13 -->
+<div class="card" id="c13">
+  <div class="q-head">
+    <span class="q-num">13</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s13"></span>
+  </div>
+  <div class="q-text"><strong>Kreuztabelle: Bildungsabschluss (UV) × Wahlbeteiligung (AV)</strong></div>
+  <table class="kt">
+    <tr><th></th><th>Kein Abitur</th><th>Abitur</th><th>Gesamt</th></tr>
+    <tr><td>Beteiligt</td><td>120</td><td>180</td><td>300</td></tr>
+    <tr><td>Nicht beteiligt</td><td>80</td><td>20</td><td>100</td></tr>
+    <tr><td><strong>Gesamt</strong></td><td>200</td><td>200</td><td>400</td></tr>
+  </table>
+  <div class="q-note">Wie groß ist die <strong>Prozentsatzdifferenz (PD)</strong> zwischen Abi und Kein-Abi bezüglich Wahlbeteiligung (in Prozentpunkten)?</div>
+  <div class="options">
+    <label><input type="radio" name="q13" value="a"> a) 20 PP</label>
+    <label><input type="radio" name="q13" value="b"> b) 30 PP</label>
+    <label><input type="radio" name="q13" value="c"> c) 40 PP</label>
+    <label><input type="radio" name="q13" value="d"> d) 50 PP</label>
+  </div>
+  <div class="hint" id="h13">Korrekt: <strong>b</strong>. Spaltenprozente: Kein Abi: 120/200 = 60 %; Abi: 180/200 = 90 %. PD = 90 % &minus; 60 % = 30 PP.</div>
+</div>
+
+<!-- Q14 -->
+<div class="card" id="c14">
+  <div class="q-head">
+    <span class="q-num">14</span><span class="q-type">Verständnis</span>
+    <span class="status" id="s14"></span>
+  </div>
+  <div class="q-text">Was bedeutet ein <strong>Odds Ratio von OR = 1</strong>?</div>
+  <div class="options">
+    <label><input type="radio" name="q14" value="a"> a) Beide Gruppen haben dieselben Chancen — die Variablen sind unabhängig voneinander</label>
+    <label><input type="radio" name="q14" value="b"> b) Gruppe 1 hat doppelt so hohe Chancen wie Gruppe 2</label>
+    <label><input type="radio" name="q14" value="c"> c) Das Ereignis ist in beiden Gruppen unmöglich</label>
+    <label><input type="radio" name="q14" value="d"> d) Der Chi²-Test liefert zwingend ein signifikantes Ergebnis</label>
+  </div>
+  <div class="hint" id="h14">Korrekt: <strong>a</strong>. OR = 1 bedeutet: Die Odds beider Gruppen sind gleich — kein Zusammenhang. OR &gt; 1 bedeutet höhere Chance in Gruppe 1, OR &lt; 1 geringere Chance.</div>
+</div>
+
+<!-- Q15 -->
+<div class="card" id="c15">
+  <div class="q-head">
+    <span class="q-num">15</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s15"></span>
+  </div>
+  <div class="q-text">Berechne den <strong>Odds Ratio (OR)</strong> aus der Tabelle in Frage 13. Gruppe 1 = Kein Abitur, Gruppe 2 = Abitur.</div>
+  <div class="q-note">Odds = Ereignis / Nicht-Ereignis</div>
+  <div class="options">
+    <label><input type="radio" name="q15" value="a"> a) 0,17</label>
+    <label><input type="radio" name="q15" value="b"> b) 3,0</label>
+    <label><input type="radio" name="q15" value="c"> c) 6,0</label>
+    <label><input type="radio" name="q15" value="d"> d) 9,0</label>
+  </div>
+  <div class="hint" id="h15">Korrekt: <strong>c</strong>. Odds(Kein Abi) = 120/80 = 1,5; Odds(Abi) = 180/20 = 9,0. OR = 9,0/1,5 = 6,0. Abitur-Gruppe hat sechsfach höhere Wahl-Odds.</div>
+</div>
+
+<!-- Q16 -->
+<div class="card" id="c16">
+  <div class="q-head">
+    <span class="q-num">16</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s16"></span>
+  </div>
+  <div class="q-text"><strong>Kreuztabelle: Geschlecht × Parteipräferenz</strong> ($n = 200$)</div>
+  <table class="kt">
+    <tr><th></th><th>Links</th><th>Rechts</th><th>Gesamt</th></tr>
+    <tr><td>Männlich</td><td>60</td><td>40</td><td>100</td></tr>
+    <tr><td>Weiblich</td><td>80</td><td>20</td><td>100</td></tr>
+    <tr><td><strong>Gesamt</strong></td><td>140</td><td>60</td><td>200</td></tr>
+  </table>
+  <div class="q-note">Wie lautet $\chi^2$? Formel: $\chi^2 = \sum \frac{(f_e - f_b)^2}{f_e}$</div>
+  <div class="options">
+    <label><input type="radio" name="q16" value="a"> a) 4,76</label>
+    <label><input type="radio" name="q16" value="b"> b) 7,14</label>
+    <label><input type="radio" name="q16" value="c"> c) 8,33</label>
+    <label><input type="radio" name="q16" value="d"> d) 9,52</label>
+  </div>
+  <div class="hint" id="h16">Korrekt: <strong>d</strong>. Erwartete Häufigkeiten: $E_{ML}=70, E_{MR}=30, E_{WL}=70, E_{WR}=30$. $\chi^2 = 100/70+100/30+100/70+100/30 = 1{,}43+3{,}33+1{,}43+3{,}33 = 9{,}52$.</div>
+</div>
+
+<!-- Q17 -->
+<div class="card" id="c17">
+  <div class="q-head">
+    <span class="q-num">17</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s17"></span>
+  </div>
+  <div class="q-text">Für die Tabelle aus Frage 16 gilt $\chi^2 = 9{,}52$ und $n = 200$. Wie lautet der <strong>Phi-Koeffizient</strong> $\varphi$?</div>
+  <div class="q-note">$\varphi = \sqrt{\chi^2 / n}$ (für 2×2-Tabellen)</div>
+  <div class="options">
+    <label><input type="radio" name="q17" value="a"> a) 0,14</label>
+    <label><input type="radio" name="q17" value="b"> b) 0,22</label>
+    <label><input type="radio" name="q17" value="c"> c) 0,31</label>
+    <label><input type="radio" name="q17" value="d"> d) 0,48</label>
+  </div>
+  <div class="hint" id="h17">Korrekt: <strong>b</strong>. $\varphi = \sqrt{9{,}52/200} = \sqrt{0{,}0476} \approx 0{,}218 \approx 0{,}22$. Schwacher bis moderater Zusammenhang.</div>
+</div>
+
+<!-- Q18 -->
+<div class="card" id="c18">
+  <div class="q-head">
+    <span class="q-num">18</span><span class="q-type">Verständnis</span>
+    <span class="status" id="s18"></span>
+  </div>
+  <div class="q-text">Welche Aussage über den $\chi^2$-Wert ist <strong>immer</strong> korrekt?</div>
+  <div class="options">
+    <label><input type="radio" name="q18" value="a"> a) Er kann negative Werte annehmen</label>
+    <label><input type="radio" name="q18" value="b"> b) Er liegt immer zwischen 0 und 1</label>
+    <label><input type="radio" name="q18" value="c"> c) Er ist nie negativ, da die Abweichungen quadriert werden</label>
+    <label><input type="radio" name="q18" value="d"> d) Er ist identisch mit Cramér's V</label>
+  </div>
+  <div class="hint" id="h18">Korrekt: <strong>c</strong>. $\chi^2 = \sum (f_e-f_b)^2 / f_e$. Quadrierte Differenzen sind immer $\geq 0$, also ist $\chi^2 \geq 0$. Bei perfekter Unabhängigkeit gilt $\chi^2 = 0$.</div>
+</div>
+
+<!-- Q19 -->
+<div class="card" id="c19">
+  <div class="q-head">
+    <span class="q-num">19</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s19"></span>
+  </div>
+  <div class="q-text">Eine <strong>3×4-Tabelle</strong> mit $n = 150$ ergibt $\chi^2 = 18$. Wie lautet <strong>Cramér's V</strong>?</div>
+  <div class="q-note">$V = \sqrt{\chi^2 / (n \cdot k)}$, wobei $k = \min(\text{Zeilen}, \text{Spalten}) - 1$</div>
+  <div class="options">
+    <label><input type="radio" name="q19" value="a"> a) 0,24</label>
+    <label><input type="radio" name="q19" value="b"> b) 0,35</label>
+    <label><input type="radio" name="q19" value="c"> c) 0,12</label>
+    <label><input type="radio" name="q19" value="d"> d) 0,49</label>
+  </div>
+  <div class="hint" id="h19">Korrekt: <strong>a</strong>. $k = \min(3,4)-1 = 2$. $V = \sqrt{18/(150 \cdot 2)} = \sqrt{18/300} = \sqrt{0{,}06} \approx 0{,}245 \approx 0{,}24$.</div>
+</div>
+
+<!-- Q20 -->
+<div class="card" id="c20">
+  <div class="q-head">
+    <span class="q-num">20</span><span class="q-type">Verständnis</span>
+    <span class="status" id="s20"></span>
+  </div>
+  <div class="q-text">Welche Aussage über den <strong>Pearson-Korrelationskoeffizienten $r$</strong> ist korrekt?</div>
+  <div class="options">
+    <label><input type="radio" name="q20" value="a"> a) $r$ misst jeden linearen und nichtlinearen Zusammenhang</label>
+    <label><input type="radio" name="q20" value="b"> b) $r > 0$ bedeutet immer, dass $X$ die Ursache von $Y$ ist</label>
+    <label><input type="radio" name="q20" value="c"> c) $r$ kann jeden beliebigen Wert annehmen</label>
+    <label><input type="radio" name="q20" value="d"> d) $r = 0$ schließt keinen Zusammenhang aus — bei einem U-förmigen Muster kann $r = 0$ gelten, obwohl ein starker Zusammenhang vorliegt</label>
+  </div>
+  <div class="hint" id="h20">Korrekt: <strong>d</strong>. Pearson misst nur <em>lineare</em> Zusammenhänge. Bei einem U-förmigen (quadratischen) Muster heben sich positive und negative Abweichungen auf: $r \approx 0$ — obwohl ein perfekter funktionaler Zusammenhang besteht.</div>
+</div>
+
+<!-- Q21 -->
+<div class="card" id="c21">
+  <div class="q-head">
+    <span class="q-num">21</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s21"></span>
+  </div>
+  <div class="q-text">Für eine Stichprobe ($n = 8$) sind folgende Hilfswerte berechnet worden:</div>
+  <div class="q-note">$\sum (x_i - \bar{x})(y_i - \bar{y}) = 36$, $\quad \sum (x_i - \bar{x})^2 = 40$, $\quad \sum (y_i - \bar{y})^2 = 90$</div>
+  <div class="q-note">Wie lautet der <strong>Korrelationskoeffizient $r$</strong>?</div>
+  <div class="options">
+    <label><input type="radio" name="q21" value="a"> a) 0,40</label>
+    <label><input type="radio" name="q21" value="b"> b) 0,50</label>
+    <label><input type="radio" name="q21" value="c"> c) 0,60</label>
+    <label><input type="radio" name="q21" value="d"> d) 0,80</label>
+  </div>
+  <div class="hint" id="h21">Korrekt: <strong>c</strong>. $r = \frac{36}{\sqrt{40 \cdot 90}} = \frac{36}{\sqrt{3600}} = \frac{36}{60} = 0{,}60$.</div>
+</div>
+
+<!-- Q22 -->
+<div class="card" id="c22">
+  <div class="q-head">
+    <span class="q-num">22</span><span class="q-type">Verständnis</span>
+    <span class="status" id="s22"></span>
+  </div>
+  <div class="q-text">Welche Eigenschaft muss die Wahrscheinlichkeitsverteilung einer <strong>diskreten Zufallsvariablen</strong> $X$ erfüllen?</div>
+  <div class="options">
+    <label><input type="radio" name="q22" value="a"> a) Alle Wahrscheinlichkeiten sind gleich groß</label>
+    <label><input type="radio" name="q22" value="b"> b) Die Summe aller Wahrscheinlichkeiten ergibt 1</label>
+    <label><input type="radio" name="q22" value="c"> c) Alle Werte von $X$ sind positiv</label>
+    <label><input type="radio" name="q22" value="d"> d) Die Verteilung ist immer symmetrisch</label>
+  </div>
+  <div class="hint" id="h22">Korrekt: <strong>b</strong>. Normierungsbedingung: $\sum_i P(X = x_i) = 1$. Wahrscheinlichkeiten sind außerdem im Bereich $[0,1]$.</div>
+</div>
+
+<!-- Q23 -->
+<div class="card" id="c23">
+  <div class="q-head">
+    <span class="q-num">23</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s23"></span>
+  </div>
+  <div class="q-text">$X$ nimmt die Werte 1, 2, 3, 4 mit den Wahrscheinlichkeiten 0,2 / 0,3 / 0,3 / 0,2 an. Wie lautet der <strong>Erwartungswert $E(X)$</strong>?</div>
+  <div class="options">
+    <label><input type="radio" name="q23" value="a"> a) 2,0</label>
+    <label><input type="radio" name="q23" value="b"> b) 2,2</label>
+    <label><input type="radio" name="q23" value="c"> c) 2,4</label>
+    <label><input type="radio" name="q23" value="d"> d) 2,5</label>
+  </div>
+  <div class="hint" id="h23">Korrekt: <strong>d</strong>. $E(X) = 1\cdot0{,}2 + 2\cdot0{,}3 + 3\cdot0{,}3 + 4\cdot0{,}2 = 0{,}2+0{,}6+0{,}9+0{,}8 = 2{,}5$.</div>
+</div>
+
+<!-- Q24 -->
+<div class="card" id="c24">
+  <div class="q-head">
+    <span class="q-num">24</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s24"></span>
+  </div>
+  <div class="q-text">Eine Normalverteilung hat $\mu = 100$ und $\sigma = 15$. Ein Wert $x = 130$ soll standardisiert werden. Wie lautet der <strong>Z-Wert</strong>?</div>
+  <div class="q-note">$z = (x - \mu) / \sigma$</div>
+  <div class="options">
+    <label><input type="radio" name="q24" value="a"> a) 2,0</label>
+    <label><input type="radio" name="q24" value="b"> b) 1,5</label>
+    <label><input type="radio" name="q24" value="c"> c) 2,5</label>
+    <label><input type="radio" name="q24" value="d"> d) 0,87</label>
+  </div>
+  <div class="hint" id="h24">Korrekt: <strong>a</strong>. $z = (130-100)/15 = 30/15 = 2{,}0$. Der Wert liegt 2 Standardabweichungen über dem Mittelwert.</div>
+</div>
+
+<!-- Q25 -->
+<div class="card" id="c25">
+  <div class="q-head">
+    <span class="q-num">25</span><span class="q-type">Verständnis</span>
+    <span class="status" id="s25"></span>
+  </div>
+  <div class="q-text">Was besagt der <strong>Zentrale Grenzwertsatz (ZGS)</strong>?</div>
+  <div class="options">
+    <label><input type="radio" name="q25" value="a"> a) Jede Zufallsvariable ist bei hinreichend großem $n$ normalverteilt</label>
+    <label><input type="radio" name="q25" value="b"> b) Bei kleinem $n$ ist der Stichprobenmittelwert immer normalverteilt</label>
+    <label><input type="radio" name="q25" value="c"> c) Bei großem $n$ ist $\bar{x}$ approximativ normalverteilt — unabhängig davon, wie $X$ in der Grundgesamtheit verteilt ist</label>
+    <label><input type="radio" name="q25" value="d"> d) Der Stichprobenmittelwert ist immer gleich dem Mittelwert der Grundgesamtheit</label>
+  </div>
+  <div class="hint" id="h25">Korrekt: <strong>c</strong>. Der ZGS gilt für die Verteilung des Stichprobenmittelwerts $\bar{x}$, nicht für einzelne Beobachtungen. Bei großem $n$ gilt: $\bar{x} \sim N(\mu, \sigma^2/n)$ approximativ.</div>
+</div>
+
+<!-- Q26 -->
+<div class="card" id="c26">
+  <div class="q-head">
+    <span class="q-num">26</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s26"></span>
+  </div>
+  <div class="q-text">$X \sim N(\mu = 200,\ \sigma = 20)$. Wie groß ist $P(X \leq 230)$?</div>
+  <div class="q-note">Verwende: $\Phi(1{,}5) = 0{,}933$</div>
+  <div class="options">
+    <label><input type="radio" name="q26" value="a"> a) 0,067</label>
+    <label><input type="radio" name="q26" value="b"> b) 0,933</label>
+    <label><input type="radio" name="q26" value="c"> c) 0,977</label>
+    <label><input type="radio" name="q26" value="d"> d) 0,500</label>
+  </div>
+  <div class="hint" id="h26">Korrekt: <strong>b</strong>. $z = (230-200)/20 = 1{,}5$. $P(X \leq 230) = \Phi(1{,}5) = 0{,}933$.</div>
+</div>
+
+<!-- Q27 -->
+<div class="card" id="c27">
+  <div class="q-head">
+    <span class="q-num">27</span><span class="q-type">Verständnis</span>
+    <span class="status" id="s27"></span>
+  </div>
+  <div class="q-text">Forschende vermuten, dass die Zustimmung zur Demokratie in Deutschland <strong>über 65 %</strong> liegt. Wie lauten $H_0$ und $H_1$ korrekt?</div>
+  <div class="options">
+    <label><input type="radio" name="q27" value="a"> a) $H_0\colon \mu > 65\,\%$; $H_1\colon \mu \leq 65\,\%$</label>
+    <label><input type="radio" name="q27" value="b"> b) $H_0\colon \mu \neq 65\,\%$; $H_1\colon \mu = 65\,\%$</label>
+    <label><input type="radio" name="q27" value="c"> c) $H_0\colon \mu = 65\,\%$; $H_1\colon \mu \neq 65\,\%$ (zweiseitig)</label>
+    <label><input type="radio" name="q27" value="d"> d) $H_0\colon \mu \leq 65\,\%$; $H_1\colon \mu > 65\,\%$ (einseitig)</label>
+  </div>
+  <div class="hint" id="h27">Korrekt: <strong>d</strong>. Die Forschungsvermutung (Effekt) kommt in $H_1$. Da man „größer als" vermutet, ist es ein einseitiger Test. $H_0$ enthält immer das Gleichheitszeichen.</div>
+</div>
+
+<!-- Q28 -->
+<div class="card" id="c28">
+  <div class="q-head">
+    <span class="q-num">28</span><span class="q-type">Verständnis</span>
+    <span class="status" id="s28"></span>
+  </div>
+  <div class="q-text">Was ist der <strong>p-Wert</strong>?</div>
+  <div class="options">
+    <label><input type="radio" name="q28" value="a"> a) Die Wahrscheinlichkeit, dass $H_0$ wahr ist</label>
+    <label><input type="radio" name="q28" value="b"> b) Die Wahrscheinlichkeit, das beobachtete oder ein noch extremeres Ergebnis zu erhalten, wenn $H_0$ wahr wäre</label>
+    <label><input type="radio" name="q28" value="c"> c) Das Signifikanzniveau $\alpha$</label>
+    <label><input type="radio" name="q28" value="d"> d) Die Teststärke (Power) des Tests</label>
+  </div>
+  <div class="hint" id="h28">Korrekt: <strong>b</strong>. Der p-Wert ist kein Maß für die Wahrheit von $H_0$, sondern für die Vereinbarkeit der Daten mit $H_0$. Kleiner p-Wert &rarr; Daten sind unter $H_0$ unwahrscheinlich &rarr; $H_0$ verwerfen.</div>
+</div>
+
+<!-- Q29 -->
+<div class="card" id="c29">
+  <div class="q-head">
+    <span class="q-num">29</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s29"></span>
+  </div>
+  <div class="q-text"><strong>z-Test:</strong> $n = 100$, $\bar{x} = 4{,}2$, $\sigma = 1{,}5$ (bekannt), $H_0\colon \mu = 4{,}5$ (zweiseitig, $\alpha = 0{,}05$). Kritischer Wert: $z_{0{,}975} = 1{,}96$.</div>
+  <div class="q-note">Wie lautet die Entscheidung?</div>
+  <div class="options">
+    <label><input type="radio" name="q29" value="a"> a) $H_0$ verwerfen; $z = -2{,}0$, $|z| > 1{,}96$</label>
+    <label><input type="radio" name="q29" value="b"> b) $H_0$ nicht verwerfen; $z = -1{,}5$, $|z| < 1{,}96$</label>
+    <label><input type="radio" name="q29" value="c"> c) $H_0$ verwerfen; $z = -3{,}0$, $|z| > 1{,}96$</label>
+    <label><input type="radio" name="q29" value="d"> d) $H_0$ nicht verwerfen; $z = -2{,}0$, aber einseitig insignifikant</label>
+  </div>
+  <div class="hint" id="h29">Korrekt: <strong>a</strong>. $z = (4{,}2-4{,}5)/(1{,}5/\sqrt{100}) = -0{,}3/0{,}15 = -2{,}0$. $|-2{,}0| = 2{,}0 > 1{,}96$ &rarr; $H_0$ verwerfen.</div>
+</div>
+
+<!-- Q30 -->
+<div class="card" id="c30">
+  <div class="q-head">
+    <span class="q-num">30</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s30"></span>
+  </div>
+  <div class="q-text"><strong>t-Test (eine Stichprobe):</strong> $n = 25$, $\bar{x} = 67$, $s = 10$. $H_0\colon \mu = 70$, $H_1\colon \mu < 70$ (einseitig, $\alpha = 0{,}05$). Kritischer Wert: $-t_{0{,}95,\,24} = -1{,}711$.</div>
+  <div class="q-note">Wie lautet die Entscheidung?</div>
+  <div class="options">
+    <label><input type="radio" name="q30" value="a"> a) $H_0$ verwerfen; $t = -2{,}0 < -1{,}711$</label>
+    <label><input type="radio" name="q30" value="b"> b) $H_0$ verwerfen; $t = -1{,}5 < -1{,}711$</label>
+    <label><input type="radio" name="q30" value="c"> c) $H_0$ nicht verwerfen; $t = -1{,}5 > -1{,}711$</label>
+    <label><input type="radio" name="q30" value="d"> d) $H_0$ nicht verwerfen; $t = -3{,}0$, aber zweiseitig insignifikant</label>
+  </div>
+  <div class="hint" id="h30">Korrekt: <strong>c</strong>. $t = (67-70)/(10/\sqrt{25}) = -3/2 = -1{,}5$. $-1{,}5 > -1{,}711$ &rarr; knapp außerhalb des Verwerfungsbereichs &rarr; $H_0$ nicht verwerfen.</div>
+</div>
+
+<!-- Q31 -->
+<div class="card" id="c31">
+  <div class="q-head">
+    <span class="q-num">31</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s31"></span>
+  </div>
+  <div class="q-text"><strong>Welch-Test (zwei Stichproben):</strong> Gruppe A: $n=25$, $\bar{x}=8$, $s=2$; Gruppe B: $n=25$, $\bar{x}=6$, $s=2$. $H_0\colon \mu_A = \mu_B$ (zweiseitig, $\alpha=0{,}05$). Kritischer Wert: $t_{0{,}975} \approx 2{,}01$.</div>
+  <div class="q-note">$t = \dfrac{\bar{x}_A - \bar{x}_B}{\sqrt{s_A^2/n_A + s_B^2/n_B}}$</div>
+  <div class="options">
+    <label><input type="radio" name="q31" value="a"> a) $H_0$ verwerfen; $t \approx 3{,}54 > 2{,}01$</label>
+    <label><input type="radio" name="q31" value="b"> b) $H_0$ nicht verwerfen; $t \approx 1{,}41 < 2{,}01$</label>
+    <label><input type="radio" name="q31" value="c"> c) $H_0$ verwerfen; $t \approx 2{,}00 \approx 2{,}01$ (Grenzfall)</label>
+    <label><input type="radio" name="q31" value="d"> d) $H_0$ nicht verwerfen; $t \approx 2{,}83$, aber einseitig getestet</label>
+  </div>
+  <div class="hint" id="h31">Korrekt: <strong>a</strong>. $SE = \sqrt{4/25+4/25} = \sqrt{0{,}32} \approx 0{,}566$. $t = (8-6)/0{,}566 \approx 3{,}54 > 2{,}01$ &rarr; $H_0$ verwerfen.</div>
+</div>
+
+<!-- Q32 -->
+<div class="card" id="c32">
+  <div class="q-head">
+    <span class="q-num">32</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s32"></span>
+  </div>
+  <div class="q-text"><strong>Approximativer Binomialtest:</strong> $n = 400$ Befragte, 220 antworten mit „Ja". $H_0\colon \pi = 0{,}5$ (zweiseitig, $\alpha=0{,}05$). Kritischer Wert: $z_{0{,}975} = 1{,}96$.</div>
+  <div class="q-note">$z = \dfrac{\hat{p} - \pi_0}{\sqrt{\pi_0(1-\pi_0)/n}}$</div>
+  <div class="options">
+    <label><input type="radio" name="q32" value="a"> a) $H_0$ nicht verwerfen; $z = 1{,}0 < 1{,}96$</label>
+    <label><input type="radio" name="q32" value="b"> b) $H_0$ nicht verwerfen; $z = 1{,}6 < 1{,}96$</label>
+    <label><input type="radio" name="q32" value="c"> c) $H_0$ verwerfen; $z = 4{,}0 > 1{,}96$</label>
+    <label><input type="radio" name="q32" value="d"> d) $H_0$ verwerfen; $z = 2{,}0 > 1{,}96$</label>
+  </div>
+  <div class="hint" id="h32">Korrekt: <strong>d</strong>. $\hat{p}=220/400=0{,}55$. $SE=\sqrt{0{,}5\cdot0{,}5/400}=0{,}025$. $z=(0{,}55-0{,}5)/0{,}025=2{,}0>1{,}96$ &rarr; $H_0$ verwerfen.</div>
+</div>
+
+<!-- Q33 -->
+<div class="card" id="c33">
+  <div class="q-head">
+    <span class="q-num">33</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s33"></span>
+  </div>
+  <div class="q-text"><strong>Korrelationstest:</strong> $r = 0{,}40$, $n = 27$. $H_0\colon \rho = 0$ (zweiseitig, $\alpha=0{,}05$). Kritischer Wert: $t_{0{,}975,\,25} = 2{,}060$.</div>
+  <div class="q-note">$t = r \cdot \dfrac{\sqrt{n-2}}{\sqrt{1-r^2}}$</div>
+  <div class="options">
+    <label><input type="radio" name="q33" value="a"> a) $H_0$ nicht verwerfen; $t \approx 1{,}83 < 2{,}060$</label>
+    <label><input type="radio" name="q33" value="b"> b) $H_0$ nicht verwerfen; $t \approx 2{,}00 < 2{,}060$</label>
+    <label><input type="radio" name="q33" value="c"> c) $H_0$ verwerfen; $t \approx 2{,}18 > 2{,}060$</label>
+    <label><input type="radio" name="q33" value="d"> d) $H_0$ verwerfen; $t \approx 2{,}83 > 2{,}060$</label>
+  </div>
+  <div class="hint" id="h33">Korrekt: <strong>c</strong>. $t = 0{,}4 \cdot \sqrt{25}/\sqrt{1-0{,}16} = 0{,}4 \cdot 5/\sqrt{0{,}84} = 2{,}0/0{,}9165 \approx 2{,}18 > 2{,}060$ &rarr; $H_0$ verwerfen.</div>
+</div>
+
+<!-- Q34 -->
+<div class="card" id="c34">
+  <div class="q-head">
+    <span class="q-num">34</span><span class="q-type">Verständnis</span>
+    <span class="status" id="s34"></span>
+  </div>
+  <div class="q-text">Was besagt die <strong>Exogenitätsannahme</strong> der OLS-Regression?</div>
+  <div class="options">
+    <label><input type="radio" name="q34" value="a"> a) Die abhängige Variable $Y$ ist normalverteilt</label>
+    <label><input type="radio" name="q34" value="b"> b) Die Kovarianz zwischen Regressoren $x_i$ und Fehlertermen $e_i$ ist null: $\text{Cov}(x_i, e_i) = 0$</label>
+    <label><input type="radio" name="q34" value="c"> c) Alle Koeffizienten im Modell sind statistisch signifikant</label>
+    <label><input type="radio" name="q34" value="d"> d) Das Bestimmtheitsmaß $R^2$ liegt zwischen 0,5 und 1</label>
+  </div>
+  <div class="hint" id="h34">Korrekt: <strong>b</strong>. Exogenität: $\text{Cov}(x_i, e_i) = 0$ — die Regressoren dürfen nicht mit den Fehlertermen korrelieren. Verletzung (z.&nbsp;B. durch ausgelassene Variablen) führt zu verzerrten OLS-Schätzern.</div>
+</div>
+
+<!-- Q35 -->
+<div class="card" id="c35">
+  <div class="q-head">
+    <span class="q-num">35</span><span class="q-type">Rechenaufgabe</span>
+    <span class="status" id="s35"></span>
+  </div>
+  <div class="q-text">Eine OLS-Regression ergibt: $SS_\text{Total} = 800$, $SS_\text{Residual} = 480$. Wie lautet $R^2$ und was bedeutet es?</div>
+  <div class="q-note">$R^2 = 1 - SS_\text{Residual} / SS_\text{Total}$</div>
+  <div class="options">
+    <label><input type="radio" name="q35" value="a"> a) $R^2 = 0{,}60$: Das Modell erklärt 60 % der Varianz in $Y$</label>
+    <label><input type="radio" name="q35" value="b"> b) $R^2 = 0{,}48$: Das Modell erklärt 48 % der Varianz in $Y$</label>
+    <label><input type="radio" name="q35" value="c"> c) $R^2 = 0{,}40$: Das Modell erklärt 40 % der Varianz in $Y$</label>
+    <label><input type="radio" name="q35" value="d"> d) $R^2 = 0{,}20$: Das Modell erklärt 20 % der Varianz in $Y$</label>
+  </div>
+  <div class="hint" id="h35">Korrekt: <strong>c</strong>. $R^2 = 1 - 480/800 = 1 - 0{,}6 = 0{,}40$. Das Modell erklärt 40 % der Gesamtvarianz in $Y$; 60 % bleiben unerklärt.</div>
+</div>
+
+<div class="btn-wrap">
+  <button id="btn-submit">Auswerten</button>
+  <button id="btn-reset">Neu starten</button>
+</div>
+</main>
+
+<script>
+const ANSWERS = {
+  1:'c',2:'b',3:'d',4:'b',5:'a',6:'d',7:'a',8:'c',9:'d',10:'b',
+  11:'a',12:'c',13:'b',14:'a',15:'c',16:'d',17:'b',18:'c',19:'a',20:'d',
+  21:'c',22:'b',23:'d',24:'a',25:'c',26:'b',27:'d',28:'b',29:'a',30:'c',
+  31:'a',32:'d',33:'c',34:'b',35:'c'
+};
+const N = 35;
+let timerInt = null;
+let secs = 70 * 60;
+
+function pad(n){ return n < 10 ? '0' + n : '' + n; }
+
+function startTimer(){
+  timerInt = setInterval(function(){
+    secs--;
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    const el = document.getElementById('timer');
+    el.textContent = pad(m) + ':' + pad(s);
+    if(secs <= 300) el.classList.add('warn');
+    if(secs <= 0){ clearInterval(timerInt); evaluate(); }
+  }, 1000);
+}
+
+function updateProgress(){
+  let answered = 0;
+  for(let i = 1; i <= N; i++){
+    if(document.querySelector('input[name="q'+i+'"]:checked')) answered++;
+  }
+  document.getElementById('progress-text').textContent = answered + ' / ' + N + ' beantwortet';
+  document.getElementById('progress-bar').style.width = Math.round(answered / N * 100) + '%';
+}
+
+document.querySelectorAll('input[type=radio]').forEach(function(r){
+  r.addEventListener('change', function(){
+    const name = this.name;
+    document.querySelectorAll('input[name="'+name+'"]').forEach(function(o){
+      o.parentElement.classList.remove('sel');
+    });
+    this.parentElement.classList.add('sel');
+    updateProgress();
+  });
+});
+
+function evaluate(){
+  try {
+    clearInterval(timerInt);
+    let correct = 0, answered = 0;
+    for(let i = 1; i <= N; i++){
+      const sel = document.querySelector('input[name="q'+i+'"]:checked');
+      const card = document.getElementById('c'+i);
+      const opts = document.querySelectorAll('input[name="q'+i+'"]');
+      opts.forEach(function(o){ o.disabled = true; });
+      if(!sel) continue;
+      answered++;
+      const correctEl = document.querySelector('input[name="q'+i+'"][value="'+ANSWERS[i]+'"]');
+      if(correctEl) correctEl.parentElement.classList.add('right');
+      if(sel.value === ANSWERS[i]){
+        correct++;
+        if(card) card.classList.add('ok');
+        const si = document.getElementById('s'+i);
+        if(si){ si.textContent = '✓'; si.className = 'status ok-s'; }
+      } else {
+        if(card) card.classList.add('err');
+        sel.parentElement.classList.remove('sel');
+        sel.parentElement.classList.add('struck');
+        const si = document.getElementById('s'+i);
+        if(si){ si.textContent = '✗'; si.className = 'status err-s'; }
+        const h = document.getElementById('h'+i);
+        if(h) h.style.display = 'block';
+      }
+    }
+    const pct = Math.round(correct / N * 100);
+    const pass = pct >= 50;
+    const banner = document.getElementById('score');
+    banner.className = pass ? 'pass' : 'fail';
+    banner.innerHTML = '<strong>Ergebnis</strong><div class="num">' + correct + '/' + N + ' &nbsp;(' + pct + '&thinsp;%)</div>' +
+      '<div style="font-size:.9rem;margin-top:4px">' + (pass ? '✓ Bestanden' : '✗ Nicht bestanden') +
+      ' &nbsp;·&nbsp; ' + answered + ' von ' + N + ' Fragen beantwortet</div>';
+    banner.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    document.getElementById('btn-submit').style.display = 'none';
+    document.getElementById('btn-reset').style.display = 'block';
+  } catch(e) {
+    const msg = e ? (e.message || String(e)) : 'Unbekannt';
+    const scoreEl = document.getElementById('score');
+    if(scoreEl){
+      scoreEl.className = 'fail';
+      scoreEl.innerHTML = '<strong>Fehler bei Auswertung:</strong><br>' + msg;
+      scoreEl.style.display = 'block';
+    }
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+}
+
+function resetQuiz(){
+  for(let i = 1; i <= N; i++){
+    const opts = document.querySelectorAll('input[name="q'+i+'"]');
+    opts.forEach(function(o){
+      o.checked = false;
+      o.disabled = false;
+      o.parentElement.classList.remove('sel','right','struck');
+    });
+    const card = document.getElementById('c'+i);
+    if(card){ card.classList.remove('ok','err'); }
+    const si = document.getElementById('s'+i);
+    if(si){ si.textContent = ''; si.className = 'status'; }
+    const h = document.getElementById('h'+i);
+    if(h){ h.style.display = 'none'; }
+  }
+  const banner = document.getElementById('score');
+  banner.style.display = 'none';
+  banner.className = '';
+  clearInterval(timerInt);
+  secs = 70 * 60;
+  const timerEl = document.getElementById('timer');
+  timerEl.textContent = '70:00';
+  timerEl.classList.remove('warn');
+  startTimer();
+  document.getElementById('btn-submit').style.display = 'block';
+  document.getElementById('btn-reset').style.display = 'none';
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+document.getElementById('btn-submit').addEventListener('click', evaluate);
+document.getElementById('btn-reset').addEventListener('click', resetQuiz);
+
+startTimer();
+</script>
+</body>
+</html>
