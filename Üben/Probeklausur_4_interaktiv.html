@@ -208,15 +208,15 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
     <span class="q-num">9</span><span class="q-type">Rechenaufgabe</span>
     <span class="status" id="s9"></span>
   </div>
-  <div class="q-text">Vier Parteien erhalten folgende Stimmanteile: <strong>40 %, 30 %, 20 %, 10 %</strong>. Wie lautet der <strong>Herfindahl-Index</strong> $H$?</div>
-  <div class="q-note">$H = \sum_{i=1}^k p_i^2$ (Anteile als Dezimalzahlen)</div>
+  <div class="q-text">Vier Parteien erhalten folgende Stimmanteile: <strong>40 %, 30 %, 20 %, 10 %</strong>. Wie lautet das <strong>Herfindahl-Streuungsmaß</strong> $HF$?</div>
+  <div class="q-note">$HF = 1 - \sum_{j=1}^k f_j^2$ (Anteile als Dezimalzahlen)</div>
   <div class="options">
-    <label><input type="radio" name="q9" value="a"> a) 0,10</label>
-    <label><input type="radio" name="q9" value="b"> b) 0,20</label>
-    <label><input type="radio" name="q9" value="c"> c) 0,25</label>
-    <label><input type="radio" name="q9" value="d"> d) 0,30</label>
+    <label><input type="radio" name="q9" value="a"> a) 0,30</label>
+    <label><input type="radio" name="q9" value="b"> b) 0,55</label>
+    <label><input type="radio" name="q9" value="c"> c) 0,70</label>
+    <label><input type="radio" name="q9" value="d"> d) 0,85</label>
   </div>
-  <div class="hint" id="h9">Korrekt: <strong>d</strong>. $H = 0{,}4^2 + 0{,}3^2 + 0{,}2^2 + 0{,}1^2 = 0{,}16 + 0{,}09 + 0{,}04 + 0{,}01 = 0{,}30$.</div>
+  <div class="hint" id="h9">Korrekt: <strong>c</strong>. Erst $\sum f_j^2 = 0{,}4^2 + 0{,}3^2 + 0{,}2^2 + 0{,}1^2 = 0{,}30$. Dann $HF = 1 - 0{,}30 = 0{,}70$. Hoher $HF$-Wert bedeutet hohe Streuung — die Stimmen verteilen sich auf viele Parteien.</div>
 </div>
 
 <!-- Q10 -->
@@ -671,7 +671,7 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
 
 <script>
 const ANSWERS = {
-  1:'c',2:'b',3:'d',4:'b',5:'a',6:'d',7:'a',8:'c',9:'d',10:'b',
+  1:'c',2:'b',3:'d',4:'b',5:'a',6:'d',7:'a',8:'c',9:'c',10:'b',
   11:'a',12:'c',13:'b',14:'a',15:'c',16:'d',17:'b',18:'c',19:'a',20:'d',
   21:'c',22:'b',23:'d',24:'a',25:'c',26:'b',27:'d',28:'b',29:'a',30:'c',
   31:'a',32:'d',33:'c',34:'b',35:'c'
