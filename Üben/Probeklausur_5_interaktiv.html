@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probeklausur 5 — Statistik (20 Fragen, 40 min)</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$']] },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6f8;color:#222;font-size:15px;line-height:1.55}
+header{background:#1a3a5c;color:#fff;padding:16px 24px;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+header h1{font-size:1.05rem;font-weight:700;flex:1}
+#timer{font-size:1.1rem;font-weight:700;background:#0d2540;padding:6px 14px;border-radius:6px;min-width:70px;text-align:center}
+#timer.warn{background:#b00020;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+#progress-bar-wrap{width:100%;height:6px;background:#0d2540;border-radius:3px}
+#progress-bar{height:6px;background:#4caf50;border-radius:3px;transition:width .3s}
+#progress-text{font-size:.8rem;color:#cdd}
+main{max-width:860px;margin:0 auto;padding:20px 16px}
+.card{background:#fff;border-radius:8px;padding:18px 20px;margin-bottom:18px;border-left:4px solid #1a3a5c;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.card.ok{border-left-color:#2e7d32;background:#f1f8f2}
+.card.err{border-left-color:#b71c1c;background:#fff5f5}
+.q-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.q-num{font-size:.75rem;font-weight:700;background:#1a3a5c;color:#fff;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.q-type{font-size:.7rem;background:#e8edf3;color:#555;padding:2px 7px;border-radius:10px}
+.q-text{font-weight:600;font-size:.97rem;margin-bottom:4px}
+.q-note{font-size:.85rem;color:#444;margin-bottom:10px}
+.options label{display:flex;align-items:flex-start;gap:9px;padding:7px 10px;border-radius:6px;cursor:pointer;margin-bottom:3px;transition:background .15s}
+.options label:hover{background:#f0f4f8}
+.options label.sel{background:#e3edf9}
+.options label.right{background:#e8f5e9;font-weight:600}
+.options label.struck{background:#ffebee;text-decoration:line-through;color:#999}
+input[type=radio]{margin-top:3px;flex-shrink:0}
+.hint{display:none;margin-top:10px;padding:10px 14px;background:#fff3cd;border-left:3px solid #f9a825;border-radius:0 6px 6px 0;font-size:.87rem;color:#444}
+.status{font-size:.8rem;font-weight:700;margin-left:auto;padding:3px 8px;border-radius:4px}
+.status.ok-s{background:#e8f5e9;color:#2e7d32}
+.status.err-s{background:#ffebee;color:#b71c1c}
+table.kt{border-collapse:collapse;margin:10px 0;font-size:.88rem}
+table.kt th,table.kt td{border:1px solid #bbb;padding:5px 10px;text-align:center}
+table.kt th{background:#e8edf3;font-weight:600}
+.stata{background:#1e1e1e;color:#d4d4d4;font-family:'Courier New',monospace;font-size:.8rem;padding:12px 14px;border-radius:6px;margin:10px 0;white-space:pre;overflow-x:auto}
+#score{display:none;max-width:860px;margin:0 auto 20px;padding:22px 28px;border-radius:8px;text-align:center;font-size:1.05rem}
+#score.pass{background:#e8f5e9;border:2px solid #2e7d32;color:#1b5e20}
+#score.fail{background:#ffebee;border:2px solid #b71c1c;color:#7f0000}
+#score .num{font-size:2.4rem;font-weight:800;margin:8px 0}
+.btn-wrap{text-align:center;margin:10px 0 30px}
+button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radius:8px;cursor:pointer}
+#btn-submit{background:#1a3a5c;color:#fff}
+#btn-submit:hover{background:#0d2540}
+#btn-reset{display:none;background:#2e7d32;color:#fff}
+#btn-reset:hover{background:#1b5e20}
+</style>
+</head>
+<body>
+<header>
+  <h1>Probeklausur 5 &mdash; Einführung in die sozialwissenschaftliche Statistik</h1>
+  <div id="timer">40:00</div>
+  <div style="flex-basis:100%">
+    <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+      <span id="progress-text">0 / 20 beantwortet</span>
+      <span style="font-size:.8rem;color:#cdd">20 Fragen &middot; 40 Minuten</span>
+    </div>
+    <div id="progress-bar-wrap"><div id="progress-bar" style="width:0%"></div></div>
+  </div>
+</header>
+
+<main>
+<div id="score"></div>
+
+<!-- Q1 -->
+<div class="card" id="c1">
+  <div class="q-head"><span class="q-num">1</span><span class="q-type">Verständnis</span><span class="status" id="s1"></span></div>
+  <div class="q-text">Welche Aussage zu <strong>Skalenniveaus</strong> ist korrekt?</div>
+  <div class="options">
+    <label><input type="radio" name="q1" value="a"> a) Parteiidentifikation (SPD, CDU, Grüne, AfD) ist ordinalskaliert, da Parteien auf einer Links-rechts-Achse geordnet werden können.</label>
+    <label><input type="radio" name="q1" value="b"> b) Bildungsabschluss (kein Abschluss, Hauptschule, Realschule, Abitur) ist nominalskaliert, da es sich um bloße Kategorien handelt.</label>
+    <label><input type="radio" name="q1" value="c"> c) Einkommen in Euro ist verhältnisskaliert: Es gibt einen absoluten Nullpunkt, und Verhältnisse wie &bdquo;doppelt so viel&ldquo; sind sinnvoll interpretierbar.</label>
+    <label><input type="radio" name="q1" value="d"> d) Temperatur in Celsius ist verhältnisskaliert, da 0&thinsp;&deg;C das vollständige Fehlen von Wärme beschreibt.</label>
+  </div>
+  <div class="hint" id="h1">Korrekt: <strong>c</strong>. Einkommen in Euro hat einen echten Nullpunkt (kein Einkommen = 0) und erlaubt Verhältnisaussagen. Parteiidentifikation ist nominal (keine sinnvolle Reihenfolge). Bildungsabschluss ist ordinal (Reihenfolge ja, Abstände nicht gleich). Celsius ist Intervallskala (kein absoluter Nullpunkt).</div>
+</div>
+
+<!-- Q2 -->
+<div class="card" id="c2">
+  <div class="q-head"><span class="q-num">2</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s2"></span></div>
+  <div class="q-text">Geordnete Urliste ($n = 10$): <strong>2, 2, 3, 4, 5, 5, 5, 5, 6, 7</strong>. Welche Kombination aus Modus und Median ist korrekt?</div>
+  <div class="options">
+    <label><input type="radio" name="q2" value="a"> a) Modus = 5; Median = 5</label>
+    <label><input type="radio" name="q2" value="b"> b) Modus = 5; Median = 4,5</label>
+    <label><input type="radio" name="q2" value="c"> c) Modus = 2; Median = 5</label>
+    <label><input type="radio" name="q2" value="d"> d) Modus = 5; Median = 4</label>
+  </div>
+  <div class="hint" id="h2">Korrekt: <strong>a</strong>. Modus = 5 (kommt 4-mal vor, häufigster Wert). Median bei $n=10$: Durchschnitt der Ränge 5 und 6: $(5+5)/2 = 5$.</div>
+</div>
+
+<!-- Q3 -->
+<div class="card" id="c3">
+  <div class="q-head"><span class="q-num">3</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s3"></span></div>
+  <div class="q-text">Geordnete Urliste ($n = 10$): <strong>2, 2, 3, 4, 5, 5, 5, 5, 6, 7</strong>. Wie groß ist der <strong>Dezilabstand</strong> $D_9 - D_1$?</div>
+  <div class="q-note">Regel: Position $= n \cdot p$. Ganzzahlig &rarr; Durchschnitt aus Rang $np$ und $np+1$. Nicht ganzzahlig &rarr; aufrunden.</div>
+  <div class="options">
+    <label><input type="radio" name="q3" value="a"> a) 4,0</label>
+    <label><input type="radio" name="q3" value="b"> b) 4,5</label>
+    <label><input type="radio" name="q3" value="c"> c) 5,0</label>
+    <label><input type="radio" name="q3" value="d"> d) 5,5</label>
+  </div>
+  <div class="hint" id="h3">Korrekt: <strong>b</strong>. $D_1$: Position $= 10 \cdot 0{,}1 = 1$ (ganzzahlig) &rarr; $(x_1+x_2)/2 = (2+2)/2 = 2$. $D_9$: Position $= 10 \cdot 0{,}9 = 9$ (ganzzahlig) &rarr; $(x_9+x_{10})/2 = (6+7)/2 = 6{,}5$. Dezilabstand $= 6{,}5 - 2 = 4{,}5$.</div>
+</div>
+
+<!-- Q4 -->
+<div class="card" id="c4">
+  <div class="q-head"><span class="q-num">4</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s4"></span></div>
+  <div class="q-text">Urliste: <strong>2, 4, 6, 8, 10</strong> ($n = 5$). Wie groß ist die <strong>empirische Varianz</strong> $s^2$?</div>
+  <div class="q-note">$s^2 = \dfrac{1}{n} \displaystyle\sum_{i=1}^n (x_i - \bar{x})^2$</div>
+  <div class="options">
+    <label><input type="radio" name="q4" value="a"> a) 6</label>
+    <label><input type="radio" name="q4" value="b"> b) 8</label>
+    <label><input type="radio" name="q4" value="c"> c) 10</label>
+    <label><input type="radio" name="q4" value="d"> d) 40</label>
+  </div>
+  <div class="hint" id="h4">Korrekt: <strong>b</strong>. $\bar{x} = 6$. Quadratische Abweichungen: $16+4+0+4+16 = 40$. $s^2 = 40/5 = 8$.</div>
+</div>
+
+<!-- Q5 -->
+<div class="card" id="c5">
+  <div class="q-head"><span class="q-num">5</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s5"></span></div>
+  <div class="q-text">Drei Parteien erzielen folgende Stimmanteile: <strong>0,50 / 0,30 / 0,20</strong>. Wie groß ist das <strong>normierte Herfindahl-Streuungsmaß</strong> $RHF$?</div>
+  <div class="q-note">$H = 1 - \sum p_j^2$ &nbsp;&nbsp; $H_{\max} = 1 - \dfrac{1}{k}$ &nbsp;&nbsp; $RHF = \dfrac{H}{H_{\max}}$</div>
+  <div class="options">
+    <label><input type="radio" name="q5" value="a"> a) 0,38</label>
+    <label><input type="radio" name="q5" value="b"> b) 0,62</label>
+    <label><input type="radio" name="q5" value="c"> c) 0,78</label>
+    <label><input type="radio" name="q5" value="d"> d) 0,93</label>
+  </div>
+  <div class="hint" id="h5">Korrekt: <strong>d</strong>. $\sum p_j^2 = 0{,}25+0{,}09+0{,}04 = 0{,}38$. $H = 1-0{,}38 = 0{,}62$. $H_{\max} = 1-\tfrac{1}{3} = 0{,}667$. $RHF = 0{,}62/0{,}667 \approx 0{,}93$. Klausurfalle: 0,38 ist $\sum p_j^2$, nicht $H$.</div>
+</div>
+
+<!-- Q6 -->
+<div class="card" id="c6">
+  <div class="q-head"><span class="q-num">6</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s6"></span></div>
+  <div class="q-text">Vier Haushalte mit aufsteigend sortierten Monatseinkommen: <strong>1.000 &euro;, 2.000 &euro;, 3.000 &euro;, 4.000 &euro;</strong> (Gesamt: 10.000 &euro;). Welche Kombination ist korrekt?</div>
+  <div class="q-note">Lorenzkurve: kumulierter Einkommensanteil der ärmsten 50&thinsp;%. &nbsp;|&nbsp; $G = 1 - \frac{1}{n}\displaystyle\sum_{i=1}^n (L_i + L_{i-1})$ mit $L_i$ = kumulierter Einkommensanteil.</div>
+  <div class="options">
+    <label><input type="radio" name="q6" value="a"> a) Ärmste 50&thinsp;% = 25&thinsp;% des Einkommens; $G = 0{,}20$</label>
+    <label><input type="radio" name="q6" value="b"> b) Ärmste 50&thinsp;% = 30&thinsp;% des Einkommens; $G = 0{,}25$</label>
+    <label><input type="radio" name="q6" value="c"> c) Ärmste 50&thinsp;% = 30&thinsp;% des Einkommens; $G = 0{,}30$</label>
+    <label><input type="radio" name="q6" value="d"> d) Ärmste 50&thinsp;% = 40&thinsp;% des Einkommens; $G = 0{,}25$</label>
+  </div>
+  <div class="hint" id="h6">Korrekt: <strong>b</strong>. Ärmste 50&thinsp;% (HH 1+2): $(1000+2000)/10000 = 30\,\%$. Gini: $L$-Werte: 0; 0,1; 0,3; 0,6; 1,0. $G = 1 - 0{,}25\cdot(0{,}1+0{,}4+0{,}9+1{,}6) = 1-0{,}75 = 0{,}25$.</div>
+</div>
+
+<!-- Q7 -->
+<div class="card" id="c7">
+  <div class="q-head"><span class="q-num">7</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s7"></span></div>
+  <div class="q-text"><strong>Kreuztabelle: Gewerkschaftsmitgliedschaft (UV) &times; SPD-Wahl (AV)</strong></div>
+  <table class="kt">
+    <tr><th></th><th>Gewerkschaftsmitglied</th><th>Kein Mitglied</th></tr>
+    <tr><td>SPD gewählt</td><td>60</td><td>20</td></tr>
+    <tr><td>SPD nicht gewählt</td><td>40</td><td>80</td></tr>
+    <tr><td><strong>Gesamt</strong></td><td>100</td><td>100</td></tr>
+  </table>
+  <div class="q-note">Wie groß ist der <strong>Odds Ratio</strong> für SPD-Wahl (Gewerkschaftsmitglied vs. kein Mitglied)?</div>
+  <div class="options">
+    <label><input type="radio" name="q7" value="a"> a) 1,5</label>
+    <label><input type="radio" name="q7" value="b"> b) 3,0</label>
+    <label><input type="radio" name="q7" value="c"> c) 6,0</label>
+    <label><input type="radio" name="q7" value="d"> d) 12,0</label>
+  </div>
+  <div class="hint" id="h7">Korrekt: <strong>c</strong>. Odds(Mitglied) $= 60/40 = 1{,}5$. Odds(kein Mitglied) $= 20/80 = 0{,}25$. $OR = 1{,}5/0{,}25 = 6{,}0$. Gewerkschaftsmitglieder haben 6-fach höhere Chance, SPD zu wählen.</div>
+</div>
+
+<!-- Q8 -->
+<div class="card" id="c8">
+  <div class="q-head"><span class="q-num">8</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s8"></span></div>
+  <div class="q-text"><strong>Kreuztabelle: Hochschulabschluss (UV) &times; Grünen-Wahl (AV)</strong>, $n = 100$</div>
+  <table class="kt">
+    <tr><th></th><th>Hochschulabschluss</th><th>Kein Hochschulabschluss</th></tr>
+    <tr><td>Grüne gewählt</td><td>40</td><td>10</td></tr>
+    <tr><td>Grüne nicht gewählt</td><td>10</td><td>40</td></tr>
+    <tr><td><strong>Gesamt</strong></td><td>50</td><td>50</td></tr>
+  </table>
+  <div class="q-note">$\chi^2 = \sum \dfrac{(f_b - f_e)^2}{f_e}$ &nbsp;|&nbsp; $\varphi = \sqrt{\chi^2/n}$ &nbsp;|&nbsp; $V = \sqrt{\chi^2/(n \cdot \min(r{-}1,\,c{-}1))}$</div>
+  <div class="options">
+    <label><input type="radio" name="q8" value="a"> a) $\chi^2 = 36$; $\varphi = 0{,}60$; Cramér's $V = 0{,}60$</label>
+    <label><input type="radio" name="q8" value="b"> b) $\chi^2 = 36$; $\varphi = 0{,}36$; Cramér's $V = 0{,}36$</label>
+    <label><input type="radio" name="q8" value="c"> c) $\chi^2 = 25$; $\varphi = 0{,}50$; Cramér's $V = 0{,}50$</label>
+    <label><input type="radio" name="q8" value="d"> d) $\chi^2 = 36$; $\varphi = 0{,}60$; Cramér's $V$ ist für 2&times;2-Tabellen nicht definiert</label>
+  </div>
+  <div class="hint" id="h8">Korrekt: <strong>a</strong>. Erwartete Häufigkeiten: alle Zellen $= 25$. $\chi^2 = 4 \cdot (15^2/25) = 4 \cdot 9 = 36$. $\varphi = \sqrt{36/100} = 0{,}60$. Cramér's $V$: $\min(r{-}1, c{-}1) = 1$ &rarr; $V = \varphi = 0{,}60$.</div>
+</div>
+
+<!-- Q9 -->
+<div class="card" id="c9">
+  <div class="q-head"><span class="q-num">9</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s9"></span></div>
+  <div class="q-text">Fünf Beobachtungen ($n = 5$, Teiler: $n$):</div>
+  <table class="kt">
+    <tr><th>$x$ (Bildungsjahre)</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+    <tr><th>$y$ (Einkommen, Tsd.&thinsp;&euro;)</th><td>2</td><td>3</td><td>5</td><td>4</td><td>6</td></tr>
+  </table>
+  <div class="q-note">Berechne zunächst $s_{xy} = \frac{1}{n}\sum(x_i-\bar{x})(y_i-\bar{y})$, dann $r = s_{xy}/(s_x \cdot s_y)$.</div>
+  <div class="options">
+    <label><input type="radio" name="q9" value="a"> a) $r = 0{,}70$</label>
+    <label><input type="radio" name="q9" value="b"> b) $r = 0{,}80$</label>
+    <label><input type="radio" name="q9" value="c"> c) $r = 0{,}90$</label>
+    <label><input type="radio" name="q9" value="d"> d) $r = 1{,}00$</label>
+  </div>
+  <div class="hint" id="h9">Korrekt: <strong>c</strong>. $\bar{x}=3, \bar{y}=4$. Kreuzprodukte: $4+1+0+0+4=9$ &rarr; $s_{xy}=9/5=1{,}8$. $s_x^2=10/5=2$ &rarr; $s_x=\sqrt{2}$. $s_y^2=10/5=2$ &rarr; $s_y=\sqrt{2}$. $r = 1{,}8/(\sqrt{2}\cdot\sqrt{2}) = 1{,}8/2 = 0{,}90$.</div>
+</div>
+
+<!-- Q10 -->
+<div class="card" id="c10">
+  <div class="q-head"><span class="q-num">10</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s10"></span></div>
+  <div class="q-text">Fünf Länder, bewertet nach Demokratiequalität (Rang $D$) und Korruptionskontrolle (Rang $K$). Wie groß ist Spearmans <strong>Rangkorrelationskoeffizient</strong> $r_s$?</div>
+  <table class="kt">
+    <tr><th>Land</th><th>Rang $D$</th><th>Rang $K$</th></tr>
+    <tr><td>A</td><td>1</td><td>2</td></tr>
+    <tr><td>B</td><td>2</td><td>1</td></tr>
+    <tr><td>C</td><td>3</td><td>3</td></tr>
+    <tr><td>D</td><td>4</td><td>5</td></tr>
+    <tr><td>E</td><td>5</td><td>4</td></tr>
+  </table>
+  <div class="q-note">$r_s = 1 - \dfrac{6 \sum d_i^2}{n(n^2-1)}$</div>
+  <div class="options">
+    <label><input type="radio" name="q10" value="a"> a) $r_s = 0{,}60$</label>
+    <label><input type="radio" name="q10" value="b"> b) $r_s = 0{,}80$</label>
+    <label><input type="radio" name="q10" value="c"> c) $r_s = 0{,}90$</label>
+    <label><input type="radio" name="q10" value="d"> d) $r_s = 1{,}00$</label>
+  </div>
+  <div class="hint" id="h10">Korrekt: <strong>b</strong>. Differenzen $d_i$: $-1, 1, 0, -1, 1$. $\sum d_i^2 = 1+1+0+1+1 = 4$. $r_s = 1 - 6\cdot4/(5\cdot24) = 1 - 24/120 = 1 - 0{,}2 = 0{,}80$.</div>
+</div>
+
+<!-- Q11 -->
+<div class="card" id="c11">
+  <div class="q-head"><span class="q-num">11</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s11"></span></div>
+  <div class="q-text">$X$ ist eine <strong>diskrete Zufallsvariable</strong> (Anzahl gewonnener Mandate einer Kleinpartei). Wie groß ist $E(X)$?</div>
+  <table class="kt">
+    <tr><th>$X$</th><th>$P(X)$</th></tr>
+    <tr><td>0</td><td>0,20</td></tr>
+    <tr><td>1</td><td>0,50</td></tr>
+    <tr><td>2</td><td>0,30</td></tr>
+  </table>
+  <div class="q-note">$E(X) = \sum_i x_i \cdot P(X = x_i)$</div>
+  <div class="options">
+    <label><input type="radio" name="q11" value="a"> a) $E(X) = 0{,}50$</label>
+    <label><input type="radio" name="q11" value="b"> b) $E(X) = 1{,}00$</label>
+    <label><input type="radio" name="q11" value="c"> c) $E(X) = 1{,}10$</label>
+    <label><input type="radio" name="q11" value="d"> d) $E(X) = 1{,}50$</label>
+  </div>
+  <div class="hint" id="h11">Korrekt: <strong>c</strong>. $E(X) = 0\cdot0{,}20 + 1\cdot0{,}50 + 2\cdot0{,}30 = 0 + 0{,}50 + 0{,}60 = 1{,}10$. Diskrete ZV: abzählbar viele Ausprägungen mit Wahrscheinlichkeitsmassefunktion. Im Gegensatz dazu: stetige ZV (z.&thinsp;B. Normalverteilung) mit Dichtefunktion.</div>
+</div>
+
+<!-- Q12 -->
+<div class="card" id="c12">
+  <div class="q-head"><span class="q-num">12</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s12"></span></div>
+  <div class="q-text">Politisches Wissensscore: <strong>stetige</strong> Zufallsvariable $X \sim N(\mu = 100,\, \sigma = 15)$. Wie groß ist $P(X \leq 115)$?</div>
+  <div class="q-note">Z-Transformation: $z = (x - \mu)/\sigma$ &nbsp;|&nbsp; $\Phi(1) = 0{,}8413$; $\Phi(2) = 0{,}9772$</div>
+  <div class="options">
+    <label><input type="radio" name="q12" value="a"> a) 0,5000</label>
+    <label><input type="radio" name="q12" value="b"> b) 0,6827</label>
+    <label><input type="radio" name="q12" value="c"> c) 0,8413</label>
+    <label><input type="radio" name="q12" value="d"> d) 0,9772</label>
+  </div>
+  <div class="hint" id="h12">Korrekt: <strong>c</strong>. $z = (115-100)/15 = 1{,}0$. $P(X \leq 115) = \Phi(1) = 0{,}8413$. Der Wert 115 liegt genau eine Standardabweichung über dem Mittelwert.</div>
+</div>
+
+<!-- Q13 -->
+<div class="card" id="c13">
+  <div class="q-head"><span class="q-num">13</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s13"></span></div>
+  <div class="q-text">$X \sim N(\mu = 50,\, \sigma = 10)$. Gesucht: Wert $x$, sodass $P(X \leq x) = 0{,}025$.</div>
+  <div class="q-note">Quantilsformel: $x = \mu + z_p \cdot \sigma$ &nbsp;|&nbsp; $z_{0{,}025} = -1{,}96$</div>
+  <div class="options">
+    <label><input type="radio" name="q13" value="a"> a) $x = 25{,}4$</label>
+    <label><input type="radio" name="q13" value="b"> b) $x = 30{,}4$</label>
+    <label><input type="radio" name="q13" value="c"> c) $x = 34{,}6$</label>
+    <label><input type="radio" name="q13" value="d"> d) $x = 69{,}6$</label>
+  </div>
+  <div class="hint" id="h13">Korrekt: <strong>b</strong>. $x = 50 + (-1{,}96)\cdot10 = 50 - 19{,}6 = 30{,}4$. Das 0,025-Quantil liegt weit links &mdash; nur 2,5&thinsp;% der Werte liegen darunter. Falle: $69{,}6$ wäre das 0,975-Quantil (rechte Seite).</div>
+</div>
+
+<!-- Q14 -->
+<div class="card" id="c14">
+  <div class="q-head"><span class="q-num">14</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s14"></span></div>
+  <div class="q-text">Stichprobe: $n = 100$, $\bar{x} = 3{,}20$, $s = 0{,}50$. Signifikanzniveau $\alpha = 0{,}05$. Wie lautet das <strong>95&thinsp;%-Konfidenzintervall</strong>?</div>
+  <div class="q-note">$\bar{x} \pm z_{0{,}975} \cdot \dfrac{s}{\sqrt{n}}$ &nbsp;|&nbsp; $z_{0{,}975} = 1{,}96$</div>
+  <div class="options">
+    <label><input type="radio" name="q14" value="a"> a) $[3{,}10;\; 3{,}30]$</label>
+    <label><input type="radio" name="q14" value="b"> b) $[3{,}15;\; 3{,}25]$</label>
+    <label><input type="radio" name="q14" value="c"> c) $[3{,}00;\; 3{,}40]$</label>
+    <label><input type="radio" name="q14" value="d"> d) $[2{,}20;\; 4{,}20]$</label>
+  </div>
+  <div class="hint" id="h14">Korrekt: <strong>a</strong>. $SE = 0{,}50/\sqrt{100} = 0{,}05$. $3{,}20 \pm 1{,}96 \cdot 0{,}05 = 3{,}20 \pm 0{,}098 \approx [3{,}10;\; 3{,}30]$.</div>
+</div>
+
+<!-- Q15 -->
+<div class="card" id="c15">
+  <div class="q-head"><span class="q-num">15</span><span class="q-type">Verständnis</span><span class="status" id="s15"></span></div>
+  <div class="q-text">Ein Forscher lehnt $H_0$ ab. Später stellt sich heraus: $H_0$ war wahr. Welcher <strong>Fehlertyp</strong> liegt vor, und was begrenzt seine Wahrscheinlichkeit?</div>
+  <div class="options">
+    <label><input type="radio" name="q15" value="a"> a) Fehler 2. Art &mdash; begrenzt durch $\beta$.</label>
+    <label><input type="radio" name="q15" value="b"> b) Fehler 1. Art &mdash; begrenzt durch das Signifikanzniveau $\alpha$.</label>
+    <label><input type="radio" name="q15" value="c"> c) Fehler 1. Art &mdash; begrenzt durch die Teststärke $1-\beta$.</label>
+    <label><input type="radio" name="q15" value="d"> d) Kein Fehler &mdash; die Ablehnung ist korrekt, wenn der Testwert den kritischen Wert überschreitet.</label>
+  </div>
+  <div class="hint" id="h15">Korrekt: <strong>b</strong>. Fehler 1. Art ($\alpha$-Fehler): $H_0$ wird abgelehnt, obwohl sie wahr ist. Wahrscheinlichkeit $\leq \alpha$. Fehler 2. Art ($\beta$-Fehler): $H_0$ wird beibehalten, obwohl sie falsch ist. Wahrscheinlichkeit $= \beta$.</div>
+</div>
+
+<!-- Q16 -->
+<div class="card" id="c16">
+  <div class="q-head"><span class="q-num">16</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s16"></span></div>
+  <div class="q-text"><strong>Z-Test:</strong> $n = 100$, $\bar{x} = 5{,}30$, $\sigma = 1{,}50$ (bekannt). $H_0\colon \mu = 5{,}0$ gegen $H_1\colon \mu \neq 5{,}0$ (zweiseitig, $\alpha = 0{,}05$). Kritischer Wert: $\pm 1{,}96$.</div>
+  <div class="q-note">$Z = (\bar{x} - \mu_0)/(\sigma/\sqrt{n})$</div>
+  <div class="options">
+    <label><input type="radio" name="q16" value="a"> a) $Z = 1{,}00$; $H_0$ kann nicht abgelehnt werden.</label>
+    <label><input type="radio" name="q16" value="b"> b) $Z = 2{,}00$; $H_0$ kann abgelehnt werden.</label>
+    <label><input type="radio" name="q16" value="c"> c) $Z = 2{,}00$; $H_0$ kann nicht abgelehnt werden.</label>
+    <label><input type="radio" name="q16" value="d"> d) $Z = 3{,}00$; $H_0$ kann abgelehnt werden.</label>
+  </div>
+  <div class="hint" id="h16">Korrekt: <strong>b</strong>. $Z = (5{,}30 - 5{,}00)/(1{,}50/\sqrt{100}) = 0{,}30/0{,}15 = 2{,}00$. $|2{,}00| > 1{,}96$ &rarr; $H_0$ verwerfen.</div>
+</div>
+
+<!-- Q17 -->
+<div class="card" id="c17">
+  <div class="q-head"><span class="q-num">17</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s17"></span></div>
+  <div class="q-text"><strong>T-Test:</strong> $n = 25$, $\bar{x} = 4{,}80$, $s = 1{,}00$ (Stichproben-SD). $H_0\colon \mu = 5{,}0$ gegen $H_1\colon \mu \neq 5{,}0$ (zweiseitig, $\alpha = 0{,}05$). Kritischer Wert: $t_{24;\,0{,}975} = \pm 2{,}064$.</div>
+  <div class="q-note">$t = (\bar{x} - \mu_0)/(s/\sqrt{n})$</div>
+  <div class="options">
+    <label><input type="radio" name="q17" value="a"> a) $t = -2{,}00$; $H_0$ kann abgelehnt werden.</label>
+    <label><input type="radio" name="q17" value="b"> b) $t = -1{,}00$; $H_0$ kann abgelehnt werden.</label>
+    <label><input type="radio" name="q17" value="c"> c) $t = -1{,}00$; $H_0$ kann nicht abgelehnt werden.</label>
+    <label><input type="radio" name="q17" value="d"> d) $t = 1{,}00$; $H_0$ kann nicht abgelehnt werden.</label>
+  </div>
+  <div class="hint" id="h17">Korrekt: <strong>c</strong>. $t = (4{,}80-5{,}00)/(1{,}00/\sqrt{25}) = -0{,}20/0{,}20 = -1{,}00$. $|-1{,}00| = 1{,}00 < 2{,}064$ &rarr; $H_0$ nicht verwerfen. Unterschied zu Z-Test: hier schätzen wir $\sigma$ durch $s$ &rarr; t-Verteilung mit $df = n-1$.</div>
+</div>
+
+<!-- Q18 -->
+<div class="card" id="c18">
+  <div class="q-head"><span class="q-num">18</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s18"></span></div>
+  <div class="q-text"><strong>Approximativer Binomialtest:</strong> $n = 400$, $\hat{\pi} = 0{,}54$. $H_0\colon \pi = 0{,}50$ gegen $H_1\colon \pi > 0{,}50$ (einseitig, $\alpha = 0{,}05$). Kritischer Wert: $1{,}645$.</div>
+  <div class="q-note">$Z = \dfrac{\hat{\pi} - \pi_0}{\sqrt{\pi_0(1-\pi_0)/n}}$</div>
+  <div class="options">
+    <label><input type="radio" name="q18" value="a"> a) $Z = 1{,}20$; $H_0$ kann nicht abgelehnt werden.</label>
+    <label><input type="radio" name="q18" value="b"> b) $Z = 1{,}60$; $H_0$ kann nicht abgelehnt werden.</label>
+    <label><input type="radio" name="q18" value="c"> c) $Z = 1{,}60$; $H_0$ kann abgelehnt werden.</label>
+    <label><input type="radio" name="q18" value="d"> d) $Z = 2{,}00$; $H_0$ kann abgelehnt werden.</label>
+  </div>
+  <div class="hint" id="h18">Korrekt: <strong>b</strong>. $SE = \sqrt{0{,}5 \cdot 0{,}5/400} = \sqrt{0{,}000625} = 0{,}025$. $Z = (0{,}54-0{,}50)/0{,}025 = 1{,}60$. $1{,}60 < 1{,}645$ &rarr; $H_0$ nicht verwerfen (knapper Unterschied!).</div>
+</div>
+
+<!-- Q19 -->
+<div class="card" id="c19">
+  <div class="q-head"><span class="q-num">19</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s19"></span></div>
+  <div class="q-text">OLS-Schätzung: $\hat{y} = 2{,}50 + 0{,}80 \cdot x$ &nbsp; ($x$ = Bildungsjahre, $\hat{y}$ = vorhergesagtes Monatseinkommen in Tsd.&thinsp;&euro;). Wie groß ist der <strong>vorhergesagte Wert</strong> für eine Person mit 15 Bildungsjahren? Was bedeutet der Koeffizient 0,80?</div>
+  <div class="options">
+    <label><input type="radio" name="q19" value="a"> a) $\hat{y} = 12{,}50$; für jedes zusätzliche Bildungsjahr steigt das Einkommen um 0,80 Tsd.&thinsp;&euro;</label>
+    <label><input type="radio" name="q19" value="b"> b) $\hat{y} = 14{,}50$; für jedes zusätzliche Bildungsjahr steigt das Einkommen um 0,80 Tsd.&thinsp;&euro;</label>
+    <label><input type="radio" name="q19" value="c"> c) $\hat{y} = 14{,}50$; für jedes zusätzliche Bildungsjahr steigt das Einkommen um 2,50 Tsd.&thinsp;&euro;</label>
+    <label><input type="radio" name="q19" value="d"> d) $\hat{y} = 16{,}50$; für jedes zusätzliche Bildungsjahr steigt das Einkommen um 0,80 Tsd.&thinsp;&euro;</label>
+  </div>
+  <div class="hint" id="h19">Korrekt: <strong>b</strong>. $\hat{y} = 2{,}50 + 0{,}80 \cdot 15 = 2{,}50 + 12{,}00 = 14{,}50$. Der Steigungskoeffizient 0,80 gibt die Veränderung in $\hat{y}$ bei einer Einheit mehr $x$ an. Der Achsenabschnitt 2,50 ist der vorhergesagte Wert für $x = 0$.</div>
+</div>
+
+<!-- Q20 -->
+<div class="card" id="c20">
+  <div class="q-head"><span class="q-num">20</span><span class="q-type">Verständnis</span><span class="status" id="s20"></span></div>
+  <div class="q-text">Lesen Sie den folgenden <strong>Stata-Output</strong> einer einfachen OLS-Regression ($y$ = Einkommen, $x$ = Bildung). Welche Aussage ist korrekt?</div>
+  <div class="stata">      Source |       SS       df       MS
+-------------+------------------------------
+       Model |    112.00       1    112.00
+    Residual |     48.00      48      1.00
+-------------+------------------------------
+       Total |    160.00      49
+
+R-squared = 0.7000
+
+--------------------------------------------------------------
+   einkommen |    Coef.   Std. Err.      t    P&gt;|t|
+-------------+------------------------------------------------
+     bildung |    0.800      0.075    10.67   0.000
+       _cons |    1.200      0.950     1.26   0.213
+--------------------------------------------------------------</div>
+  <div class="options">
+    <label><input type="radio" name="q20" value="a"> a) Der Achsenabschnitt (_cons = 1,200) ist auf dem 5&thinsp;%-Niveau statistisch signifikant (p = 0,213).</label>
+    <label><input type="radio" name="q20" value="b"> b) $R^2 = 0{,}70$: 70&thinsp;% der Varianz im Einkommen werden durch Bildung erklärt.</label>
+    <label><input type="radio" name="q20" value="c"> c) Der Bildungskoeffizient ist nicht signifikant, da p = 0,000 keinen interpretierbaren Wert darstellt.</label>
+    <label><input type="radio" name="q20" value="d"> d) Ein zusätzliches Bildungsjahr geht mit einem um 0,075 Tsd.&thinsp;&euro; höheren Einkommen einher.</label>
+  </div>
+  <div class="hint" id="h20">Korrekt: <strong>b</strong>. $R^2 = 0{,}70$: 70&thinsp;% der Varianz erklärt. Zu den Fallen: _cons hat p = 0,213 &gt; 0,05 &rarr; nicht signifikant. p = 0,000 heißt p &lt; 0,001 &rarr; bildung ist hoch signifikant. Der Koeffizient 0,800 (nicht 0,075) gibt die Einkommensveränderung an; 0,075 ist der Standardfehler.</div>
+</div>
+
+<div class="btn-wrap">
+  <button id="btn-submit">Auswerten</button>
+  <button id="btn-reset">Neu starten</button>
+</div>
+</main>
+
+<script>
+const ANSWERS = {
+  1:'c', 2:'a', 3:'b', 4:'b', 5:'d',
+  6:'b', 7:'c', 8:'a', 9:'c', 10:'b',
+  11:'c', 12:'c', 13:'b', 14:'a', 15:'b',
+  16:'b', 17:'c', 18:'b', 19:'b', 20:'b'
+};
+const N = 20;
+let timerInt = null;
+let secs = 40 * 60;
+
+function pad(n){ return n < 10 ? '0' + n : '' + n; }
+
+function startTimer(){
+  timerInt = setInterval(function(){
+    secs--;
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    const el = document.getElementById('timer');
+    el.textContent = pad(m) + ':' + pad(s);
+    if(secs <= 300) el.classList.add('warn');
+    if(secs <= 0){ clearInterval(timerInt); evaluate(); }
+  }, 1000);
+}
+
+function updateProgress(){
+  let answered = 0;
+  for(let i = 1; i <= N; i++){
+    if(document.querySelector('input[name="q'+i+'"]:checked')) answered++;
+  }
+  document.getElementById('progress-text').textContent = answered + ' / ' + N + ' beantwortet';
+  document.getElementById('progress-bar').style.width = Math.round(answered / N * 100) + '%';
+}
+
+document.querySelectorAll('input[type=radio]').forEach(function(r){
+  r.addEventListener('change', function(){
+    const name = this.name;
+    document.querySelectorAll('input[name="'+name+'"]').forEach(function(o){
+      o.parentElement.classList.remove('sel');
+    });
+    this.parentElement.classList.add('sel');
+    updateProgress();
+  });
+});
+
+function evaluate(){
+  try {
+    clearInterval(timerInt);
+    let correct = 0, answered = 0;
+    for(let i = 1; i <= N; i++){
+      const sel = document.querySelector('input[name="q'+i+'"]:checked');
+      const card = document.getElementById('c'+i);
+      const opts = document.querySelectorAll('input[name="q'+i+'"]');
+      opts.forEach(function(o){ o.disabled = true; });
+      if(!sel) continue;
+      answered++;
+      const correctEl = document.querySelector('input[name="q'+i+'"][value="'+ANSWERS[i]+'"]');
+      if(correctEl) correctEl.parentElement.classList.add('right');
+      if(sel.value === ANSWERS[i]){
+        correct++;
+        if(card) card.classList.add('ok');
+        const si = document.getElementById('s'+i);
+        if(si){ si.textContent = '✓'; si.className = 'status ok-s'; }
+      } else {
+        if(card) card.classList.add('err');
+        sel.parentElement.classList.remove('sel');
+        sel.parentElement.classList.add('struck');
+        const si = document.getElementById('s'+i);
+        if(si){ si.textContent = '✗'; si.className = 'status err-s'; }
+        const h = document.getElementById('h'+i);
+        if(h) h.style.display = 'block';
+      }
+    }
+    const pct = Math.round(correct / N * 100);
+    const pass = pct >= 50;
+    const banner = document.getElementById('score');
+    banner.className = pass ? 'pass' : 'fail';
+    banner.innerHTML = '<strong>Ergebnis</strong><div class="num">' + correct + '/' + N + ' &nbsp;(' + pct + '&thinsp;%)</div>' +
+      '<div style="font-size:.9rem;margin-top:4px">' + (pass ? '&#10003; Bestanden' : '&#10007; Nicht bestanden') +
+      ' &nbsp;&middot;&nbsp; ' + answered + ' von ' + N + ' Fragen beantwortet</div>';
+    banner.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    document.getElementById('btn-submit').style.display = 'none';
+    document.getElementById('btn-reset').style.display = 'block';
+  } catch(e) {
+    const msg = e ? (e.message || String(e)) : 'Unbekannt';
+    const scoreEl = document.getElementById('score');
+    if(scoreEl){
+      scoreEl.className = 'fail';
+      scoreEl.innerHTML = '<strong>Fehler bei Auswertung:</strong><br>' + msg;
+      scoreEl.style.display = 'block';
+    }
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+}
+
+function resetQuiz(){
+  for(let i = 1; i <= N; i++){
+    const opts = document.querySelectorAll('input[name="q'+i+'"]');
+    opts.forEach(function(o){
+      o.checked = false;
+      o.disabled = false;
+      o.parentElement.classList.remove('sel','right','struck');
+    });
+    const card = document.getElementById('c'+i);
+    if(card){ card.classList.remove('ok','err'); }
+    const si = document.getElementById('s'+i);
+    if(si){ si.textContent = ''; si.className = 'status'; }
+    const h = document.getElementById('h'+i);
+    if(h){ h.style.display = 'none'; }
+  }
+  const banner = document.getElementById('score');
+  banner.style.display = 'none';
+  banner.className = '';
+  clearInterval(timerInt);
+  secs = 40 * 60;
+  const timerEl = document.getElementById('timer');
+  timerEl.textContent = '40:00';
+  timerEl.classList.remove('warn');
+  startTimer();
+  document.getElementById('btn-submit').style.display = 'block';
+  document.getElementById('btn-reset').style.display = 'none';
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+document.getElementById('btn-submit').addEventListener('click', evaluate);
+document.getElementById('btn-reset').addEventListener('click', resetQuiz);
+
+startTimer();
+</script>
+</body>
+</html>
