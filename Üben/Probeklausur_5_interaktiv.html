@@ -103,7 +103,6 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
 <div class="card" id="c3">
   <div class="q-head"><span class="q-num">3</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s3"></span></div>
   <div class="q-text">Geordnete Urliste ($n = 10$): <strong>2, 2, 3, 4, 5, 5, 5, 5, 6, 7</strong>. Wie groß ist der <strong>Dezilabstand</strong> $D_9 - D_1$?</div>
-  <div class="q-note">Regel: Position $= n \cdot p$. Ganzzahlig &rarr; Durchschnitt aus Rang $np$ und $np+1$. Nicht ganzzahlig &rarr; aufrunden.</div>
   <div class="options">
     <label><input type="radio" name="q3" value="a"> a) 4,0</label>
     <label><input type="radio" name="q3" value="b"> b) 4,5</label>
@@ -117,7 +116,6 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
 <div class="card" id="c4">
   <div class="q-head"><span class="q-num">4</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s4"></span></div>
   <div class="q-text">Urliste: <strong>2, 4, 6, 8, 10</strong> ($n = 5$). Wie groß ist die <strong>empirische Varianz</strong> $s^2$?</div>
-  <div class="q-note">$s^2 = \dfrac{1}{n} \displaystyle\sum_{i=1}^n (x_i - \bar{x})^2$</div>
   <div class="options">
     <label><input type="radio" name="q4" value="a"> a) 6</label>
     <label><input type="radio" name="q4" value="b"> b) 8</label>
@@ -131,7 +129,6 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
 <div class="card" id="c5">
   <div class="q-head"><span class="q-num">5</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s5"></span></div>
   <div class="q-text">Drei Parteien erzielen folgende Stimmanteile: <strong>0,50 / 0,30 / 0,20</strong>. Wie groß ist das <strong>normierte Herfindahl-Streuungsmaß</strong> $RHF$?</div>
-  <div class="q-note">$H = 1 - \sum p_j^2$ &nbsp;&nbsp; $H_{\max} = 1 - \dfrac{1}{k}$ &nbsp;&nbsp; $RHF = \dfrac{H}{H_{\max}}$</div>
   <div class="options">
     <label><input type="radio" name="q5" value="a"> a) 0,38</label>
     <label><input type="radio" name="q5" value="b"> b) 0,62</label>
@@ -145,7 +142,6 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
 <div class="card" id="c6">
   <div class="q-head"><span class="q-num">6</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s6"></span></div>
   <div class="q-text">Vier Haushalte mit aufsteigend sortierten Monatseinkommen: <strong>1.000 &euro;, 2.000 &euro;, 3.000 &euro;, 4.000 &euro;</strong> (Gesamt: 10.000 &euro;). Welche Kombination ist korrekt?</div>
-  <div class="q-note">Lorenzkurve: kumulierter Einkommensanteil der ärmsten 50&thinsp;%. &nbsp;|&nbsp; $G = 1 - \frac{1}{n}\displaystyle\sum_{i=1}^n (L_i + L_{i-1})$ mit $L_i$ = kumulierter Einkommensanteil.</div>
   <div class="options">
     <label><input type="radio" name="q6" value="a"> a) Ärmste 50&thinsp;% = 25&thinsp;% des Einkommens; $G = 0{,}20$</label>
     <label><input type="radio" name="q6" value="b"> b) Ärmste 50&thinsp;% = 30&thinsp;% des Einkommens; $G = 0{,}25$</label>
@@ -158,14 +154,13 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
 <!-- Q7 -->
 <div class="card" id="c7">
   <div class="q-head"><span class="q-num">7</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s7"></span></div>
-  <div class="q-text"><strong>Kreuztabelle: Gewerkschaftsmitgliedschaft (UV) &times; SPD-Wahl (AV)</strong></div>
+  <div class="q-text"><strong>Kreuztabelle: Gewerkschaftsmitgliedschaft (UV) &times; SPD-Wahl (AV).</strong> Wie groß ist der <strong>Odds Ratio</strong> für SPD-Wahl (Gewerkschaftsmitglied vs. kein Mitglied)?</div>
   <table class="kt">
     <tr><th></th><th>Gewerkschaftsmitglied</th><th>Kein Mitglied</th></tr>
     <tr><td>SPD gewählt</td><td>60</td><td>20</td></tr>
     <tr><td>SPD nicht gewählt</td><td>40</td><td>80</td></tr>
     <tr><td><strong>Gesamt</strong></td><td>100</td><td>100</td></tr>
   </table>
-  <div class="q-note">Wie groß ist der <strong>Odds Ratio</strong> für SPD-Wahl (Gewerkschaftsmitglied vs. kein Mitglied)?</div>
   <div class="options">
     <label><input type="radio" name="q7" value="a"> a) 1,5</label>
     <label><input type="radio" name="q7" value="b"> b) 3,0</label>
@@ -185,7 +180,6 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
     <tr><td>Grüne nicht gewählt</td><td>10</td><td>40</td></tr>
     <tr><td><strong>Gesamt</strong></td><td>50</td><td>50</td></tr>
   </table>
-  <div class="q-note">$\chi^2 = \sum \dfrac{(f_b - f_e)^2}{f_e}$ &nbsp;|&nbsp; $\varphi = \sqrt{\chi^2/n}$ &nbsp;|&nbsp; $V = \sqrt{\chi^2/(n \cdot \min(r{-}1,\,c{-}1))}$</div>
   <div class="options">
     <label><input type="radio" name="q8" value="a"> a) $\chi^2 = 36$; $\varphi = 0{,}60$; Cramér's $V = 0{,}60$</label>
     <label><input type="radio" name="q8" value="b"> b) $\chi^2 = 36$; $\varphi = 0{,}36$; Cramér's $V = 0{,}36$</label>
@@ -203,7 +197,6 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
     <tr><th>$x$ (Bildungsjahre)</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
     <tr><th>$y$ (Einkommen, Tsd.&thinsp;&euro;)</th><td>2</td><td>3</td><td>5</td><td>4</td><td>6</td></tr>
   </table>
-  <div class="q-note">Berechne zunächst $s_{xy} = \frac{1}{n}\sum(x_i-\bar{x})(y_i-\bar{y})$, dann $r = s_{xy}/(s_x \cdot s_y)$.</div>
   <div class="options">
     <label><input type="radio" name="q9" value="a"> a) $r = 0{,}70$</label>
     <label><input type="radio" name="q9" value="b"> b) $r = 0{,}80$</label>
@@ -225,7 +218,6 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
     <tr><td>D</td><td>4</td><td>5</td></tr>
     <tr><td>E</td><td>5</td><td>4</td></tr>
   </table>
-  <div class="q-note">$r_s = 1 - \dfrac{6 \sum d_i^2}{n(n^2-1)}$</div>
   <div class="options">
     <label><input type="radio" name="q10" value="a"> a) $r_s = 0{,}60$</label>
     <label><input type="radio" name="q10" value="b"> b) $r_s = 0{,}80$</label>
@@ -245,7 +237,6 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
     <tr><td>1</td><td>0,50</td></tr>
     <tr><td>2</td><td>0,30</td></tr>
   </table>
-  <div class="q-note">$E(X) = \sum_i x_i \cdot P(X = x_i)$</div>
   <div class="options">
     <label><input type="radio" name="q11" value="a"> a) $E(X) = 0{,}50$</label>
     <label><input type="radio" name="q11" value="b"> b) $E(X) = 1{,}00$</label>
@@ -259,7 +250,6 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
 <div class="card" id="c12">
   <div class="q-head"><span class="q-num">12</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s12"></span></div>
   <div class="q-text">Politisches Wissensscore: <strong>stetige</strong> Zufallsvariable $X \sim N(\mu = 100,\, \sigma = 15)$. Wie groß ist $P(X \leq 115)$?</div>
-  <div class="q-note">Z-Transformation: $z = (x - \mu)/\sigma$ &nbsp;|&nbsp; $\Phi(1) = 0{,}8413$; $\Phi(2) = 0{,}9772$</div>
   <div class="options">
     <label><input type="radio" name="q12" value="a"> a) 0,5000</label>
     <label><input type="radio" name="q12" value="b"> b) 0,6827</label>
@@ -273,7 +263,6 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
 <div class="card" id="c13">
   <div class="q-head"><span class="q-num">13</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s13"></span></div>
   <div class="q-text">$X \sim N(\mu = 50,\, \sigma = 10)$. Gesucht: Wert $x$, sodass $P(X \leq x) = 0{,}025$.</div>
-  <div class="q-note">Quantilsformel: $x = \mu + z_p \cdot \sigma$ &nbsp;|&nbsp; $z_{0{,}025} = -1{,}96$</div>
   <div class="options">
     <label><input type="radio" name="q13" value="a"> a) $x = 25{,}4$</label>
     <label><input type="radio" name="q13" value="b"> b) $x = 30{,}4$</label>
@@ -287,7 +276,6 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
 <div class="card" id="c14">
   <div class="q-head"><span class="q-num">14</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s14"></span></div>
   <div class="q-text">Stichprobe: $n = 100$, $\bar{x} = 3{,}20$, $s = 0{,}50$. Signifikanzniveau $\alpha = 0{,}05$. Wie lautet das <strong>95&thinsp;%-Konfidenzintervall</strong>?</div>
-  <div class="q-note">$\bar{x} \pm z_{0{,}975} \cdot \dfrac{s}{\sqrt{n}}$ &nbsp;|&nbsp; $z_{0{,}975} = 1{,}96$</div>
   <div class="options">
     <label><input type="radio" name="q14" value="a"> a) $[3{,}10;\; 3{,}30]$</label>
     <label><input type="radio" name="q14" value="b"> b) $[3{,}15;\; 3{,}25]$</label>
@@ -314,7 +302,6 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
 <div class="card" id="c16">
   <div class="q-head"><span class="q-num">16</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s16"></span></div>
   <div class="q-text"><strong>Z-Test:</strong> $n = 100$, $\bar{x} = 5{,}30$, $\sigma = 1{,}50$ (bekannt). $H_0\colon \mu = 5{,}0$ gegen $H_1\colon \mu \neq 5{,}0$ (zweiseitig, $\alpha = 0{,}05$). Kritischer Wert: $\pm 1{,}96$.</div>
-  <div class="q-note">$Z = (\bar{x} - \mu_0)/(\sigma/\sqrt{n})$</div>
   <div class="options">
     <label><input type="radio" name="q16" value="a"> a) $Z = 1{,}00$; $H_0$ kann nicht abgelehnt werden.</label>
     <label><input type="radio" name="q16" value="b"> b) $Z = 2{,}00$; $H_0$ kann abgelehnt werden.</label>
@@ -328,7 +315,6 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
 <div class="card" id="c17">
   <div class="q-head"><span class="q-num">17</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s17"></span></div>
   <div class="q-text"><strong>T-Test:</strong> $n = 25$, $\bar{x} = 4{,}80$, $s = 1{,}00$ (Stichproben-SD). $H_0\colon \mu = 5{,}0$ gegen $H_1\colon \mu \neq 5{,}0$ (zweiseitig, $\alpha = 0{,}05$). Kritischer Wert: $t_{24;\,0{,}975} = \pm 2{,}064$.</div>
-  <div class="q-note">$t = (\bar{x} - \mu_0)/(s/\sqrt{n})$</div>
   <div class="options">
     <label><input type="radio" name="q17" value="a"> a) $t = -2{,}00$; $H_0$ kann abgelehnt werden.</label>
     <label><input type="radio" name="q17" value="b"> b) $t = -1{,}00$; $H_0$ kann abgelehnt werden.</label>
@@ -342,7 +328,6 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
 <div class="card" id="c18">
   <div class="q-head"><span class="q-num">18</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s18"></span></div>
   <div class="q-text"><strong>Approximativer Binomialtest:</strong> $n = 400$, $\hat{\pi} = 0{,}54$. $H_0\colon \pi = 0{,}50$ gegen $H_1\colon \pi > 0{,}50$ (einseitig, $\alpha = 0{,}05$). Kritischer Wert: $1{,}645$.</div>
-  <div class="q-note">$Z = \dfrac{\hat{\pi} - \pi_0}{\sqrt{\pi_0(1-\pi_0)/n}}$</div>
   <div class="options">
     <label><input type="radio" name="q18" value="a"> a) $Z = 1{,}20$; $H_0$ kann nicht abgelehnt werden.</label>
     <label><input type="radio" name="q18" value="b"> b) $Z = 1{,}60$; $H_0$ kann nicht abgelehnt werden.</label>
