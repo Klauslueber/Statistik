@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probeklausur 7 — Statistik (49 Fragen, 100 min)</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$']] },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6f8;color:#222;font-size:15px;line-height:1.55}
+header{background:#1a3a5c;color:#fff;padding:16px 24px;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+header h1{font-size:1.05rem;font-weight:700;flex:1}
+#timer{font-size:1.1rem;font-weight:700;background:#0d2540;padding:6px 14px;border-radius:6px;min-width:70px;text-align:center}
+#timer.warn{background:#b00020;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+#progress-bar-wrap{width:100%;height:6px;background:#0d2540;border-radius:3px}
+#progress-bar{height:6px;background:#4caf50;border-radius:3px;transition:width .3s}
+#progress-text{font-size:.8rem;color:#cdd}
+main{max-width:860px;margin:0 auto;padding:20px 16px}
+.card{background:#fff;border-radius:8px;padding:18px 20px;margin-bottom:18px;border-left:4px solid #1a3a5c;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.card.ok{border-left-color:#2e7d32;background:#f1f8f2}
+.card.err{border-left-color:#b71c1c;background:#fff5f5}
+.q-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.q-num{font-size:.75rem;font-weight:700;background:#1a3a5c;color:#fff;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.q-type{font-size:.7rem;background:#e8edf3;color:#555;padding:2px 7px;border-radius:10px}
+.q-text{font-weight:600;font-size:.97rem;margin-bottom:8px}
+.options label{display:flex;align-items:flex-start;gap:9px;padding:7px 10px;border-radius:6px;cursor:pointer;margin-bottom:3px;transition:background .15s}
+.options label:hover{background:#f0f4f8}
+.options label.sel{background:#e3edf9}
+.options label.right{background:#e8f5e9;font-weight:600}
+.options label.struck{background:#ffebee;text-decoration:line-through;color:#999}
+input[type=radio]{margin-top:3px;flex-shrink:0}
+.hint{display:none;margin-top:10px;padding:10px 14px;background:#fff3cd;border-left:3px solid #f9a825;border-radius:0 6px 6px 0;font-size:.87rem;color:#444}
+.status{font-size:.8rem;font-weight:700;margin-left:auto;padding:3px 8px;border-radius:4px}
+.status.ok-s{background:#e8f5e9;color:#2e7d32}
+.status.err-s{background:#ffebee;color:#b71c1c}
+table.kt{border-collapse:collapse;margin:10px 0;font-size:.88rem}
+table.kt th,table.kt td{border:1px solid #bbb;padding:5px 10px;text-align:center}
+table.kt th{background:#e8edf3;font-weight:600}
+.stata{background:#1e1e1e;color:#d4d4d4;font-family:'Courier New',monospace;font-size:.8rem;padding:12px 14px;border-radius:6px;margin:10px 0;white-space:pre;overflow-x:auto}
+#score{display:none;max-width:860px;margin:0 auto 20px;padding:22px 28px;border-radius:8px;text-align:center;font-size:1.05rem}
+#score.pass{background:#e8f5e9;border:2px solid #2e7d32;color:#1b5e20}
+#score.fail{background:#ffebee;border:2px solid #b71c1c;color:#7f0000}
+#score .num{font-size:2.4rem;font-weight:800;margin:8px 0}
+.btn-wrap{text-align:center;margin:10px 0 30px}
+button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radius:8px;cursor:pointer}
+#btn-submit{background:#1a3a5c;color:#fff}
+#btn-submit:hover{background:#0d2540}
+#btn-reset{display:none;background:#2e7d32;color:#fff}
+#btn-reset:hover{background:#1b5e20}
+</style>
+</head>
+<body>
+<header>
+  <h1>Probeklausur 7 &mdash; Einführung in die sozialwissenschaftliche Statistik <span style="font-weight:400;font-size:.85rem;opacity:.8">(alle MC-Fragen aus den Tutorien #2&ndash;#12)</span></h1>
+  <div id="timer">100:00</div>
+  <div style="flex-basis:100%">
+    <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+      <span id="progress-text">0 / 49 beantwortet</span>
+      <span style="font-size:.8rem;color:#cdd">49 Fragen &middot; 100 Minuten</span>
+    </div>
+    <div id="progress-bar-wrap"><div id="progress-bar" style="width:0%"></div></div>
+  </div>
+</header>
+
+<main>
+<div id="score"></div>
+
+<!-- ===================== Tutorium #2 — Skalenniveaus ===================== -->
+
+<!-- Q1 -->
+<div class="card" id="c1">
+  <div class="q-head"><span class="q-num">1</span><span class="q-type">Verständnis</span><span class="status" id="s1"></span></div>
+  <div class="q-text">Welche der folgenden Variablen ist von Natur aus <strong>diskret</strong>?</div>
+  <div class="options">
+    <label><input type="radio" name="q1" value="a"> a) Länge der Umlaufbahn des Mondes.</label>
+    <label><input type="radio" name="q1" value="b"> b) Körpergröße.</label>
+    <label><input type="radio" name="q1" value="c"> c) Wohnfläche (Größe einer Wohnung).</label>
+    <label><input type="radio" name="q1" value="d"> d) Schulnoten.</label>
+  </div>
+  <div class="hint" id="h1">Korrekt: <strong>d</strong>. Schulnoten sind von Natur aus diskret (abzählbare Kategorien: 1&ndash;6). Umlaufbahnlänge, Körpergröße und Wohnfläche sind kontinuierliche Größen &mdash; auch wenn sie in der Praxis gerundet gemessen werden, sind sie ihrer Natur nach stetig.</div>
+</div>
+
+<!-- Q2 -->
+<div class="card" id="c2">
+  <div class="q-head"><span class="q-num">2</span><span class="q-type">Verständnis</span><span class="status" id="s2"></span></div>
+  <div class="q-text">Was versteht man unter <strong>diskreten Variablen</strong>?</div>
+  <div class="options">
+    <label><input type="radio" name="q2" value="a"> a) Eine Variable, die in einem Face-to-Face-Interview erhoben wurde, bei dem den Befragten Diskretion zugesichert wurde.</label>
+    <label><input type="radio" name="q2" value="b"> b) Eine Variable, die innerhalb eines beliebigen Intervalls unendlich viele Ausprägungen annehmen kann.</label>
+    <label><input type="radio" name="q2" value="c"> c) Eine Variable, die nur zwei Ausprägungen annehmen kann.</label>
+    <label><input type="radio" name="q2" value="d"> d) Eine Variable, die nur eine abzählbare Zahl von Ausprägungen annehmen kann (abzählbar unendlich oder endlich viele Ausprägungen).</label>
+  </div>
+  <div class="hint" id="h2">Korrekt: <strong>d</strong>. Diskrete Variablen haben abzählbar viele Ausprägungen (endlich oder abzählbar unendlich). b) beschreibt stetige Variablen. c) beschreibt speziell dichotome (binäre) Variablen &mdash; einen Sonderfall diskreter Variablen. a) verwechselt den Begriff mit "Diskretion" im Sinne von Vertraulichkeit.</div>
+</div>
+
+<!-- Q3 -->
+<div class="card" id="c3">
+  <div class="q-head"><span class="q-num">3</span><span class="q-type">Verständnis</span><span class="status" id="s3"></span></div>
+  <div class="q-text">Was versteht man unter einer <strong>stetigen Variable</strong>?</div>
+  <div class="options">
+    <label><input type="radio" name="q3" value="a"> a) Eine Variable, die der nummerischen Repräsentation einer qualitativen Variablen entspricht.</label>
+    <label><input type="radio" name="q3" value="b"> b) Eine Variable, die innerhalb eines Intervalls unendlich viele Ausprägungen annehmen kann.</label>
+    <label><input type="radio" name="q3" value="c"> c) Eine Variable, die nur eine begrenzte Zahl von Ausprägungen annehmen kann.</label>
+    <label><input type="radio" name="q3" value="d"> d) Eine Variable, die in einem kleinen Intervall mindestens noch eine weitere Ausprägung annehmen kann.</label>
+  </div>
+  <div class="hint" id="h3">Korrekt: <strong>b</strong>. Stetige Variablen können in jedem Intervall unendlich viele Werte annehmen (z.&thinsp;B. Zeit, Einkommen als reelle Zahl). d) klingt ähnlich, erfasst aber nur unzureichend die Dichte-Eigenschaft &mdash; entscheidend ist die Unendlichkeit der Ausprägungen in jedem Intervall, nicht nur "mindestens eine weitere".</div>
+</div>
+
+<!-- Q4 -->
+<div class="card" id="c4">
+  <div class="q-head"><span class="q-num">4</span><span class="q-type">Verständnis</span><span class="status" id="s4"></span></div>
+  <div class="q-text">Welche der folgenden Variablen ist <strong>nominalskaliert</strong>?</div>
+  <div class="options">
+    <label><input type="radio" name="q4" value="a"> a) Intelligenz.</label>
+    <label><input type="radio" name="q4" value="b"> b) Höchster Schulabschluss.</label>
+    <label><input type="radio" name="q4" value="c"> c) Einwohnerzahl.</label>
+    <label><input type="radio" name="q4" value="d"> d) Arbeitsmarktstatus.</label>
+  </div>
+  <div class="hint" id="h4">Korrekt: <strong>d</strong>. Arbeitsmarktstatus (z.&thinsp;B. erwerbstätig, arbeitslos, in Ausbildung, Rentner) hat keine natürliche Rangfolge &rarr; nominalskaliert. Höchster Schulabschluss ist ordinalskaliert (Rangfolge). Intelligenz (IQ-Score) wird als intervallskaliert behandelt. Einwohnerzahl ist ratioskaliert (echter Nullpunkt, Zählvariable).</div>
+</div>
+
+<!-- Q5 -->
+<div class="card" id="c5">
+  <div class="q-head"><span class="q-num">5</span><span class="q-type">Verständnis</span><span class="status" id="s5"></span></div>
+  <div class="q-text">Welche der folgenden Variablen wird auf einer <strong>Intervallskala</strong> gemessen?</div>
+  <div class="options">
+    <label><input type="radio" name="q5" value="a"> a) Arbeitsmarktstatus.</label>
+    <label><input type="radio" name="q5" value="b"> b) Einkommen.</label>
+    <label><input type="radio" name="q5" value="c"> c) Zahl der Studierenden an der Goethe-Universität Frankfurt.</label>
+    <label><input type="radio" name="q5" value="d"> d) Körpertemperatur.</label>
+  </div>
+  <div class="hint" id="h5">Korrekt: <strong>d</strong>. Körpertemperatur (in &deg;C) hat gleiche Abstände, aber keinen echten Nullpunkt (0&thinsp;&deg;C &ne; "keine Temperatur") &rarr; Intervallskala. Einkommen und Zahl der Studierenden haben einen echten Nullpunkt (0&thinsp;&euro; = kein Einkommen, 0 Studierende = niemand) &rarr; Ratioskala. Arbeitsmarktstatus ist nominalskaliert.</div>
+</div>
+
+<!-- Q6 -->
+<div class="card" id="c6">
+  <div class="q-head"><span class="q-num">6</span><span class="q-type">Verständnis</span><span class="status" id="s6"></span></div>
+  <div class="q-text">Welche der folgenden Aussagen zur <strong>Ratioskala</strong> ist richtig?</div>
+  <div class="options">
+    <label><input type="radio" name="q6" value="a"> a) Variablen, die auf einer Ratioskala gemessen werden, können nur mit wenigen statistischen Verfahren ausgewertet werden.</label>
+    <label><input type="radio" name="q6" value="b"> b) Variablen, die auf einer Ratioskala gemessen werden, besitzen einen natürlichen Nullpunkt.</label>
+    <label><input type="radio" name="q6" value="c"> c) Variablen, die auf einer Ratioskala gemessen werden, besitzen keinen natürlichen Nullpunkt.</label>
+    <label><input type="radio" name="q6" value="d"> d) Variablen, die auf einer Ratioskala gemessen werden, besitzen keine inhärente Ordnung.</label>
+  </div>
+  <div class="hint" id="h6">Korrekt: <strong>b</strong>. Die Ratioskala (Verhältnisskala) ist durch einen echten, natürlichen Nullpunkt definiert (z.&thinsp;B. 0&thinsp;&euro; = kein Einkommen). Das erlaubt sinnvolle Verhältnisaussagen ("doppelt so viel"). Ratioskalierte Variablen haben zudem eine inhärente Ordnung und können mit allen statistischen Verfahren ausgewertet werden &mdash; sie stehen am oberen Ende der Skalenhierarchie.</div>
+</div>
+
+<!-- Q7 -->
+<div class="card" id="c7">
+  <div class="q-head"><span class="q-num">7</span><span class="q-type">Verständnis</span><span class="status" id="s7"></span></div>
+  <div class="q-text">Was versteht man unter einer <strong>topologischen Skala</strong>?</div>
+  <div class="options">
+    <label><input type="radio" name="q7" value="a"> a) Skalen, die einen natürlichen Nullpunkt besitzen.</label>
+    <label><input type="radio" name="q7" value="b"> b) Skalen, die entweder ein ordinales oder nominales Messniveau haben.</label>
+    <label><input type="radio" name="q7" value="c"> c) Skalen, deren Abstände sich sinnvoll interpretieren lassen.</label>
+    <label><input type="radio" name="q7" value="d"> d) Skalen, die mindestens intervall-skaliert sind.</label>
+  </div>
+  <div class="hint" id="h7">Korrekt: <strong>b</strong>. "Topologisch" bezeichnet Skalen ohne metrische Struktur &mdash; also nominal und ordinal (nur Klassifikation bzw. Rangfolge, keine interpretierbaren Abstände). Metrische Skalen (Intervall- und Ratioskala, Option d) sind das Gegenstück dazu. Ein natürlicher Nullpunkt (Option a) ist spezifisch für die Ratioskala.</div>
+</div>
+
+<!-- ===================== Tutorium #3 — Häufigkeiten ===================== -->
+
+<!-- Q8 -->
+<div class="card" id="c8">
+  <div class="q-head"><span class="q-num">8</span><span class="q-type">Verständnis</span><span class="status" id="s8"></span></div>
+  <div class="q-text">Ab welchem Skalenniveau sind <strong>Häufigkeitsauszählungen</strong> möglich?</div>
+  <div class="options">
+    <label><input type="radio" name="q8" value="a"> a) Absolut.</label>
+    <label><input type="radio" name="q8" value="b"> b) Ratio.</label>
+    <label><input type="radio" name="q8" value="c"> c) Ordinal.</label>
+    <label><input type="radio" name="q8" value="d"> d) Nominal.</label>
+  </div>
+  <div class="hint" id="h8">Korrekt: <strong>d</strong>. Häufigkeiten (Zählungen, wie oft eine Kategorie vorkommt) lassen sich bereits für nominalskalierte Variablen bilden &mdash; das niedrigste Skalenniveau reicht aus. "Absolut" ist keine gültige Skalenniveau-Bezeichnung (Verwechslung mit absoluten Häufigkeiten).</div>
+</div>
+
+<!-- Q9 -->
+<div class="card" id="c9">
+  <div class="q-head"><span class="q-num">9</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s9"></span></div>
+  <div class="q-text">Schauen Sie sich die folgende Tabelle an. Welchen Wert hat $\sum_{i=3}^{5} x_i$?</div>
+  <table class="kt">
+    <tr><th>$i$</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+    <tr><th>$x_i$</th><td>12</td><td>8</td><td>5</td><td>26</td><td>3</td></tr>
+  </table>
+  <div class="options">
+    <label><input type="radio" name="q9" value="a"> a) 34</label>
+    <label><input type="radio" name="q9" value="b"> b) 54</label>
+    <label><input type="radio" name="q9" value="c"> c) 25</label>
+    <label><input type="radio" name="q9" value="d"> d) 43</label>
+  </div>
+  <div class="hint" id="h9">Korrekt: <strong>a</strong>. $\sum_{i=3}^{5}x_i = x_3+x_4+x_5 = 5+26+3=34$. Falle: 54 entsteht, wenn man versehentlich ab $i=1$ oder $i=2$ aufsummiert.</div>
+</div>
+
+<!-- Q10 -->
+<div class="card" id="c10">
+  <div class="q-head"><span class="q-num">10</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s10"></span></div>
+  <div class="q-text">1.000 Personen wurden nach ihrer Parteipräferenz gefragt. Welche Werte haben die Zellen $a$ und $b$?</div>
+  <table class="kt">
+    <tr><th>$a_j$</th><th>$h_j$</th><th>$f_j$</th></tr>
+    <tr><td>CDU</td><td>332</td><td>0,332</td></tr>
+    <tr><td>SPD</td><td>$a$</td><td>0,288</td></tr>
+    <tr><td>Grüne</td><td>151</td><td>$b$</td></tr>
+    <tr><td>Linke</td><td>86</td><td>0,086</td></tr>
+    <tr><td>FDP</td><td>143</td><td>0,143</td></tr>
+    <tr><td><strong>Gesamt</strong></td><td>1000</td><td>1,0000</td></tr>
+  </table>
+  <div class="options">
+    <label><input type="radio" name="q10" value="a"> a) $a = 289$, $b = 0{,}151$.</label>
+    <label><input type="radio" name="q10" value="b"> b) $a = 286$, $b = 0{,}159$.</label>
+    <label><input type="radio" name="q10" value="c"> c) $a = 288$, $b = 0{,}151$.</label>
+    <label><input type="radio" name="q10" value="d"> d) $a = 291$, $b = 0{,}160$.</label>
+  </div>
+  <div class="hint" id="h10">Korrekt: <strong>c</strong>. $a = 1000-332-151-86-143 = 288$ (stimmt mit $f=0{,}288$ überein). $b = 151/1000 = 0{,}151$.</div>
+</div>
+
+<!-- Q11 -->
+<div class="card" id="c11">
+  <div class="q-head"><span class="q-num">11</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s11"></span></div>
+  <div class="q-text">1.000 Personen wurden nach ihrer Parteipräferenz gefragt. Welche Werte haben die Zellen $a$ und $b$?</div>
+  <table class="kt">
+    <tr><th>$a_j$</th><th>$h_j$</th><th>$f_j$</th><th>$F_j$</th></tr>
+    <tr><td>CDU</td><td>377</td><td>0,377</td><td>$a$</td></tr>
+    <tr><td>SPD</td><td>284</td><td>0,284</td><td>$b$</td></tr>
+    <tr><td>Grüne</td><td>145</td><td>0,145</td><td>0,806</td></tr>
+    <tr><td>Linke</td><td>82</td><td>0,082</td><td>0,888</td></tr>
+    <tr><td>FDP</td><td>112</td><td>0,112</td><td>1,000</td></tr>
+    <tr><td><strong>Gesamt</strong></td><td>1000</td><td>1,0000</td></tr>
+  </table>
+  <div class="options">
+    <label><input type="radio" name="q11" value="a"> a) $a = 377$, $b = 661$.</label>
+    <label><input type="radio" name="q11" value="b"> b) $a = 0{,}379$, $b = 0{,}665$.</label>
+    <label><input type="radio" name="q11" value="c"> c) $a = 0{,}377$, $b = 0{,}661$.</label>
+    <label><input type="radio" name="q11" value="d"> d) $a = 0{,}377$, $b = 0{,}651$.</label>
+  </div>
+  <div class="hint" id="h11">Korrekt: <strong>c</strong>. $F_1 = f_1 = 0{,}377$. $F_2 = f_1+f_2 = 0{,}377+0{,}284=0{,}661$. Falle: die erste Option ohne Komma verwechselt absolute mit relativer Schreibweise.</div>
+</div>
+
+<!-- ===================== Tutorium #4 — Kreuztabellen ===================== -->
+
+<!-- Q12 -->
+<div class="card" id="c12">
+  <div class="q-head"><span class="q-num">12</span><span class="q-type">Verständnis</span><span class="status" id="s12"></span></div>
+  <div class="q-text">Wie werden die abhängige und die unabhängige Variable normalerweise in einer <strong>Kreuztabelle</strong> angeordnet?</div>
+  <div class="options">
+    <label><input type="radio" name="q12" value="a"> a) Die Anordnung hängt von der spezifischen Fragestellung ab.</label>
+    <label><input type="radio" name="q12" value="b"> b) Die abhängige Variable wird in den Spalten und die unabhängige Variable in den Zeilen angeordnet.</label>
+    <label><input type="radio" name="q12" value="c"> c) Die unabhängige Variable wird in den Zeilen und die abhängige Variable in den Spalten angeordnet.</label>
+    <label><input type="radio" name="q12" value="d"> d) Die unabhängige Variable wird in den Spalten und die abhängige Variable in den Zeilen angeordnet.</label>
+  </div>
+  <div class="hint" id="h12">Korrekt: <strong>d</strong>. Konvention: unabhängige Variable (UV) in den Spalten, abhängige Variable (AV) in den Zeilen. So lassen sich Spaltenprozente direkt als bedingte Verteilung der AV gegeben der UV lesen.</div>
+</div>
+
+<!-- Q13 -->
+<div class="card" id="c13">
+  <div class="q-head"><span class="q-num">13</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s13"></span></div>
+  <div class="q-text">Schauen Sie sich die folgende Kreuztabelle an (gemeinsame relative Häufigkeiten). Welche Interpretation ist korrekt?</div>
+  <table class="kt">
+    <tr><th rowspan="2">Parteipräferenz</th><th colspan="2">Geschlecht</th><th rowspan="2">Gesamt</th></tr>
+    <tr><th>Männlich</th><th>Weiblich</th></tr>
+    <tr><td>CDU/CSU</td><td>0,1958</td><td>0,1886</td><td>0,3844</td></tr>
+    <tr><td>SPD</td><td>0,1531</td><td>0,1281</td><td>0,2812</td></tr>
+    <tr><td>Linke</td><td>0,0688</td><td>0,0383</td><td>0,1070</td></tr>
+    <tr><td>Grüne</td><td>0,0677</td><td>0,0666</td><td>0,1342</td></tr>
+    <tr><td>FDP</td><td>0,0355</td><td>0,0255</td><td>0,0610</td></tr>
+    <tr><td>AfD</td><td>0,0211</td><td>0,0111</td><td>0,0322</td></tr>
+    <tr><td><strong>Gesamt</strong></td><td>0,5419</td><td>0,4581</td><td>1,0000</td></tr>
+  </table>
+  <div class="options">
+    <label><input type="radio" name="q13" value="a"> a) 19,58&thinsp;% der Männer haben die CDU/CSU gewählt.</label>
+    <label><input type="radio" name="q13" value="b"> b) Männer wählen häufiger die CDU/CSU als Frauen.</label>
+    <label><input type="radio" name="q13" value="c"> c) 45,81&thinsp;% der Befragten sind männlich.</label>
+    <label><input type="radio" name="q13" value="d"> d) 12,81&thinsp;% der Befragten sind weiblich und haben die SPD gewählt.</label>
+  </div>
+  <div class="hint" id="h13">Korrekt: <strong>d</strong>. Die Tabelle zeigt gemeinsame (Joint) relative Häufigkeiten. 0,1281 = Anteil aller Befragten, die weiblich sind UND SPD gewählt haben. Falle a): 19,58&thinsp;% ist der Anteil an der Gesamtstichprobe, nicht der Anteil unter den Männern (das wäre eine Spaltenprozentzahl: $0{,}1958/0{,}5419\approx36{,}1\,\%$). Falle b): bedingt auf Geschlecht wählen sogar mehr Frauen CDU/CSU ($41{,}2\,\%$ vs. $36{,}1\,\%$ bei Männern). Falle c): 45,81&thinsp;% sind weiblich, nicht männlich (54,19&thinsp;% sind männlich).</div>
+</div>
+
+<!-- Q14 -->
+<div class="card" id="c14">
+  <div class="q-head"><span class="q-num">14</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s14"></span></div>
+  <div class="q-text">Schauen Sie sich die folgende Kreuztabelle an (absolute Häufigkeiten). Berechnen Sie $\chi^2$.</div>
+  <table class="kt">
+    <tr><th rowspan="2">Y</th><th colspan="2">X</th><th rowspan="2">Gesamt</th></tr>
+    <tr><th>$b_1$</th><th>$b_2$</th></tr>
+    <tr><td>$a_1$</td><td>180</td><td>220</td><td>400</td></tr>
+    <tr><td>$a_2$</td><td>220</td><td>180</td><td>400</td></tr>
+    <tr><td><strong>Gesamt</strong></td><td>400</td><td>400</td><td>800</td></tr>
+  </table>
+  <div class="options">
+    <label><input type="radio" name="q14" value="a"> a) $\chi^2 = 8$</label>
+    <label><input type="radio" name="q14" value="b"> b) $\chi^2 = 6{,}8$</label>
+    <label><input type="radio" name="q14" value="c"> c) $\chi^2 = 8{,}4$</label>
+    <label><input type="radio" name="q14" value="d"> d) $\chi^2 = 7{,}4$</label>
+  </div>
+  <div class="hint" id="h14">Korrekt: <strong>a</strong>. Erwartete Häufigkeiten unter Unabhängigkeit: alle Zellen $=400\cdot400/800=200$. $\chi^2=\sum(O-E)^2/E=4\cdot(20^2/200)=4\cdot2=8$.</div>
+</div>
+
+<!-- ===================== Tutorium #5 — Lagemaße ===================== -->
+
+<!-- Q15 -->
+<div class="card" id="c15">
+  <div class="q-head"><span class="q-num">15</span><span class="q-type">Verständnis</span><span class="status" id="s15"></span></div>
+  <div class="q-text">Der <strong>Mittelwert</strong> einer Verteilung entspricht &hellip;</div>
+  <div class="options">
+    <label><input type="radio" name="q15" value="a"> a) dem Wert mit den kleinsten Abstandsquadraten zu allen Daten.</label>
+    <label><input type="radio" name="q15" value="b"> b) dem Wert mit der größten Häufigkeit.</label>
+    <label><input type="radio" name="q15" value="c"> c) dem Wert der Summe aller absoluten Abstände.</label>
+    <label><input type="radio" name="q15" value="d"> d) dem Wert mit den kleinsten absoluten Gesamtabständen zu allen Daten.</label>
+  </div>
+  <div class="hint" id="h15">Korrekt: <strong>a</strong>. Der Mittelwert minimiert die Summe der quadrierten Abweichungen (Least-Squares-Eigenschaft). b) beschreibt den Modus. d) beschreibt den Median (minimiert die Summe der absoluten Abstände). c) ist keine sinnvolle Definition eines Lagemaßes.</div>
+</div>
+
+<!-- Q16 -->
+<div class="card" id="c16">
+  <div class="q-head"><span class="q-num">16</span><span class="q-type">Verständnis</span><span class="status" id="s16"></span></div>
+  <div class="q-text">Welche der folgenden Aussagen zum <strong>Modus</strong> ist richtig?</div>
+  <div class="options">
+    <label><input type="radio" name="q16" value="a"> a) Der Modus einer Verteilung darf ab dem Messniveau einer Intervallskala interpretiert werden.</label>
+    <label><input type="radio" name="q16" value="b"> b) Der Modus einer Verteilung darf nicht für intervall-skalierte Variablen interpretiert werden.</label>
+    <label><input type="radio" name="q16" value="c"> c) Der Modus einer Verteilung darf ab dem nominalen Skalenniveau interpretiert werden.</label>
+    <label><input type="radio" name="q16" value="d"> d) Der Modus einer Verteilung darf ab dem Messniveau einer Ratioskala interpretiert werden.</label>
+  </div>
+  <div class="hint" id="h16">Korrekt: <strong>c</strong>. Der Modus (häufigster Wert) ist das einzige Lagemaß, das bereits für nominalskalierte Variablen sinnvoll ist &mdash; und bleibt auch auf höheren Skalenniveaus interpretierbar. b) ist falsch: der Modus ist auch für intervallskalierte Variablen zulässig, nur eben nicht das informativste Maß dort.</div>
+</div>
+
+<!-- Q17 -->
+<div class="card" id="c17">
+  <div class="q-head"><span class="q-num">17</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s17"></span></div>
+  <div class="q-text">Bestimmen Sie den Median der folgenden geordneten Urliste ($n = 13$): <strong>1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 5, 6</strong>.</div>
+  <div class="options">
+    <label><input type="radio" name="q17" value="a"> a) 2,5</label>
+    <label><input type="radio" name="q17" value="b"> b) 2</label>
+    <label><input type="radio" name="q17" value="c"> c) 3</label>
+    <label><input type="radio" name="q17" value="d"> d) 4</label>
+  </div>
+  <div class="hint" id="h17">Korrekt: <strong>c</strong>. Bei $n=13$ (ungerade) liegt der Median an Position $(13+1)/2=7$. Die 7. Position in der geordneten Liste ist 3.</div>
+</div>
+
+<!-- Q18 -->
+<div class="card" id="c18">
+  <div class="q-head"><span class="q-num">18</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s18"></span></div>
+  <div class="q-text">Bestimmen Sie den Modus der folgenden geordneten Urliste: <strong>1, 2, 3, 3, 4, 4, 5, 5, 5, 5, 6, 7, 7</strong>.</div>
+  <div class="options">
+    <label><input type="radio" name="q18" value="a"> a) 4</label>
+    <label><input type="radio" name="q18" value="b"> b) 4,5</label>
+    <label><input type="radio" name="q18" value="c"> c) 4,385</label>
+    <label><input type="radio" name="q18" value="d"> d) 5</label>
+  </div>
+  <div class="hint" id="h18">Korrekt: <strong>d</strong>. 5 kommt viermal vor (öfter als jede andere Ausprägung) &rarr; Modus = 5. 4,5 und 4,385 sind keine sinnvollen Modus-Werte bei ganzzahligen Ausprägungen.</div>
+</div>
+
+<!-- Q19 -->
+<div class="card" id="c19">
+  <div class="q-head"><span class="q-num">19</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s19"></span></div>
+  <div class="q-text">Bestimmen Sie den Median der folgenden geordneten Urliste ($n = 14$): <strong>1, 2, 3, 3, 3, 3, 3, 4, 5, 5, 6, 6, 7, 7</strong>.</div>
+  <div class="options">
+    <label><input type="radio" name="q19" value="a"> a) 3,5</label>
+    <label><input type="radio" name="q19" value="b"> b) 4</label>
+    <label><input type="radio" name="q19" value="c"> c) $\tilde{x}_1 = 3$, $\tilde{x}_2 = 4$.</label>
+    <label><input type="radio" name="q19" value="d"> d) 3</label>
+  </div>
+  <div class="hint" id="h19">Korrekt: <strong>a</strong>. Bei $n=14$ (gerade) sind die beiden mittleren Werte an Position 7 und 8: $x_7=3$, $x_8=4$. Median $=(3+4)/2=3{,}5$. Falle: manche Darstellungen geben bei unterschiedlichen mittleren Werten beide Werte separat an ($\tilde{x}_1,\tilde{x}_2$) &mdash; in dieser Vorlesung gilt aber die übliche Konvention: der Median ist der Mittelwert der beiden mittleren Werte.</div>
+</div>
+
+<!-- Q20 -->
+<div class="card" id="c20">
+  <div class="q-head"><span class="q-num">20</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s20"></span></div>
+  <div class="q-text">Schauen Sie sich die folgende Tabelle an. Bestimmen Sie das <strong>arithmetische Mittel</strong> des Einkommens.</div>
+  <table class="kt">
+    <tr><th>$i$</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+    <tr><th>Einkommen in &euro;</th><td>2174,45</td><td>2176,00</td><td>2743,73</td><td>1518,70</td><td>4167,32</td></tr>
+  </table>
+  <div class="options">
+    <label><input type="radio" name="q20" value="a"> a) 2556,04</label>
+    <label><input type="radio" name="q20" value="b"> b) 2656,12</label>
+    <label><input type="radio" name="q20" value="c"> c) 2566,34</label>
+    <label><input type="radio" name="q20" value="d"> d) 2586,47</label>
+  </div>
+  <div class="hint" id="h20">Korrekt: <strong>a</strong>. Summe $=2174{,}45+2176{,}00+2743{,}73+1518{,}70+4167{,}32=12780{,}20$. $\bar{x}=12780{,}20/5=2556{,}04$&thinsp;&euro;.</div>
+</div>
+
+<!-- ===================== Tutorium #6 — Streuungsmaße ===================== -->
+
+<!-- Q21 -->
+<div class="card" id="c21">
+  <div class="q-head"><span class="q-num">21</span><span class="q-type">Verständnis</span><span class="status" id="s21"></span></div>
+  <div class="q-text">Welche Lagemaße werden in einem <strong>Box-Plot</strong> dargestellt?</div>
+  <div class="options">
+    <label><input type="radio" name="q21" value="a"> a) Median und Modus.</label>
+    <label><input type="radio" name="q21" value="b"> b) Quintile.</label>
+    <label><input type="radio" name="q21" value="c"> c) Modus, Median und Mittelwert.</label>
+    <label><input type="radio" name="q21" value="d"> d) Quartile.</label>
+  </div>
+  <div class="hint" id="h21">Korrekt: <strong>d</strong>. Ein Boxplot basiert auf den Quartilen: Median ($x_{0{,}50}$), unteres Quartil ($x_{0{,}25}$) und oberes Quartil ($x_{0{,}75}$) bilden die Box. Modus und Mittelwert werden nicht direkt dargestellt.</div>
+</div>
+
+<!-- Q22 -->
+<div class="card" id="c22">
+  <div class="q-head"><span class="q-num">22</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s22"></span></div>
+  <div class="q-text">Schauen Sie sich die folgende Tabelle an. Berechnen Sie die <strong>Standardabweichung</strong>.</div>
+  <table class="kt">
+    <tr><th>$i$</th><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+    <tr><th>$x_i$</th><td>2</td><td>1</td><td>4</td><td>3</td></tr>
+  </table>
+  <div class="options">
+    <label><input type="radio" name="q22" value="a"> a) 1,12</label>
+    <label><input type="radio" name="q22" value="b"> b) 0,89</label>
+    <label><input type="radio" name="q22" value="c"> c) 1,54</label>
+    <label><input type="radio" name="q22" value="d"> d) 1,28</label>
+  </div>
+  <div class="hint" id="h22">Korrekt: <strong>a</strong>. $\bar{x}=2{,}5$. Abweichungsquadrate: $0{,}25+2{,}25+2{,}25+0{,}25=5{,}0$. $s^2=5{,}0/4=1{,}25$. $s=\sqrt{1{,}25}\approx1{,}12$.</div>
+</div>
+
+<!-- Q23 -->
+<div class="card" id="c23">
+  <div class="q-head"><span class="q-num">23</span><span class="q-type">Verständnis</span><span class="status" id="s23"></span></div>
+  <div class="q-text">Was versteht man unter einem <strong>p-Quantil</strong>?</div>
+  <div class="options">
+    <label><input type="radio" name="q23" value="a"> a) Das p-Quantil entspricht dem Wert $x_p$, für den der Anteil $p$ der Daten $\leq x_p$ und der Anteil $(1-p) \geq x_p$ ist.</label>
+    <label><input type="radio" name="q23" value="b"> b) Das p-Quantil teilt die Daten in der Mitte, sodass die Hälfte der Daten $\leq x_p$ und die Hälfte der Daten $\geq x_p$ ist.</label>
+    <label><input type="radio" name="q23" value="c"> c) Das p-Quantil teilt die Daten in fünf Bereiche, die jeweils 20&thinsp;% der Daten entsprechen.</label>
+    <label><input type="radio" name="q23" value="d"> d) Das p-Quantil gibt die Wahrscheinlichkeit aller Beobachtungen an, im Bereich des p-ten Quantils zu liegen.</label>
+  </div>
+  <div class="hint" id="h23">Korrekt: <strong>a</strong>. Die allgemeine Definition gilt für jedes $p\in(0,1)$. Option b) beschreibt nur den Spezialfall $p=0{,}5$ (Median). Option c) beschreibt Quintile, einen weiteren Spezialfall.</div>
+</div>
+
+<!-- Q24 -->
+<div class="card" id="c24">
+  <div class="q-head"><span class="q-num">24</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s24"></span></div>
+  <div class="q-text">Bestimmen Sie für die geordnete Urliste ($n = 10$): <strong>1, 1, 2, 2, 2, 3, 3, 4, 5, 5</strong> den <strong>Dezilabstand</strong> $D_9 - D_1$.</div>
+  <div class="options">
+    <label><input type="radio" name="q24" value="a"> a) 4</label>
+    <label><input type="radio" name="q24" value="b"> b) 3,5</label>
+    <label><input type="radio" name="q24" value="c"> c) 5</label>
+    <label><input type="radio" name="q24" value="d"> d) 4,5</label>
+  </div>
+  <div class="hint" id="h24">Korrekt: <strong>a</strong>. $D_1$: Position $=10\cdot0{,}1=1$ (ganzzahlig) &rarr; Mittel aus $x_1,x_2=(1+1)/2=1$. $D_9$: Position $=10\cdot0{,}9=9$ (ganzzahlig) &rarr; Mittel aus $x_9,x_{10}=(5+5)/2=5$. Dezilabstand $=5-1=4$.</div>
+</div>
+
+<!-- Q25 -->
+<div class="card" id="c25">
+  <div class="q-head"><span class="q-num">25</span><span class="q-type">Verständnis</span><span class="status" id="s25"></span></div>
+  <div class="q-text">Ab welchem Skalenniveau ist die Berechnung von <strong>Standardabweichung und Varianz</strong> zulässig?</div>
+  <div class="options">
+    <label><input type="radio" name="q25" value="a"> a) Ab nominalem Skalenniveau.</label>
+    <label><input type="radio" name="q25" value="b"> b) Ab Ratioskalenniveau.</label>
+    <label><input type="radio" name="q25" value="c"> c) Ab ordinalem Skalenniveau.</label>
+    <label><input type="radio" name="q25" value="d"> d) Ab Intervallskalenniveau.</label>
+  </div>
+  <div class="hint" id="h25">Korrekt: <strong>d</strong>. Standardabweichung und Varianz basieren auf quadrierten Abständen zum Mittelwert &mdash; dafür müssen Abstände interpretierbar sein. Das ist erst ab Intervallskalenniveau der Fall.</div>
+</div>
+
+<!-- ===================== Tutorium #7 — Zusammenhang metrisch ===================== -->
+
+<!-- Q26 -->
+<div class="card" id="c26">
+  <div class="q-head"><span class="q-num">26</span><span class="q-type">Verständnis</span><span class="status" id="s26"></span></div>
+  <div class="q-text">Was bedeutet es, wenn die Korrelation $r$ einen Wert von 1 annimmt?</div>
+  <div class="options">
+    <label><input type="radio" name="q26" value="a"> a) Alle Wertepaare $(x_i,y_i)$ liegen auf einer Geraden mit positiver Steigung.</label>
+    <label><input type="radio" name="q26" value="b"> b) Alle Datenpaare $(x_i,y_i)$ liegen auf einer Geraden mit der Steigung 1.</label>
+    <label><input type="radio" name="q26" value="c"> c) Zwischen den Merkmalen X und Y gibt es einen schwachen positiven Zusammenhang.</label>
+    <label><input type="radio" name="q26" value="d"> d) Alle Datenpaare $(x_i,y_i)$ liegen auf einer Geraden mit positiver oder negativer Steigung.</label>
+  </div>
+  <div class="hint" id="h26">Korrekt: <strong>a</strong>. $r=1$ bedeutet perfekten positiven linearen Zusammenhang: alle Punkte liegen exakt auf einer Geraden mit positiver Steigung (die Steigung selbst kann beliebig sein, nicht nur 1). d) wäre nur allgemein für $|r|=1$ richtig, nicht spezifisch für $r=1$.</div>
+</div>
+
+<!-- Q27 -->
+<div class="card" id="c27">
+  <div class="q-head"><span class="q-num">27</span><span class="q-type">Verständnis</span><span class="status" id="s27"></span></div>
+  <div class="q-text">Welche der folgenden Aussagen zu <strong>Korrelationskoeffizient</strong> ($r$) und <strong>Rangkorrelationskoeffizient</strong> ($\rho$) ist richtig?</div>
+  <div class="options">
+    <label><input type="radio" name="q27" value="a"> a) Der Korrelationskoeffizient ($r$) reagiert stärker auf Ausreißer als der Rangkorrelationskoeffizient ($\rho$).</label>
+    <label><input type="radio" name="q27" value="b"> b) Der Korrelationskoeffizient ($r$) und der Rangkorrelationskoeffizient ($\rho$) reagieren beide nicht auf Ausreißer.</label>
+    <label><input type="radio" name="q27" value="c"> c) Der Korrelationskoeffizient ($r$) und der Rangkorrelationskoeffizient ($\rho$) reagieren gleichermaßen stark auf Ausreißer.</label>
+    <label><input type="radio" name="q27" value="d"> d) Der Korrelationskoeffizient ($r$) reagiert weniger stark auf Ausreißer als der Rangkorrelationskoeffizient ($\rho$).</label>
+  </div>
+  <div class="hint" id="h27">Korrekt: <strong>a</strong>. $r$ verwendet die tatsächlichen (metrischen) Werte, Ausreißer verzerren daher Mittelwerte und Abweichungsquadrate stark. $\rho$ (Spearman) verwendet nur Rangplätze &mdash; ein Ausreißer bleibt einfach der höchste/niedrigste Rang und verzerrt das Maß deutlich weniger.</div>
+</div>
+
+<!-- ===================== Tutorium #8 — Konzentrationsmaße ===================== -->
+
+<!-- Q28 -->
+<div class="card" id="c28">
+  <div class="q-head"><span class="q-num">28</span><span class="q-type">Verständnis</span><span class="status" id="s28"></span></div>
+  <div class="q-text">Welchen Wert nimmt das <strong>Herfindahl-Streuungsmaß</strong> an, wenn sich alle Beobachtungen auf eine Kategorie konzentrieren?</div>
+  <div class="options">
+    <label><input type="radio" name="q28" value="a"> a) $(n-1)/n$</label>
+    <label><input type="radio" name="q28" value="b"> b) 1</label>
+    <label><input type="radio" name="q28" value="c"> c) $(k-1)/k$</label>
+    <label><input type="radio" name="q28" value="d"> d) 0</label>
+  </div>
+  <div class="hint" id="h28">Korrekt: <strong>d</strong>. $HF=1-\sum f_j^2$. Bei voller Konzentration auf eine Kategorie ist $f_j=1$ für diese Kategorie und 0 für alle anderen &rarr; $\sum f_j^2=1$ &rarr; $HF=1-1=0$. Falle: Verwechslung mit dem unnormierten Rohindex $\sum p_j^2$, der in diesem Fall 1 wäre &mdash; gefragt ist aber nach dem Streuungsmaß $HF$, nicht dem Rohindex.</div>
+</div>
+
+<!-- Q29 -->
+<div class="card" id="c29">
+  <div class="q-head"><span class="q-num">29</span><span class="q-type">Verständnis</span><span class="status" id="s29"></span></div>
+  <div class="q-text">Wie verhalten sich <strong>Gini-Koeffizient</strong> und <strong>Lorenzkurve</strong> zueinander?</div>
+  <div class="options">
+    <label><input type="radio" name="q29" value="a"> a) Der Gini-Koeffizient entspricht dem Anteil der Fläche zwischen Diagonalen und der X-Achse, der durch die Lorenzkurve eingenommen wird.</label>
+    <label><input type="radio" name="q29" value="b"> b) Der Gini-Koeffizient entspricht dem doppelten Anteil der Fläche zwischen Diagonalen und der Y-Achse, der durch die Lorenzkurve eingenommen wird.</label>
+    <label><input type="radio" name="q29" value="c"> c) Der Gini-Koeffizient entspricht der doppelten Fläche zwischen Diagonale und X-Achse.</label>
+    <label><input type="radio" name="q29" value="d"> d) Der Gini-Koeffizient entspricht dem Anteil der Fläche zwischen X-Achse und Diagonalen, der nicht durch die Lorenzkurve eingenommen wird.</label>
+  </div>
+  <div class="hint" id="h29">Korrekt: <strong>d</strong>. Geometrisch ist der Gini-Koeffizient das Verhältnis der Fläche zwischen Diagonale und Lorenzkurve zur Gesamtfläche zwischen Diagonale und X-Achse (0,5). Je weiter die Lorenzkurve von der Diagonale (Gleichverteilungslinie) entfernt ist, desto größer diese "Lücke" und desto größer der Gini-Koeffizient (maximale Ungleichheit). Falle a): das beschreibt gerade den Komplementäranteil ($1-G$), nicht $G$ selbst.</div>
+</div>
+
+<!-- Q30 -->
+<div class="card" id="c30">
+  <div class="q-head"><span class="q-num">30</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s30"></span></div>
+  <div class="q-text">Schauen Sie sich die folgende Tabelle an (nominalskalierte Variable). Berechnen Sie das <strong>normierte Herfindahl-Streuungsmaß</strong>.</div>
+  <table class="kt">
+    <tr><th>$a_j$</th><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+    <tr><th>$h_j$</th><td>1</td><td>2</td><td>6</td><td>1</td></tr>
+  </table>
+  <div class="options">
+    <label><input type="radio" name="q30" value="a"> a) 0,88</label>
+    <label><input type="radio" name="q30" value="b"> b) 0,94</label>
+    <label><input type="radio" name="q30" value="c"> c) 0,77</label>
+    <label><input type="radio" name="q30" value="d"> d) 0,82</label>
+  </div>
+  <div class="hint" id="h30">Korrekt: <strong>c</strong>. $f_j=0{,}1;\,0{,}2;\,0{,}6;\,0{,}1$. $\sum f_j^2=0{,}01+0{,}04+0{,}36+0{,}01=0{,}42$. $HF=1-0{,}42=0{,}58$. Normiert: $HF^*=HF/(1-1/k)=0{,}58/0{,}75\approx0{,}77$.</div>
+</div>
+
+<!-- Q31 -->
+<div class="card" id="c31">
+  <div class="q-head"><span class="q-num">31</span><span class="q-type">Verständnis</span><span class="status" id="s31"></span></div>
+  <div class="q-text">Welche der folgenden Eigenschaften trifft auf die <strong>Lorenzkurve</strong> zu?</div>
+  <div class="options">
+    <label><input type="radio" name="q31" value="a"> a) Die Lorenzkurve ist monoton wachsend und konkav.</label>
+    <label><input type="radio" name="q31" value="b"> b) Die Lorenzkurve ist monoton wachsend und konvex.</label>
+    <label><input type="radio" name="q31" value="c"> c) Die Lorenzkurve ist monoton fallend und konvex.</label>
+    <label><input type="radio" name="q31" value="d"> d) Die Lorenzkurve ist monoton fallend und konkav.</label>
+  </div>
+  <div class="hint" id="h31">Korrekt: <strong>b</strong>. Die Lorenzkurve steigt monoton von (0,0) nach (1,1) und ist konvex &mdash; sie krümmt sich von der Diagonale weg nach unten, je größer die Ungleichheit ist. Bei perfekter Gleichverteilung fällt sie mit der Diagonale zusammen.</div>
+</div>
+
+<!-- ===================== Tutorium #9 — Zufallsvariablen ===================== -->
+
+<!-- Q32 -->
+<div class="card" id="c32">
+  <div class="q-head"><span class="q-num">32</span><span class="q-type">Verständnis</span><span class="status" id="s32"></span></div>
+  <div class="q-text">Welchen Wert ergibt das Integral $\int_{-\infty}^{+\infty} f(x)\,dx$ bei der Anwendung auf eine stetige Zufallsvariable?</div>
+  <div class="options">
+    <label><input type="radio" name="q32" value="a"> a) Einen Wert $\geq 0$.</label>
+    <label><input type="radio" name="q32" value="b"> b) 1</label>
+    <label><input type="radio" name="q32" value="c"> c) Das lässt sich allgemein nicht sagen. Es hängt von der Zufallsvariable ab.</label>
+    <label><input type="radio" name="q32" value="d"> d) 0</label>
+  </div>
+  <div class="hint" id="h32">Korrekt: <strong>b</strong>. Die Normierungseigenschaft einer Dichtefunktion besagt: $\int_{-\infty}^{+\infty}f(x)\,dx=1$ &mdash; die Gesamtfläche unter der Dichtekurve entspricht der Gesamtwahrscheinlichkeit von 1, unabhängig von der konkreten Verteilung.</div>
+</div>
+
+<!-- Q33 -->
+<div class="card" id="c33">
+  <div class="q-head"><span class="q-num">33</span><span class="q-type">Verständnis</span><span class="status" id="s33"></span></div>
+  <div class="q-text">Was ist ein <strong>p-Quantil</strong> bei einer stetigen Zufallsvariable $X$?</div>
+  <div class="options">
+    <label><input type="radio" name="q33" value="a"> a) Ein p-Quantil lässt sich nur bei diskreten Zufallsvariablen bestimmen.</label>
+    <label><input type="radio" name="q33" value="b"> b) Das p-Quantil gibt den Interquartilsabstand der Zufallsvariable an.</label>
+    <label><input type="radio" name="q33" value="c"> c) Es ist der Wert $x_p$, für den gilt $F(x)=0{,}5$.</label>
+    <label><input type="radio" name="q33" value="d"> d) Es ist der Wert $x_p$, der die Fläche unter der Dichtekurve in zwei Teile teilt, wobei die Fläche links von $x_p$ dem Wert $p$ entspricht.</label>
+  </div>
+  <div class="hint" id="h33">Korrekt: <strong>d</strong>. Das p-Quantil $x_p$ teilt die Fläche unter der Dichtefunktion so, dass die Fläche links von $x_p$ genau $p$ entspricht (also $F(x_p)=p$). Option c) beschreibt nur den Spezialfall $p=0{,}5$ (Median).</div>
+</div>
+
+<!-- Q34 -->
+<div class="card" id="c34">
+  <div class="q-head"><span class="q-num">34</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s34"></span></div>
+  <div class="q-text">Bestimmen Sie das 0,05-Quantil einer standardnormalverteilten Variablen ($Z \sim N(0,1)$).</div>
+  <div class="options">
+    <label><input type="radio" name="q34" value="a"> a) $z_{0{,}05}=-1{,}64$</label>
+    <label><input type="radio" name="q34" value="b"> b) $z_{0{,}05}=-1{,}96$</label>
+    <label><input type="radio" name="q34" value="c"> c) $z_{0{,}05}=1{,}64$</label>
+    <label><input type="radio" name="q34" value="d"> d) $z_{0{,}05}=1{,}96$</label>
+  </div>
+  <div class="hint" id="h34">Korrekt: <strong>a</strong>. Das 0,05-Quantil liegt im linken (unteren) Bereich der Standardnormalverteilung, da nur 5&thinsp;% der Fläche links davon liegen sollen &rarr; $z_{0{,}05}=-1{,}64$. Das 0,95-Quantil wäre $+1{,}64$ (Symmetrie um 0).</div>
+</div>
+
+<!-- ===================== Tutorium #11 — Testen ===================== -->
+
+<!-- Q35 -->
+<div class="card" id="c35">
+  <div class="q-head"><span class="q-num">35</span><span class="q-type">Verständnis</span><span class="status" id="s35"></span></div>
+  <div class="q-text">Welche Bedeutung hat das <strong>Signifikanzniveau</strong> bei einem statistischen Test?</div>
+  <div class="options">
+    <label><input type="radio" name="q35" value="a"> a) Das Signifikanzniveau $\alpha$ legt fest, mit welcher Irrtumswahrscheinlichkeit die Nullhypothese verworfen werden kann.</label>
+    <label><input type="radio" name="q35" value="b"> b) Das Signifikanzniveau $\alpha$ legt fest, mit welcher Irrtumswahrscheinlichkeit die Alternativhypothese verworfen werden kann.</label>
+    <label><input type="radio" name="q35" value="c"> c) Das Signifikanzniveau $\alpha$ legt fest, mit welcher Irrtumswahrscheinlichkeit die Forschungshypothese verworfen werden kann.</label>
+    <label><input type="radio" name="q35" value="d"> d) Das Signifikanzniveau $\beta$ legt fest, mit welcher Irrtumswahrscheinlichkeit die Alternativhypothese bestätigt werden kann.</label>
+  </div>
+  <div class="hint" id="h35">Korrekt: <strong>a</strong>. $\alpha$ ist die Wahrscheinlichkeit, mit der man $H_0$ fälschlicherweise verwirft, obwohl sie eigentlich wahr ist (Fehler 1. Art). Die anderen Optionen verwechseln $H_0$ mit $H_1$ bzw. $\alpha$ mit $\beta$.</div>
+</div>
+
+<!-- Q36 -->
+<div class="card" id="c36">
+  <div class="q-head"><span class="q-num">36</span><span class="q-type">Verständnis</span><span class="status" id="s36"></span></div>
+  <div class="q-text">Vervollständigen Sie den folgenden Satz: <strong>Einseitige statistische Tests</strong> &hellip;</div>
+  <div class="options">
+    <label><input type="radio" name="q36" value="a"> a) &hellip; resultieren aus ungerichteten Hypothesen.</label>
+    <label><input type="radio" name="q36" value="b"> b) &hellip; sind rechtsseitig.</label>
+    <label><input type="radio" name="q36" value="c"> c) &hellip; sind linksseitig.</label>
+    <label><input type="radio" name="q36" value="d"> d) &hellip; sind entweder linksseitig oder rechtsseitig.</label>
+  </div>
+  <div class="hint" id="h36">Korrekt: <strong>d</strong>. Einseitige Tests ergeben sich aus gerichteten Hypothesen (z.&thinsp;B. $\mu>\mu_0$ oder $\mu<\mu_0$) und können je nach Richtung entweder rechtsseitig oder linksseitig sein &mdash; nicht grundsätzlich nur eines von beidem.</div>
+</div>
+
+<!-- Q37 -->
+<div class="card" id="c37">
+  <div class="q-head"><span class="q-num">37</span><span class="q-type">Verständnis</span><span class="status" id="s37"></span></div>
+  <div class="q-text">Sie wollen die Forschungshypothese testen, dass der Erwartungswert $\mu$ einer Variable $X$ kleiner 10 ist. Wie sehen die entsprechenden Hypothesen aus?</div>
+  <div class="options">
+    <label><input type="radio" name="q37" value="a"> a) $H_0\colon \mu \geq 0$, $H_1\colon \mu < 0$</label>
+    <label><input type="radio" name="q37" value="b"> b) $H_0\colon \mu \neq 10$, $H_1\colon \mu = 10$</label>
+    <label><input type="radio" name="q37" value="c"> c) $H_0\colon \mu \leq 10$, $H_1\colon \mu > 10$</label>
+    <label><input type="radio" name="q37" value="d"> d) $H_0\colon \mu \geq 10$, $H_1\colon \mu < 10$</label>
+  </div>
+  <div class="hint" id="h37">Korrekt: <strong>d</strong>. Die Forschungshypothese ($\mu<10$) wird zur Alternativhypothese $H_1$. Die Nullhypothese ist das logische Komplement: $H_0\colon \mu\geq10$. Damit handelt es sich um einen linksseitigen Test.</div>
+</div>
+
+<!-- Q38 -->
+<div class="card" id="c38">
+  <div class="q-head"><span class="q-num">38</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s38"></span></div>
+  <div class="q-text">Forschungshypothese: der Erwartungswert $\mu$ einer Variable $X$ ist größer als 10. Stichprobe: $n = 36$, $\bar{X}_n = 12$, $\sigma = 3$ (bekannt). Führen Sie einen Hypothesentest mit $\alpha = 0{,}05$ durch.</div>
+  <div class="options">
+    <label><input type="radio" name="q38" value="a"> a) $H_0$ kann abgelehnt werden; es gilt $Z=4$; der kritische Wert ist $-1{,}64$.</label>
+    <label><input type="radio" name="q38" value="b"> b) $H_0$ kann abgelehnt werden; es gilt $Z=2$; der kritische Wert ist $1{,}96$.</label>
+    <label><input type="radio" name="q38" value="c"> c) $H_0$ kann abgelehnt werden; es gilt $Z=4$; der kritische Wert ist $1{,}64$.</label>
+    <label><input type="radio" name="q38" value="d"> d) $H_0$ kann nicht abgelehnt werden; es gilt $Z=2$; der kritische Wert ist $1{,}64$.</label>
+  </div>
+  <div class="hint" id="h38">Korrekt: <strong>c</strong>. $SE=\sigma/\sqrt{n}=3/6=0{,}5$. $Z=(12-10)/0{,}5=4$. Rechtsseitiger Test bei $\alpha=0{,}05$: kritischer Wert $=1{,}64$. Da $Z=4>1{,}64$, wird $H_0$ verworfen.</div>
+</div>
+
+<!-- Q39 -->
+<div class="card" id="c39">
+  <div class="q-head"><span class="q-num">39</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s39"></span></div>
+  <div class="q-text">Forschungshypothese: der Erwartungswert $\mu$ einer Variable $X$ ist kleiner als 100. Stichprobe: $n = 64$, $\bar{X}_n = 105$, $S_n = 10$. Führen Sie einen Hypothesentest mit $\alpha = 0{,}05$ durch.</div>
+  <div class="options">
+    <label><input type="radio" name="q39" value="a"> a) $H_0$ kann abgelehnt werden; es gilt $T=4$; der kritische Wert ist $-1{,}64$.</label>
+    <label><input type="radio" name="q39" value="b"> b) $H_0$ kann abgelehnt werden; es gilt $T=4$; der kritische Wert ist $-1{,}96$.</label>
+    <label><input type="radio" name="q39" value="c"> c) $H_0$ kann nicht abgelehnt werden; es gilt $T=4$; der kritische Wert ist $-1{,}64$.</label>
+    <label><input type="radio" name="q39" value="d"> d) $H_0$ kann nicht abgelehnt werden; es gilt $T=5$; der kritische Wert ist $-1{,}64$.</label>
+  </div>
+  <div class="hint" id="h39">Korrekt: <strong>c</strong>. $SE=S_n/\sqrt{n}=10/8=1{,}25$. $T=(105-100)/1{,}25=4$. Da die Forschungshypothese $\mu<100$ lautet, ist dies ein linksseitiger Test mit kritischem Wert $-1{,}64$. Ablehnung nur bei $T<-1{,}64$ &mdash; hier ist $T=+4$ deutlich positiv, also weit davon entfernt, $H_0$ zu verwerfen (die Stichprobe deutet sogar auf $\mu>100$ hin, das Gegenteil der Forschungshypothese).</div>
+</div>
+
+<!-- Q40 -->
+<div class="card" id="c40">
+  <div class="q-head"><span class="q-num">40</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s40"></span></div>
+  <div class="q-text">Der Stimmenanteil einer Partei A ($\pi_A$) wurde in einer Stichprobe vom Umfang $n = 36$ auf $\hat{\pi}_A = 0{,}15$ geschätzt. Forschungshypothese: die Partei erreicht mehr als 10&thinsp;% der Stimmen. Signifikanzniveau $\alpha = 0{,}01$.</div>
+  <div class="options">
+    <label><input type="radio" name="q40" value="a"> a) $H_0$ kann abgelehnt werden; es gilt $Z=1{,}5$; der kritische Wert ist $2{,}33$.</label>
+    <label><input type="radio" name="q40" value="b"> b) $H_0$ kann nicht abgelehnt werden; es gilt $Z=1$; der kritische Wert ist $1{,}64$.</label>
+    <label><input type="radio" name="q40" value="c"> c) $H_0$ kann nicht abgelehnt werden; es gilt $Z=-1$; der kritische Wert ist $-2{,}33$.</label>
+    <label><input type="radio" name="q40" value="d"> d) $H_0$ kann nicht abgelehnt werden; es gilt $Z=1$; der kritische Wert ist $2{,}33$.</label>
+  </div>
+  <div class="hint" id="h40">Korrekt: <strong>d</strong>. $SE=\sqrt{\pi_0(1-\pi_0)/n}=\sqrt{0{,}10\cdot0{,}90/36}=\sqrt{0{,}0025}=0{,}05$. $Z=(0{,}15-0{,}10)/0{,}05=1{,}0$. Rechtsseitiger Test bei $\alpha=0{,}01$: kritischer Wert $=2{,}33$. Da $Z=1{,}0<2{,}33$, kann $H_0$ nicht verworfen werden.</div>
+</div>
+
+<!-- Q41 -->
+<div class="card" id="c41">
+  <div class="q-head"><span class="q-num">41</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s41"></span></div>
+  <div class="q-text">Durchschnittliche Einkommen von Männern ($\bar{X}_1$) und Frauen ($\bar{X}_2$): $n_1=n_2=1000$, $\bar{X}_1=2000$, $S_1=300$, $\bar{X}_2=1500$, $S_2=300$. Forschungshypothese: Männer verdienen mehr als Frauen. $\alpha = 0{,}01$.</div>
+  <div class="options">
+    <label><input type="radio" name="q41" value="a"> a) $H_0$ kann abgelehnt werden; es gilt $T=37{,}268$; der kritische Wert ist $2{,}33$.</label>
+    <label><input type="radio" name="q41" value="b"> b) $H_0$ kann nicht abgelehnt werden; es gilt $T=0{,}775$; der kritische Wert ist $2{,}33$.</label>
+    <label><input type="radio" name="q41" value="c"> c) $H_0$ kann abgelehnt werden; es gilt $T=37{,}268$; der kritische Wert ist $-2{,}33$.</label>
+    <label><input type="radio" name="q41" value="d"> d) $H_0$ kann abgelehnt werden; es gilt $T=7{,}244$; der kritische Wert ist $-2{,}33$.</label>
+  </div>
+  <div class="hint" id="h41">Korrekt: <strong>a</strong>. $SE=\sqrt{S_1^2/n_1+S_2^2/n_2}=\sqrt{300^2/1000+300^2/1000}=\sqrt{180}\approx13{,}416$. $T=(2000-1500)/13{,}416\approx37{,}268$. Rechtsseitiger Test (Männer verdienen mehr) bei $\alpha=0{,}01$: kritischer Wert $=+2{,}33$ (nicht negativ, da rechtsseitig!). $T$ liegt weit im Ablehnungsbereich.</div>
+</div>
+
+<!-- ===================== Tutorium #12 — Regression ===================== -->
+
+<!-- Q42 -->
+<div class="card" id="c42">
+  <div class="q-head"><span class="q-num">42</span><span class="q-type">Verständnis</span><span class="status" id="s42"></span></div>
+  <div class="q-text">Was trifft zu, wenn die <strong>Exogenitätsannahme</strong> in einer OLS-Regression verletzt ist?</div>
+  <div class="options">
+    <label><input type="radio" name="q42" value="a"> a) Der Fehlerterm der Regression ist nicht mehr normalverteilt ($e_i \sim N(0,\sigma)$).</label>
+    <label><input type="radio" name="q42" value="b"> b) Die Koeffizienten werden verzerrt geschätzt.</label>
+    <label><input type="radio" name="q42" value="c"> c) Das $R^2$ wird zu groß geschätzt.</label>
+    <label><input type="radio" name="q42" value="d"> d) Die Zahl der Beobachtungen ist zu klein.</label>
+  </div>
+  <div class="hint" id="h42">Korrekt: <strong>b</strong>. Exogenität bedeutet, dass der Fehlerterm unkorreliert mit den erklärenden Variablen ist ($E(e_i \mid x_i)=0$). Ist diese Annahme verletzt (z.&thinsp;B. durch ausgelassene Variablen, Messfehler, Simultanität), führt dies zu verzerrten (biased) Koeffizientenschätzungen &mdash; der zentrale Schaden der Endogenität.</div>
+</div>
+
+<!-- Q43 -->
+<div class="card" id="c43">
+  <div class="q-head"><span class="q-num">43</span><span class="q-type">Verständnis</span><span class="status" id="s43"></span></div>
+  <div class="q-text">Welche Eigenschaften haben die in einer OLS-Regression geschätzten Parameter ($\alpha, \beta$)?</div>
+  <div class="options">
+    <label><input type="radio" name="q43" value="a"> a) Es sind die Parameter, für die die Summe der Residuen minimal wird.</label>
+    <label><input type="radio" name="q43" value="b"> b) Es sind die Parameter, für die die Abweichung vom Mittelwert maximal wird.</label>
+    <label><input type="radio" name="q43" value="c"> c) Es sind die Parameter, für die die Summe der quadrierten Residuen minimal wird.</label>
+    <label><input type="radio" name="q43" value="d"> d) Es sind die Parameter, für die die Abweichung vom Mittelwert minimal wird.</label>
+  </div>
+  <div class="hint" id="h43">Korrekt: <strong>c</strong>. "Ordinary Least Squares" &mdash; der Name sagt es bereits: Die Parameter werden so gewählt, dass die Summe der quadrierten Residuen ($\sum e_i^2$) minimal wird. Die einfache Summe der (unquadrierten) Residuen wäre immer 0 und daher kein sinnvolles Minimierungskriterium.</div>
+</div>
+
+<!-- Q44 -->
+<div class="card" id="c44">
+  <div class="q-head"><span class="q-num">44</span><span class="q-type">Stata-Output</span><span class="status" id="s44"></span></div>
+  <div class="q-text">Lesen Sie den folgenden <strong>Stata-OLS-Output</strong> (abhängige Variable: Stundenlohn in &euro;; Prädiktoren: Bildung in Jahren, Mann = Dummy [1=männlich]). Welche Aussage ist eine richtige Interpretation?</div>
+  <div class="stata">      Source |       SS           df       MS       Number of obs = 10,930
+-------------+----------------------------------    F(2, 10927)   =  769.62
+       Model |  208746.71          2   104373.355    Prob &gt; F      =  0.0000
+    Residual | 1481882.42     10,927    135.616585   R-squared     =  0.1235
+-------------+----------------------------------    Adj R-squared =  0.1233
+       Total | 1690629.13     10,929    154.692024   Root MSE      =  11.645
+
+------------------------------------------------------------------------------
+     StdLohn |      Coef.   Std. Err.      t    P&gt;|t|    [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     Bildung |   1.416507    .0406408   34.85   0.000     1.336843    1.49617
+        Mann |   3.981476    .2228951   17.86   0.000     3.544561    4.418391
+       _cons |  -4.776834    .5423262   -8.81   0.000    -5.839892   -3.713777
+------------------------------------------------------------------------------</div>
+  <div class="options">
+    <label><input type="radio" name="q44" value="a"> a) Männer erzielen im Durchschnitt einen um 3,98 Euro höheren Stundenlohn als Frauen.</label>
+    <label><input type="radio" name="q44" value="b"> b) Frauen erzielen im Durchschnitt einen um 4,78 Euro niedrigeren Stundenlohn als Männer.</label>
+    <label><input type="radio" name="q44" value="c"> c) Männer erzielen im Durchschnitt einen um 39,8 Cent höheren Stundenlohn als Frauen.</label>
+    <label><input type="radio" name="q44" value="d"> d) Frauen erzielen im Durchschnitt einen um 3,98 Euro höheren Stundenlohn als Männer.</label>
+  </div>
+  <div class="hint" id="h44">Korrekt: <strong>a</strong>. Der Koeffizient von Mann (Dummy: männlich=1) beträgt 3,981 &mdash; bei sonst gleicher Bildung verdienen Männer im Schnitt 3,98&thinsp;&euro; mehr pro Stunde als Frauen (Referenzkategorie). Falle b): 4,78 ist der Achsenabschnitt (_cons), nicht der Geschlechtseffekt. Falle c): Kommafehler (Cent statt Euro). Falle d): Vorzeichen verdreht.</div>
+</div>
+
+<!-- Q45 -->
+<div class="card" id="c45">
+  <div class="q-head"><span class="q-num">45</span><span class="q-type">Stata-Output</span><span class="status" id="s45"></span></div>
+  <div class="q-text">Gleicher Regressionsoutput wie zuvor (Stundenlohn auf Bildung und Mann). Welchen Stundenlohn prognostiziert das Modell für eine <strong>Frau</strong>, die 12 Jahre zur Schule gegangen ist?</div>
+  <div class="stata">      Source |       SS           df       MS       Number of obs = 10,930
+-------------+----------------------------------    F(2, 10927)   =  769.62
+       Model |  208746.71          2   104373.355    Prob &gt; F      =  0.0000
+    Residual | 1481882.42     10,927    135.616585   R-squared     =  0.1235
+-------------+----------------------------------    Adj R-squared =  0.1233
+       Total | 1690629.13     10,929    154.692024   Root MSE      =  11.645
+
+------------------------------------------------------------------------------
+     StdLohn |      Coef.   Std. Err.      t    P&gt;|t|    [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     Bildung |   1.416507    .0406408   34.85   0.000     1.336843    1.49617
+        Mann |   3.981476    .2228951   17.86   0.000     3.544561    4.418391
+       _cons |  -4.776834    .5423262   -8.81   0.000    -5.839892   -3.713777
+------------------------------------------------------------------------------</div>
+  <div class="options">
+    <label><input type="radio" name="q45" value="a"> a) 12,23 Euro.</label>
+    <label><input type="radio" name="q45" value="b"> b) 14,22 Euro.</label>
+    <label><input type="radio" name="q45" value="c"> c) 17,00 Euro.</label>
+    <label><input type="radio" name="q45" value="d"> d) 16,21 Euro.</label>
+  </div>
+  <div class="hint" id="h45">Korrekt: <strong>a</strong>. $\hat{y}=-4{,}776834+1{,}416507\cdot12+3{,}981476\cdot0\approx12{,}23$&thinsp;&euro;. Der Mann-Dummy entfällt (=0) für eine Frau.</div>
+</div>
+
+<!-- Q46 -->
+<div class="card" id="c46">
+  <div class="q-head"><span class="q-num">46</span><span class="q-type">Stata-Output</span><span class="status" id="s46"></span></div>
+  <div class="q-text">Gleicher Regressionsoutput wie zuvor (Stundenlohn auf Bildung und Mann). Welchen Stundenlohn prognostiziert das Modell für einen <strong>Mann</strong>, der 10 Jahre zur Schule gegangen ist?</div>
+  <div class="stata">      Source |       SS           df       MS       Number of obs = 10,930
+-------------+----------------------------------    F(2, 10927)   =  769.62
+       Model |  208746.71          2   104373.355    Prob &gt; F      =  0.0000
+    Residual | 1481882.42     10,927    135.616585   R-squared     =  0.1235
+-------------+----------------------------------    Adj R-squared =  0.1233
+       Total | 1690629.13     10,929    154.692024   Root MSE      =  11.645
+
+------------------------------------------------------------------------------
+     StdLohn |      Coef.   Std. Err.      t    P&gt;|t|    [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     Bildung |   1.416507    .0406408   34.85   0.000     1.336843    1.49617
+        Mann |   3.981476    .2228951   17.86   0.000     3.544561    4.418391
+       _cons |  -4.776834    .5423262   -8.81   0.000    -5.839892   -3.713777
+------------------------------------------------------------------------------</div>
+  <div class="options">
+    <label><input type="radio" name="q46" value="a"> a) 14,17 Euro.</label>
+    <label><input type="radio" name="q46" value="b"> b) 18,15 Euro.</label>
+    <label><input type="radio" name="q46" value="c"> c) 9,39 Euro.</label>
+    <label><input type="radio" name="q46" value="d"> d) 13,37 Euro.</label>
+  </div>
+  <div class="hint" id="h46">Korrekt: <strong>d</strong>. $\hat{y}=-4{,}776834+1{,}416507\cdot10+3{,}981476\cdot1\approx13{,}37$&thinsp;&euro;.</div>
+</div>
+
+<!-- Q47 -->
+<div class="card" id="c47">
+  <div class="q-head"><span class="q-num">47</span><span class="q-type">Stata-Output</span><span class="status" id="s47"></span></div>
+  <div class="q-text">Leider fehlt der $R^2$-Wert im folgenden Output (gleiche Variablen: Stundenlohn auf Bildung und Mann). Berechnen Sie $R^2$ aus den vorhandenen Informationen.</div>
+  <div class="stata">      Source |       SS           df       MS       Number of obs = 10,930
+-------------+----------------------------------    F(2, 10927)   =  769.62
+       Model |  208746.71          2   104373.355    Prob &gt; F      =  0.0000
+    Residual | 1481882.42     10,927    135.616585   R-squared     =
+-------------+----------------------------------    Adj R-squared =  0.1233
+       Total | 1690629.13     10,929    154.692024   Root MSE      =  11.645
+
+------------------------------------------------------------------------------
+     StdLohn |      Coef.   Std. Err.      t    P&gt;|t|    [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     Bildung |   1.386507    .0406408   34.85   0.000     1.336843    1.49617
+        Mann |   3.481476    .2228951   17.86   0.000     3.544561    4.418391
+       _cons |  -4.276834    .5423262   -8.81   0.000    -5.839892   -3.713777
+------------------------------------------------------------------------------</div>
+  <div class="options">
+    <label><input type="radio" name="q47" value="a"> a) $R^2 = 0{,}2234$</label>
+    <label><input type="radio" name="q47" value="b"> b) $R^2 = 0{,}1235$</label>
+    <label><input type="radio" name="q47" value="c"> c) $R^2 = 0{,}8765$</label>
+    <label><input type="radio" name="q47" value="d"> d) $R^2 = 0{,}1409$</label>
+  </div>
+  <div class="hint" id="h47">Korrekt: <strong>b</strong>. $R^2=SS_{Modell}/SS_{Total}=208746{,}71/1690629{,}13\approx0{,}1235$. Alternativ: $R^2=1-SS_{Residual}/SS_{Total}=1-1481882{,}42/1690629{,}13\approx0{,}1235$.</div>
+</div>
+
+<!-- Q48 -->
+<div class="card" id="c48">
+  <div class="q-head"><span class="q-num">48</span><span class="q-type">Stata-Output</span><span class="status" id="s48"></span></div>
+  <div class="q-text">Abhängige Variable: Lebenszufriedenheit (Skala 0&ndash;10). Erklärende Variablen: Parteipräferenz-Dummies, Referenzkategorie CDU. Berechnen Sie aus den vorhandenen Informationen den Mittelwert der Lebenszufriedenheit für CDU- und Linken-Anhänger.</div>
+  <div class="stata">      Source |       SS           df       MS       Number of obs =  1,801
+-------------+----------------------------------    F(5, 1795)    =  15.27
+       Model |  259.502639          5   51.9005278    Prob &gt; F      =  0.0000
+    Residual | 6102.5862      1,795    3.39976947    R-squared     =  0.0408
+-------------+----------------------------------    Adj R-squared =  0.0381
+       Total | 6362.08884     1,800    3.5344938     Root MSE      =  1.8438
+
+------------------------------------------------------------------------------
+     stflife |      Coef.   Std. Err.      t    P&gt;|t|    [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         SPD |  -.0909068    .1078227   -0.84   0.399    -.3023779    .1205644
+       Linke | -1.043723     .1501181   -6.95   0.000   -1.338147    -.7492981
+      Gruene |   .0395642    .1377269    0.29   0.774    -.2305578    .3096861
+         FDP |   .1089857    .1892804    0.58   0.565    -.2622474    .4802187
+         AfD | -1.267503     .252065    -5.03   0.000   -1.761875    -.7731316
+       _cons |  7.836469     .0701432  111.72   0.000     7.698898    7.97404
+------------------------------------------------------------------------------</div>
+  <div class="options">
+    <label><input type="radio" name="q48" value="a"> a) CDU: 7,836; Linke: 6,792.</label>
+    <label><input type="radio" name="q48" value="b"> b) CDU: 7,256; Linke: 5,998.</label>
+    <label><input type="radio" name="q48" value="c"> c) CDU: 0; Linke: -1,044.</label>
+    <label><input type="radio" name="q48" value="d"> d) CDU: 7,722; Linke: 6,992.</label>
+  </div>
+  <div class="hint" id="h48">Korrekt: <strong>a</strong>. Bei Dummy-Kodierung mit Referenzkategorie CDU ist der Mittelwert der Referenzgruppe gleich dem Achsenabschnitt: $\overline{y}_{CDU}=\_cons=7{,}836$. Der Mittelwert jeder anderen Gruppe ergibt sich als $\_cons+\text{Koeffizient}$: $\overline{y}_{Linke}=7{,}836469+(-1{,}043723)=6{,}792746\approx6{,}792$.</div>
+</div>
+
+<!-- Q49 -->
+<div class="card" id="c49">
+  <div class="q-head"><span class="q-num">49</span><span class="q-type">Stata-Output</span><span class="status" id="s49"></span></div>
+  <div class="q-text">Abhängige Variable: Zufriedenheit mit der wirtschaftlichen Lage (Skala 0&ndash;10). Erklärende Variablen: Parteipräferenz-Dummies, Referenzkategorie CDU. Unterscheidet sich die Zufriedenheit von SPD- und CDU-Anhängern signifikant?</div>
+  <div class="stata">      Source |       SS           df       MS       Number of obs =  1,796
+-------------+----------------------------------    F(5, 1790)    =  13.39
+       Model |  227.368005          5   45.473601     Prob &gt; F      =  0.0000
+    Residual | 6077.11919     1,790    3.39503865    R-squared     =  0.0361
+-------------+----------------------------------    Adj R-squared =  0.0334
+       Total | 6304.48719     1,795    3.51224913    Root MSE      =  1.8426
+
+------------------------------------------------------------------------------
+      stfeco |      Coef.   Std. Err.      t    P&gt;|t|    [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         SPD | -.3009909     .1078996   -2.79   0.005    -.5126132   -.0893686
+       Linke | -1.07108      .1502951   -7.13   0.000   -1.365853    -.7763079
+      Gruene | -.0950385     .1380294   -0.69   0.491    -.3657543    .1756772
+         FDP |  .1587493     .1891299    0.84   0.401    -.2121892    .5296879
+         AfD | -.9660155     .2518755   -3.84   0.000   -1.460017    -.4720146
+       _cons |  7.086705     .0700437  101.18   0.000     6.949329    7.224081
+------------------------------------------------------------------------------</div>
+  <div class="options">
+    <label><input type="radio" name="q49" value="a"> a) Ja, SPD-Anhänger sind signifikant weniger zufrieden mit der Wirtschaftslage.</label>
+    <label><input type="radio" name="q49" value="b"> b) Das lässt sich nicht bestimmen, da der Output keine Mittelwerte sondern Regressionskoeffizienten enthält.</label>
+    <label><input type="radio" name="q49" value="c"> c) Das lässt sich nicht bestimmen, da der Dummy CDU nicht in der Regression enthalten ist.</label>
+    <label><input type="radio" name="q49" value="d"> d) Nein, es gibt keinen signifikanten Unterschied zwischen SPD- und CDU-Anhängern.</label>
+  </div>
+  <div class="hint" id="h49">Korrekt: <strong>a</strong>. Der SPD-Koeffizient hat $p=0{,}005<0{,}05$ (sogar $<0{,}01$) &rarr; hochsignifikant. Da CDU die Referenzkategorie ist, zeigt der negative, signifikante Koeffizient: SPD-Anhänger sind im Schnitt signifikant weniger zufrieden mit der Wirtschaftslage als CDU-Anhänger. Falle c): Die Referenzkategorie muss nicht explizit im Output stehen &mdash; ihr Effekt ist im Achsenabschnitt (_cons) enthalten.</div>
+</div>
+
+<div class="btn-wrap">
+  <button id="btn-submit">Auswerten</button>
+  <button id="btn-reset">Neu starten</button>
+</div>
+</main>
+
+<script>
+const ANSWERS = {
+  1:'d', 2:'d', 3:'b', 4:'d', 5:'d',
+  6:'b', 7:'b', 8:'d', 9:'a', 10:'c',
+  11:'c', 12:'d', 13:'d', 14:'a', 15:'a',
+  16:'c', 17:'c', 18:'d', 19:'a', 20:'a',
+  21:'d', 22:'a', 23:'a', 24:'a', 25:'d',
+  26:'a', 27:'a', 28:'d', 29:'d', 30:'c',
+  31:'b', 32:'b', 33:'d', 34:'a', 35:'a',
+  36:'d', 37:'d', 38:'c', 39:'c', 40:'d',
+  41:'a', 42:'b', 43:'c', 44:'a', 45:'a',
+  46:'d', 47:'b', 48:'a', 49:'a'
+};
+const N = 49;
+let timerInt = null;
+let secs = 100 * 60;
+
+function pad(n){ return n < 10 ? '0' + n : '' + n; }
+
+function startTimer(){
+  timerInt = setInterval(function(){
+    secs--;
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    const el = document.getElementById('timer');
+    el.textContent = pad(m) + ':' + pad(s);
+    if(secs <= 300) el.classList.add('warn');
+    if(secs <= 0){ clearInterval(timerInt); evaluate(); }
+  }, 1000);
+}
+
+function updateProgress(){
+  let answered = 0;
+  for(let i = 1; i <= N; i++){
+    if(document.querySelector('input[name="q'+i+'"]:checked')) answered++;
+  }
+  document.getElementById('progress-text').textContent = answered + ' / ' + N + ' beantwortet';
+  document.getElementById('progress-bar').style.width = Math.round(answered / N * 100) + '%';
+}
+
+document.querySelectorAll('input[type=radio]').forEach(function(r){
+  r.addEventListener('change', function(){
+    const name = this.name;
+    document.querySelectorAll('input[name="'+name+'"]').forEach(function(o){
+      o.parentElement.classList.remove('sel');
+    });
+    this.parentElement.classList.add('sel');
+    updateProgress();
+  });
+});
+
+function evaluate(){
+  try {
+    clearInterval(timerInt);
+    let correct = 0, answered = 0;
+    for(let i = 1; i <= N; i++){
+      const sel = document.querySelector('input[name="q'+i+'"]:checked');
+      const card = document.getElementById('c'+i);
+      const opts = document.querySelectorAll('input[name="q'+i+'"]');
+      opts.forEach(function(o){ o.disabled = true; });
+      if(!sel) continue;
+      answered++;
+      const correctEl = document.querySelector('input[name="q'+i+'"][value="'+ANSWERS[i]+'"]');
+      if(correctEl) correctEl.parentElement.classList.add('right');
+      if(sel.value === ANSWERS[i]){
+        correct++;
+        if(card) card.classList.add('ok');
+        const si = document.getElementById('s'+i);
+        if(si){ si.textContent = '✓'; si.className = 'status ok-s'; }
+      } else {
+        if(card) card.classList.add('err');
+        sel.parentElement.classList.remove('sel');
+        sel.parentElement.classList.add('struck');
+        const si = document.getElementById('s'+i);
+        if(si){ si.textContent = '✗'; si.className = 'status err-s'; }
+        const h = document.getElementById('h'+i);
+        if(h) h.style.display = 'block';
+      }
+    }
+    const pct = Math.round(correct / N * 100);
+    const pass = pct >= 50;
+    const banner = document.getElementById('score');
+    banner.className = pass ? 'pass' : 'fail';
+    banner.innerHTML = '<strong>Ergebnis</strong><div class="num">' + correct + '/' + N + ' &nbsp;(' + pct + '&thinsp;%)</div>' +
+      '<div style="font-size:.9rem;margin-top:4px">' + (pass ? '&#10003; Bestanden' : '&#10007; Nicht bestanden') +
+      ' &nbsp;&middot;&nbsp; ' + answered + ' von ' + N + ' Fragen beantwortet</div>';
+    banner.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    document.getElementById('btn-submit').style.display = 'none';
+    document.getElementById('btn-reset').style.display = 'block';
+  } catch(e) {
+    const msg = e ? (e.message || String(e)) : 'Unbekannt';
+    const scoreEl = document.getElementById('score');
+    if(scoreEl){
+      scoreEl.className = 'fail';
+      scoreEl.innerHTML = '<strong>Fehler bei Auswertung:</strong><br>' + msg;
+      scoreEl.style.display = 'block';
+    }
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+}
+
+function resetQuiz(){
+  for(let i = 1; i <= N; i++){
+    const opts = document.querySelectorAll('input[name="q'+i+'"]');
+    opts.forEach(function(o){
+      o.checked = false;
+      o.disabled = false;
+      o.parentElement.classList.remove('sel','right','struck');
+    });
+    const card = document.getElementById('c'+i);
+    if(card){ card.classList.remove('ok','err'); }
+    const si = document.getElementById('s'+i);
+    if(si){ si.textContent = ''; si.className = 'status'; }
+    const h = document.getElementById('h'+i);
+    if(h){ h.style.display = 'none'; }
+  }
+  const banner = document.getElementById('score');
+  banner.style.display = 'none';
+  banner.className = '';
+  clearInterval(timerInt);
+  secs = 100 * 60;
+  const timerEl = document.getElementById('timer');
+  timerEl.textContent = '100:00';
+  timerEl.classList.remove('warn');
+  startTimer();
+  document.getElementById('btn-submit').style.display = 'block';
+  document.getElementById('btn-reset').style.display = 'none';
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+document.getElementById('btn-submit').addEventListener('click', evaluate);
+document.getElementById('btn-reset').addEventListener('click', resetQuiz);
+
+startTimer();
+</script>
+</body>
+</html>
