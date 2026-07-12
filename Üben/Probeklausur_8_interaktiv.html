@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probeklausur 8 — Statistik (40 Fragen, 80 min)</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$']] },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6f8;color:#222;font-size:15px;line-height:1.55}
+header{background:#1a3a5c;color:#fff;padding:16px 24px;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+header h1{font-size:1.05rem;font-weight:700;flex:1}
+#timer{font-size:1.1rem;font-weight:700;background:#0d2540;padding:6px 14px;border-radius:6px;min-width:70px;text-align:center}
+#timer.warn{background:#b00020;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+#progress-bar-wrap{width:100%;height:6px;background:#0d2540;border-radius:3px}
+#progress-bar{height:6px;background:#4caf50;border-radius:3px;transition:width .3s}
+#progress-text{font-size:.8rem;color:#cdd}
+main{max-width:860px;margin:0 auto;padding:20px 16px}
+.card{background:#fff;border-radius:8px;padding:18px 20px;margin-bottom:18px;border-left:4px solid #1a3a5c;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.card.ok{border-left-color:#2e7d32;background:#f1f8f2}
+.card.err{border-left-color:#b71c1c;background:#fff5f5}
+.q-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.q-num{font-size:.75rem;font-weight:700;background:#1a3a5c;color:#fff;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.q-type{font-size:.7rem;background:#e8edf3;color:#555;padding:2px 7px;border-radius:10px}
+.q-text{font-weight:600;font-size:.97rem;margin-bottom:8px}
+.options label{display:flex;align-items:flex-start;gap:9px;padding:7px 10px;border-radius:6px;cursor:pointer;margin-bottom:3px;transition:background .15s}
+.options label:hover{background:#f0f4f8}
+.options label.sel{background:#e3edf9}
+.options label.right{background:#e8f5e9;font-weight:600}
+.options label.struck{background:#ffebee;text-decoration:line-through;color:#999}
+input[type=radio]{margin-top:3px;flex-shrink:0}
+.hint{display:none;margin-top:10px;padding:10px 14px;background:#fff3cd;border-left:3px solid #f9a825;border-radius:0 6px 6px 0;font-size:.87rem;color:#444}
+.status{font-size:.8rem;font-weight:700;margin-left:auto;padding:3px 8px;border-radius:4px}
+.status.ok-s{background:#e8f5e9;color:#2e7d32}
+.status.err-s{background:#ffebee;color:#b71c1c}
+table.kt{border-collapse:collapse;margin:10px 0;font-size:.88rem}
+table.kt th,table.kt td{border:1px solid #bbb;padding:5px 10px;text-align:center}
+table.kt th{background:#e8edf3;font-weight:600}
+.stata{background:#1e1e1e;color:#d4d4d4;font-family:'Courier New',monospace;font-size:.8rem;padding:12px 14px;border-radius:6px;margin:10px 0;white-space:pre;overflow-x:auto}
+#score{display:none;max-width:860px;margin:0 auto 20px;padding:22px 28px;border-radius:8px;text-align:center;font-size:1.05rem}
+#score.pass{background:#e8f5e9;border:2px solid #2e7d32;color:#1b5e20}
+#score.fail{background:#ffebee;border:2px solid #b71c1c;color:#7f0000}
+#score .num{font-size:2.4rem;font-weight:800;margin:8px 0}
+.btn-wrap{text-align:center;margin:10px 0 30px}
+button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radius:8px;cursor:pointer}
+#btn-submit{background:#1a3a5c;color:#fff}
+#btn-submit:hover{background:#0d2540}
+#btn-reset{display:none;background:#2e7d32;color:#fff}
+#btn-reset:hover{background:#1b5e20}
+</style>
+</head>
+<body>
+<header>
+  <h1>Probeklausur 8 &mdash; Einführung in die sozialwissenschaftliche Statistik</h1>
+  <div id="timer">80:00</div>
+  <div style="flex-basis:100%">
+    <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+      <span id="progress-text">0 / 40 beantwortet</span>
+      <span style="font-size:.8rem;color:#cdd">40 Fragen &middot; 80 Minuten</span>
+    </div>
+    <div id="progress-bar-wrap"><div id="progress-bar" style="width:0%"></div></div>
+  </div>
+</header>
+
+
+<main>
+<div id="score"></div>
+
+<!-- Q1 -->
+<div class="card" id="c1">
+  <div class="q-head"><span class="q-num">1</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s1"></span></div>
+  <div class="q-text">Der Politikinteresse-Index $X$ ist normalverteilt mit $\mu = 50$ und $\sigma = 8$. Eine Person hat einen Wert von $X = 66$. Wie groß ist der zugehörige Z-Wert?</div>
+  <div class="options">
+    <label><input type="radio" name="q1" value="a"> a) $Z = 2{,}00$</label>
+    <label><input type="radio" name="q1" value="b"> b) $Z = 16{,}00$</label>
+    <label><input type="radio" name="q1" value="c"> c) $Z = 1{,}50$</label>
+    <label><input type="radio" name="q1" value="d"> d) $Z = 8{,}00$</label>
+  </div>
+  <div class="hint" id="h1">Korrekt: <strong>a</strong>. $Z = (X-\mu)/\sigma = (66-50)/8 = 16/8 = 2{,}00$. Falle b): die Differenz $16$ wurde nicht durch $\sigma$ geteilt. Falle d): $\sigma$ selbst mit dem Z-Wert verwechselt.</div>
+</div>
+
+<!-- Q2 -->
+<div class="card" id="c2">
+  <div class="q-head"><span class="q-num">2</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s2"></span></div>
+  <div class="q-text">Gleiche Variable ($\mu = 50$, $\sigma = 8$). Wie groß ist die Wahrscheinlichkeit, dass eine zufällig gezogene Person einen Wert über 66 hat? (Tabellenwert: $\Phi(2{,}00) = 0{,}9772$)</div>
+  <div class="options">
+    <label><input type="radio" name="q2" value="a"> a) 0,9772</label>
+    <label><input type="radio" name="q2" value="b"> b) 0,0228</label>
+    <label><input type="radio" name="q2" value="c"> c) 0,4886</label>
+    <label><input type="radio" name="q2" value="d"> d) 1,9772</label>
+  </div>
+  <div class="hint" id="h2">Korrekt: <strong>b</strong>. $Z = (66-50)/8 = 2{,}00$. $P(X\gt 66) = 1-\Phi(2{,}00) = 1-0{,}9772 = 0{,}0228$. Falle a): das ist $P(X \leq 66)$, nicht $P(X\gt 66)$ &mdash; das Komplement vergessen.</div>
+</div>
+
+<!-- Q3 -->
+<div class="card" id="c3">
+  <div class="q-head"><span class="q-num">3</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s3"></span></div>
+  <div class="q-text">Gleiche Variable ($\mu = 50$, $\sigma = 8$). Wie groß ist die Wahrscheinlichkeit, dass eine Person einen Wert zwischen 42 und 58 hat? (Tabellenwert: $\Phi(1{,}00) = 0{,}8413$)</div>
+  <div class="options">
+    <label><input type="radio" name="q3" value="a"> a) 0,8413</label>
+    <label><input type="radio" name="q3" value="b"> b) 0,1587</label>
+    <label><input type="radio" name="q3" value="c"> c) 0,6826</label>
+    <label><input type="radio" name="q3" value="d"> d) 0,3413</label>
+  </div>
+  <div class="hint" id="h3">Korrekt: <strong>c</strong>. $Z_1=(42-50)/8=-1{,}00$; $Z_2=(58-50)/8=1{,}00$. Wegen Symmetrie: $\Phi(-1{,}00)=1-\Phi(1{,}00)=0{,}1587$. $P(42\lt X\lt58)=\Phi(1{,}00)-\Phi(-1{,}00)=0{,}8413-0{,}1587=0{,}6826$. Falle a): nur $\Phi(1{,}00)$ ohne den unteren Tail abzuziehen. Falle b): nur die untere Randwahrscheinlichkeit.</div>
+</div>
+
+<!-- Q4 -->
+<div class="card" id="c4">
+  <div class="q-head"><span class="q-num">4</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s4"></span></div>
+  <div class="q-text">Gleiche Variable ($\mu = 50$, $\sigma = 8$). Ab welchem X-Wert gehört jemand zu den obersten 10&thinsp;% mit dem höchsten Politikinteresse? ($z_{0{,}90} = 1{,}28$)</div>
+  <div class="options">
+    <label><input type="radio" name="q4" value="a"> a) 60,24</label>
+    <label><input type="radio" name="q4" value="b"> b) 39,76</label>
+    <label><input type="radio" name="q4" value="c"> c) 51,28</label>
+    <label><input type="radio" name="q4" value="d"> d) 58,00</label>
+  </div>
+  <div class="hint" id="h4">Korrekt: <strong>a</strong>. $x_p = \mu+\sigma\cdot z_p = 50+8\cdot1{,}28 = 50+10{,}24 = 60{,}24$. Falle b): $\mu-\sigma\cdot z_p$ gerechnet (falsches Vorzeichen, das wäre das <em>untere</em> 10&thinsp;%-Quantil). Falle c): $z_p$ nicht mit $\sigma$ multipliziert, nur addiert.</div>
+</div>
+
+<!-- Q5 -->
+<div class="card" id="c5">
+  <div class="q-head"><span class="q-num">5</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s5"></span></div>
+  <div class="q-text">Sechs Befragte wurden nach ihrer Mitgliedschaft in der Regierungspartei ($X$: 0 = nein, 1 = ja) und ihrer Demokratiezufriedenheit ($Y$, Skala 0&ndash;10) gefragt.</div>
+  <table class="kt">
+    <tr><th>Nicht-Mitglieder ($x=0$)</th><td>6</td><td>7</td><td>5</td></tr>
+    <tr><th>Mitglieder ($x=1$)</th><td>9</td><td>10</td><td>11</td></tr>
+  </table>
+  <div class="q-text">Berechnen Sie den <strong>punkt-biserialen Korrelationskoeffizienten</strong> $r_\text{pb}$.</div>
+  <div class="options">
+    <label><input type="radio" name="q5" value="a"> a) $r_\text{pb} \approx 0{,}93$</label>
+    <label><input type="radio" name="q5" value="b"> b) $r_\text{pb} \approx 0{,}50$</label>
+    <label><input type="radio" name="q5" value="c"> c) $r_\text{pb} \approx 1{,}85$</label>
+    <label><input type="radio" name="q5" value="d"> d) $r_\text{pb} \approx 4{,}00$</label>
+  </div>
+  <div class="hint" id="h5">Korrekt: <strong>a</strong>. $\bar{y}_0=(6+7+5)/3=6$; $\bar{y}_1=(9+10+11)/3=10$; $\bar{y}=(6+7+5+9+10+11)/6=8$. Abweichungsquadrate zum Gesamtmittel: $4+1+9+1+4+9=28$; empirische Varianz $s_y^2=28/6\approx4{,}667$; $s_y\approx2{,}160$. $r_\text{pb}=\dfrac{10-6}{2{,}160}\cdot\sqrt{\dfrac{3\cdot3}{6^2}}=1{,}852\cdot0{,}5\approx0{,}93$. Falle b): nur den Wurzelterm $\sqrt{n_1n_0/n^2}=0{,}5$ als Ergebnis genommen. Falle c): den Wurzelterm vergessen und nur $(\bar{y}_1-\bar{y}_0)/s_y$ gerechnet. Falle d): nur die rohe Mittelwertdifferenz $\bar{y}_1-\bar{y}_0=4$ ohne Normierung.</div>
+</div>
+
+<!-- Q6 -->
+<div class="card" id="c6">
+  <div class="q-head"><span class="q-num">6</span><span class="q-type">Stata-Output</span><span class="status" id="s6"></span></div>
+  <div class="q-text">Lesen Sie den folgenden <strong>Stata-OLS-Output</strong> (abhängige Variable: Lebenszufriedenheit <em>stflife</em>, Skala 0&ndash;10; Prädiktoren: Alter in Jahren, Bildung in Jahren).</div>
+  <div class="stata">      Source |       SS           df       MS       Number of obs =    850
+-------------+----------------------------------    F(2, 847)     =  39.33
+       Model |   102.0000         2    51.0000       Prob &gt; F      = 0.0000
+    Residual |  1098.0000       847     1.2962       R-squared     = 0.0850
+-------------+----------------------------------    Adj R-squared = 0.0829
+       Total |  1200.0000       849     1.4134       Root MSE      = 1.1385
+
+------------------------------------------------------------------------------
+     stflife |      Coef.   Std. Err.      t    P&gt;|t|    [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       Alter |  -.0150000   .0060000    -2.50   0.012    -.0267600   -.0032400
+     Bildung |   .1800000   .0280000     6.43   0.000     .1251200    .2348800
+       _cons |  6.2000000   .3500000    17.71   0.000    5.5140000   6.8860000
+------------------------------------------------------------------------------</div>
+  <div class="q-text">Welchen Wert für die Lebenszufriedenheit prognostiziert das Modell für eine 40-jährige Person mit 12 Jahren Bildung?</div>
+  <div class="options">
+    <label><input type="radio" name="q6" value="a"> a) 7,76</label>
+    <label><input type="radio" name="q6" value="b"> b) 8,36</label>
+    <label><input type="radio" name="q6" value="c"> c) 5,60</label>
+    <label><input type="radio" name="q6" value="d"> d) 8,96</label>
+  </div>
+  <div class="hint" id="h6">Korrekt: <strong>a</strong>. $\hat{y}=6{,}2+(-0{,}015\cdot40)+(0{,}180\cdot12)=6{,}2-0{,}6+2{,}16=7{,}76$. Falle b): den Alter-Term vergessen ($6{,}2+2{,}16$). Falle c): den Bildungs-Term vergessen ($6{,}2-0{,}6$). Falle d): Vorzeichenfehler beim Alter-Effekt (Alter fälschlich mit positivem Vorzeichen addiert statt subtrahiert).</div>
+</div>
+
+<!-- Q7 -->
+<div class="card" id="c7">
+  <div class="q-head"><span class="q-num">7</span><span class="q-type">Stata-Output</span><span class="status" id="s7"></span></div>
+  <div class="q-text">Lesen Sie den folgenden <strong>Stata-OLS-Output</strong> (abhängige Variable: Politikvertrauen <em>polvertr</em>, Skala 0&ndash;10; Prädiktoren: Einkommen in 1.000&thinsp;&euro;, weiblich = Dummy [1 = weiblich]). Der $R^2$-Wert fehlt.</div>
+  <div class="stata">      Source |       SS           df       MS       Number of obs =  1,250
+-------------+----------------------------------    F(2, 1247)    = 113.98
+       Model |   340.0000         2   170.0000       Prob &gt; F      = 0.0000
+    Residual |  1860.0000     1,247     1.4916       R-squared     =
+-------------+----------------------------------    Adj R-squared = 0.1531
+       Total |  2200.0000     1,249     1.7614       Root MSE      = 1.2214
+
+------------------------------------------------------------------------------
+    polvertr |      Coef.   Std. Err.      t    P&gt;|t|    [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   Einkommen |   .0450000   .0060000     7.50   0.000     .0332400    .0567600
+    weiblich |  -.3200000   .0700000    -4.57   0.000    -.4572000   -.1828000
+       _cons |  4.1000000   .1500000    27.33   0.000    3.8060000   4.3940000
+------------------------------------------------------------------------------</div>
+  <div class="q-text">Berechnen Sie $R^2$ aus den vorhandenen Informationen.</div>
+  <div class="options">
+    <label><input type="radio" name="q7" value="a"> a) $R^2 = 0{,}1545$</label>
+    <label><input type="radio" name="q7" value="b"> b) $R^2 = 0{,}8455$</label>
+    <label><input type="radio" name="q7" value="c"> c) $R^2 = 0{,}1828$</label>
+    <label><input type="radio" name="q7" value="d"> d) $R^2 = 0{,}2200$</label>
+  </div>
+  <div class="hint" id="h7">Korrekt: <strong>a</strong>. $R^2=SS_{Modell}/SS_{Total}=340/2200\approx0{,}1545$. Falle b): $SS_{Residual}/SS_{Total}=1860/2200\approx0{,}8455$ ist der <em>nicht</em> erklärte Anteil ($1-R^2$), nicht $R^2$ selbst. Falle c): versehentlich durch $SS_{Residual}$ statt $SS_{Total}$ geteilt.</div>
+</div>
+
+<!-- Q8 -->
+<div class="card" id="c8">
+  <div class="q-head"><span class="q-num">8</span><span class="q-type">Stata-Output</span><span class="status" id="s8"></span></div>
+  <div class="q-text">Lesen Sie den folgenden <strong>Stata-OLS-Output</strong> (abhängige Variable: Zufriedenheit mit dem Gesundheitssystem <em>stfhealth</em>, Skala 0&ndash;10; erklärende Variablen: Bildungsabschluss-Dummies, Referenzkategorie Hauptschule).</div>
+  <div class="stata">      Source |       SS           df       MS       Number of obs =  1,500
+-------------+----------------------------------    F(3, 1496)    =  20.78
+       Model |   180.0000         3    60.0000       Prob &gt; F      = 0.0000
+    Residual |  4320.0000     1,496     2.8877       R-squared     = 0.0400
+-------------+----------------------------------    Adj R-squared = 0.0381
+       Total |  4500.0000     1,499     3.0020       Root MSE      = 1.6993
+
+------------------------------------------------------------------------------
+   stfhealth |      Coef.   Std. Err.      t    P&gt;|t|    [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   Realschule |   .1500000   .0900000     1.67   0.095    -.0264000    .3264000
+   Fachabitur |   .4200000   .1100000     3.82   0.000     .2044000    .6356000
+      Abitur |   .6100000   .0950000     6.42   0.000     .4238000    .7962000
+       _cons |  6.3000000   .0700000    90.00   0.000    6.1628000   6.4372000
+------------------------------------------------------------------------------</div>
+  <div class="q-text">Unterscheidet sich die Zufriedenheit von Realschul-Absolventen signifikant von der Referenzgruppe (Hauptschule) auf dem 5&thinsp;%-Niveau?</div>
+  <div class="options">
+    <label><input type="radio" name="q8" value="a"> a) Ja, Realschul-Absolventen sind signifikant zufriedener als Hauptschul-Absolventen.</label>
+    <label><input type="radio" name="q8" value="b"> b) Nein, es gibt auf dem 5&thinsp;%-Niveau keinen signifikanten Unterschied zwischen Realschule und Hauptschule.</label>
+    <label><input type="radio" name="q8" value="c"> c) Das lässt sich nicht bestimmen, da der Output keine Mittelwerte sondern Regressionskoeffizienten enthält.</label>
+    <label><input type="radio" name="q8" value="d"> d) Das lässt sich nicht bestimmen, da der Dummy Hauptschule nicht in der Regression enthalten ist.</label>
+  </div>
+  <div class="hint" id="h8">Korrekt: <strong>b</strong>. Der Realschule-Koeffizient hat $p=0{,}095\gt 0{,}05$ &mdash; auf dem 5&thinsp;%-Niveau nicht signifikant (wäre er es auf dem 10&thinsp;%-Niveau, dort ist $0{,}095\lt 0{,}10$). Falle a): verwechselt "positiver Koeffizient" mit "signifikant". Falle d): die Referenzkategorie muss nicht explizit im Output stehen &mdash; ihr Effekt ist im Achsenabschnitt (_cons) enthalten.</div>
+</div>
+
+<!-- Q9 -->
+<div class="card" id="c9">
+  <div class="q-head"><span class="q-num">9</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s9"></span></div>
+  <div class="q-text">1.400 Befragte wurden gefragt, ob sie ein staatliches Klimageld befürworten. Schauen Sie sich die folgende Kreuztabelle an.</div>
+  <table class="kt">
+    <tr><th rowspan="2">Zustimmung Klimageld</th><th colspan="2">Wohnort</th><th rowspan="2">Gesamt</th></tr>
+    <tr><th>Stadt</th><th>Land</th></tr>
+    <tr><td>Ja</td><td>150</td><td>90</td><td>240</td></tr>
+    <tr><td>Nein</td><td>50</td><td>110</td><td>160</td></tr>
+    <tr><td><strong>Gesamt</strong></td><td>200</td><td>200</td><td>400</td></tr>
+  </table>
+  <div class="q-text">Berechnen Sie die <strong>Prozentsatzdifferenz</strong> für die Zustimmung zwischen Stadt- und Landbewohnern und interpretieren Sie diese.</div>
+  <div class="options">
+    <label><input type="radio" name="q9" value="a"> a) $d\% = 30$ Prozentpunkte; Stadtbewohner stimmen häufiger zu als Landbewohner.</label>
+    <label><input type="radio" name="q9" value="b"> b) $d\% = 30$ Prozentpunkte; Landbewohner stimmen häufiger zu als Stadtbewohner.</label>
+    <label><input type="radio" name="q9" value="c"> c) $d\% = 75$ Prozentpunkte; Stadtbewohner stimmen häufiger zu.</label>
+    <label><input type="radio" name="q9" value="d"> d) $d\% = 15$ Prozentpunkte; kein nennenswerter Unterschied.</label>
+  </div>
+  <div class="hint" id="h9">Korrekt: <strong>a</strong>. Spaltenanteile (bedingt auf Wohnort): $f(\text{ja}\mid\text{Stadt})=150/200=75\,\%$; $f(\text{ja}\mid\text{Land})=90/200=45\,\%$. $d\%=75-45=30$ Prozentpunkte &mdash; Stadtbewohner stimmen deutlich häufiger zu. Falle c): nur den Wert für Stadt genommen, nicht die Differenz gebildet. Falle d): fälschlich mit den Anteilen an der Gesamtstichprobe gerechnet ($150/400-90/400=15\,\%$) statt mit den bedingten Spaltenanteilen.</div>
+</div>
+
+<!-- Q10 -->
+<div class="card" id="c10">
+  <div class="q-head"><span class="q-num">10</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s10"></span></div>
+  <div class="q-text">Gleiche Kreuztabelle wie zuvor (Klimageld &times; Wohnort). Wie groß sind die <strong>Odds</strong> für Zustimmung zum Klimageld unter Stadtbewohnern bzw. unter Landbewohnern?</div>
+  <table class="kt">
+    <tr><th rowspan="2">Zustimmung Klimageld</th><th colspan="2">Wohnort</th><th rowspan="2">Gesamt</th></tr>
+    <tr><th>Stadt</th><th>Land</th></tr>
+    <tr><td>Ja</td><td>150</td><td>90</td><td>240</td></tr>
+    <tr><td>Nein</td><td>50</td><td>110</td><td>160</td></tr>
+    <tr><td><strong>Gesamt</strong></td><td>200</td><td>200</td><td>400</td></tr>
+  </table>
+  <div class="options">
+    <label><input type="radio" name="q10" value="a"> a) Odds(Stadt) $=3{,}0$; Odds(Land) $\approx0{,}82$</label>
+    <label><input type="radio" name="q10" value="b"> b) Odds(Stadt) $=0{,}75$; Odds(Land) $=0{,}45$</label>
+    <label><input type="radio" name="q10" value="c"> c) Odds(Stadt) $\approx0{,}33$; Odds(Land) $\approx1{,}22$</label>
+    <label><input type="radio" name="q10" value="d"> d) Odds(Stadt) $=3{,}0$; Odds(Land) $\approx1{,}22$</label>
+  </div>
+  <div class="hint" id="h10">Korrekt: <strong>a</strong>. Odds(Stadt) $=h_{11}/h_{21}=150/50=3{,}0$ (dreimal so oft Zustimmung wie Ablehnung). Odds(Land) $=h_{12}/h_{22}=90/110\approx0{,}82$. Falle b): das sind die relativen Häufigkeiten (Anteile), nicht die Odds. Falle c): Odds invertiert gerechnet (Ablehnung : Zustimmung statt umgekehrt). Falle d): nur die Land-Odds invertiert.</div>
+</div>
+
+<!-- Q11 -->
+<div class="card" id="c11">
+  <div class="q-head"><span class="q-num">11</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s11"></span></div>
+  <div class="q-text">Gleiche Kreuztabelle wie zuvor (Klimageld &times; Wohnort). Berechnen Sie die <strong>Odds-Ratio</strong> und interpretieren Sie das Ergebnis.</div>
+  <table class="kt">
+    <tr><th rowspan="2">Zustimmung Klimageld</th><th colspan="2">Wohnort</th><th rowspan="2">Gesamt</th></tr>
+    <tr><th>Stadt</th><th>Land</th></tr>
+    <tr><td>Ja</td><td>150</td><td>90</td><td>240</td></tr>
+    <tr><td>Nein</td><td>50</td><td>110</td><td>160</td></tr>
+    <tr><td><strong>Gesamt</strong></td><td>200</td><td>200</td><td>400</td></tr>
+  </table>
+  <div class="options">
+    <label><input type="radio" name="q11" value="a"> a) $OR\approx3{,}67$; die Chance auf Zustimmung ist unter Stadtbewohnern etwa 3,7-mal so hoch wie unter Landbewohnern.</label>
+    <label><input type="radio" name="q11" value="b"> b) $OR\approx1{,}67$; kein nennenswerter Unterschied zwischen den Gruppen.</label>
+    <label><input type="radio" name="q11" value="c"> c) $OR=30$; die Chance ist 30-mal höher.</label>
+    <label><input type="radio" name="q11" value="d"> d) $OR\approx0{,}27$; Landbewohner haben höhere Chancen auf Zustimmung.</label>
+  </div>
+  <div class="hint" id="h11">Korrekt: <strong>a</strong>. $OR=\dfrac{h_{11}h_{22}}{h_{21}h_{12}}=\dfrac{150\cdot110}{50\cdot90}=\dfrac{16500}{4500}\approx3{,}67$. Stadtbewohner haben eine rund 3,7-mal höhere Chance (Odds) zuzustimmen als Landbewohner &mdash; deutlicher Zusammenhang zwischen Wohnort und Zustimmung. Falle b): $0{,}75/0{,}45\approx1{,}67$ ist das Verhältnis der <em>Anteile</em> (Risk-Ratio-Logik), nicht der Odds-Ratio &mdash; Odds und Wahrscheinlichkeiten sind nicht dasselbe. Falle c): Verwechslung mit der Prozentsatzdifferenz (30 Prozentpunkte). Falle d): Kehrwert der korrekten Odds-Ratio (Gruppenreihenfolge vertauscht).</div>
+</div>
+
+<!-- Q12 -->
+<div class="card" id="c12">
+  <div class="q-head"><span class="q-num">12</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s12"></span></div>
+  <div class="q-text">Gleiche Kreuztabelle wie zuvor (Klimageld &times; Wohnort). Berechnen Sie <strong>Chi²</strong> und <strong>Phi</strong> und interpretieren Sie diese Maßzahlen.</div>
+  <table class="kt">
+    <tr><th rowspan="2">Zustimmung Klimageld</th><th colspan="2">Wohnort</th><th rowspan="2">Gesamt</th></tr>
+    <tr><th>Stadt</th><th>Land</th></tr>
+    <tr><td>Ja</td><td>150</td><td>90</td><td>240</td></tr>
+    <tr><td>Nein</td><td>50</td><td>110</td><td>160</td></tr>
+    <tr><td><strong>Gesamt</strong></td><td>200</td><td>200</td><td>400</td></tr>
+  </table>
+  <div class="options">
+    <label><input type="radio" name="q12" value="a"> a) $\chi^2=37{,}5$; $\varphi\approx0{,}306$ &mdash; moderater Zusammenhang zwischen Wohnort und Zustimmung.</label>
+    <label><input type="radio" name="q12" value="b"> b) $\chi^2=30{,}0$; $\varphi\approx0{,}274$</label>
+    <label><input type="radio" name="q12" value="c"> c) $\chi^2=37{,}5$; $\varphi\approx0{,}094$</label>
+    <label><input type="radio" name="q12" value="d"> d) $\chi^2=9{,}375$; $\varphi\approx0{,}153$</label>
+  </div>
+  <div class="hint" id="h12">Korrekt: <strong>a</strong>. Erwartete Häufigkeiten unter Unabhängigkeit: alle Randprodukte $/400$ ergeben $\tilde{h}_{11}=\tilde{h}_{12}=120$, $\tilde{h}_{21}=\tilde{h}_{22}=80$. $\chi^2=\dfrac{30^2}{120}+\dfrac{30^2}{120}+\dfrac{30^2}{80}+\dfrac{30^2}{80}=7{,}5+7{,}5+11{,}25+11{,}25=37{,}5$. $\varphi=\sqrt{\chi^2/n}=\sqrt{37{,}5/400}\approx0{,}306$ &mdash; ein moderater Zusammenhang. Falle c): $\varphi^2=0{,}09375\approx0{,}094$ mit $\varphi$ selbst verwechselt (klassische Verwechslung). Falle b) und d): mit falschen erwarteten Häufigkeiten gerechnet.</div>
+</div>
+
+<!-- Q13 -->
+<div class="card" id="c13">
+  <div class="q-head"><span class="q-num">13</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s13"></span></div>
+  <div class="q-text">Schauen Sie sich die folgende Tabelle an: $x$ ist die Anzahl der Jahre, die eine Abgeordnete im Parlament sitzt; $y$ ist die Anzahl der von ihr im letzten Jahr gehaltenen Reden.</div>
+  <table class="kt">
+    <tr><th>$i$</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+    <tr><th>$x_i$ (Jahre)</th><td>2</td><td>4</td><td>6</td><td>8</td><td>10</td></tr>
+    <tr><th>$y_i$ (Reden)</th><td>5</td><td>12</td><td>8</td><td>15</td><td>14</td></tr>
+  </table>
+  <div class="q-text">Berechnen Sie die <strong>Kovarianz</strong> $s_{XY}$.</div>
+  <div class="options">
+    <label><input type="radio" name="q13" value="a"> a) $s_{XY} = 8{,}4$</label>
+    <label><input type="radio" name="q13" value="b"> b) $s_{XY} = 42{,}0$</label>
+    <label><input type="radio" name="q13" value="c"> c) $s_{XY} = 1{,}68$</label>
+    <label><input type="radio" name="q13" value="d"> d) $s_{XY} = 10{,}5$</label>
+  </div>
+  <div class="hint" id="h13">Korrekt: <strong>a</strong>. $\bar{x}=6$, $\bar{y}=10{,}8$. Abweichungsprodukte: $(-4)(-5{,}8)+(-2)(1{,}2)+(0)(-2{,}8)+(2)(4{,}2)+(4)(3{,}2)=23{,}2-2{,}4+0+8{,}4+12{,}8=42{,}0$. $s_{XY}=42{,}0/5=8{,}4$. Falle b): die Summe der Abweichungsprodukte nicht durch $n$ geteilt. Falle d): versehentlich durch $n-1=4$ statt durch $n=5$ geteilt.</div>
+</div>
+
+<!-- Q14 -->
+<div class="card" id="c14">
+  <div class="q-head"><span class="q-num">14</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s14"></span></div>
+  <div class="q-text">Gleiche Tabelle wie zuvor (Jahre im Parlament $x$, Anzahl Reden $y$). Berechnen Sie den <strong>Korrelationskoeffizienten nach Bravais-Pearson</strong> $r$.</div>
+  <table class="kt">
+    <tr><th>$i$</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+    <tr><th>$x_i$ (Jahre)</th><td>2</td><td>4</td><td>6</td><td>8</td><td>10</td></tr>
+    <tr><th>$y_i$ (Reden)</th><td>5</td><td>12</td><td>8</td><td>15</td><td>14</td></tr>
+  </table>
+  <div class="options">
+    <label><input type="radio" name="q14" value="a"> a) $r \approx 0{,}79$</label>
+    <label><input type="radio" name="q14" value="b"> b) $r \approx 0{,}89$</label>
+    <label><input type="radio" name="q14" value="c"> c) $r \approx 0{,}42$</label>
+    <label><input type="radio" name="q14" value="d"> d) $r = 8{,}40$</label>
+  </div>
+  <div class="hint" id="h14">Korrekt: <strong>a</strong>. Aus Frage 13: $s_{XY}=8{,}4$. Streuungen: $\sum(x_i-\bar{x})^2=40 \Rightarrow s_X=\sqrt{40/5}=\sqrt{8}\approx2{,}828$. $\sum(y_i-\bar{y})^2=70{,}8 \Rightarrow s_Y=\sqrt{70{,}8/5}=\sqrt{14{,}16}\approx3{,}763$. $r=s_{XY}/(s_X\cdot s_Y)=8{,}4/(2{,}828\cdot3{,}763)\approx8{,}4/10{,}643\approx0{,}79$. Falle d): die Kovarianz selbst als Ergebnis genommen, ohne durch die Streuungen zu normieren &mdash; $r$ muss aber immer in $[-1,1]$ liegen, ein Wert von 8,40 ist daher offensichtlich unmöglich (Plausibilitätscheck!).</div>
+</div>
+
+<!-- Q15 -->
+<div class="card" id="c15">
+  <div class="q-head"><span class="q-num">15</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s15"></span></div>
+  <div class="q-text">Für fünf Länder liegen die Wahlbeteiligung (in %) und ein Institutionenvertrauens-Index vor.</div>
+  <table class="kt">
+    <tr><th>Land</th><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr>
+    <tr><th>$x$ (Wahlbeteiligung %)</th><td>72</td><td>58</td><td>81</td><td>65</td><td>90</td></tr>
+    <tr><th>$y$ (Vertrauensindex)</th><td>58</td><td>50</td><td>55</td><td>60</td><td>70</td></tr>
+  </table>
+  <div class="q-text">Berechnen Sie den <strong>Rangkorrelationskoeffizienten nach Spearman</strong> $\rho$.</div>
+  <div class="options">
+    <label><input type="radio" name="q15" value="a"> a) $\rho = 0{,}60$</label>
+    <label><input type="radio" name="q15" value="b"> b) $\rho = -0{,}60$</label>
+    <label><input type="radio" name="q15" value="c"> c) $\rho = 0{,}50$</label>
+    <label><input type="radio" name="q15" value="d"> d) $\rho = 0{,}80$</label>
+  </div>
+  <div class="hint" id="h15">Korrekt: <strong>a</strong>. Ränge (klein &rarr; groß): $x$: B(1), D(2), A(3), C(4), E(5). $y$: B(1), C(2), A(3), D(4), E(5). Mittlerer Rang $=(5+1)/2=3$. Abweichungen $rg(x)-3$: A:0, B:$-2$, C:1, D:$-1$, E:2. Abweichungen $rg(y)-3$: A:0, B:$-2$, C:$-1$, D:1, E:2. Produkte: $0,4,-1,-1,4$, Summe $=6$. Quadratsummen je $10$. $\rho=6/\sqrt{10\cdot10}=6/10=0{,}60$. Falle b): Vorzeichenfehler bei den Abweichungen. Falle c) und d): Rangvergabe für C und D vertauscht (typischer Flüchtigkeitsfehler beim Rangieren).</div>
+</div>
+
+<!-- Q16 -->
+<div class="card" id="c16">
+  <div class="q-head"><span class="q-num">16</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s16"></span></div>
+  <div class="q-text">Aus einer Stichprobe von $n=225$ Personen wurde ein mittleres Einkommen von $\bar{x}=1800$&thinsp;&euro; geschätzt. Die Standardabweichung in der Grundgesamtheit ist bekannt: $\sigma=150$&thinsp;&euro;. Bestimmen Sie das 95&thinsp;%-Konfidenzintervall.</div>
+  <div class="options">
+    <label><input type="radio" name="q16" value="a"> a) $[1780{,}40;\ 1819{,}60]$&thinsp;&euro;</label>
+    <label><input type="radio" name="q16" value="b"> b) $[1783{,}60;\ 1816{,}40]$&thinsp;&euro;</label>
+    <label><input type="radio" name="q16" value="c"> c) $[1506{,}00;\ 2094{,}00]$&thinsp;&euro;</label>
+    <label><input type="radio" name="q16" value="d"> d) $[1799{,}00;\ 1801{,}00]$&thinsp;&euro;</label>
+  </div>
+  <div class="hint" id="h16">Korrekt: <strong>a</strong>. Standardfehler: $\sigma/\sqrt{n}=150/\sqrt{225}=150/15=10$. $z_{0{,}975}=1{,}96$. $KI=1800\pm1{,}96\cdot10=1800\pm19{,}6=[1780{,}40;\,1819{,}60]$. Falle b): falsches Quantil verwendet ($z_{0{,}95}=1{,}64$ statt $z_{0{,}975}=1{,}96$). Falle c): $\sigma$ direkt statt des Standardfehlers $\sigma/\sqrt{n}$ verwendet. Falle d): durch $n$ statt $\sqrt{n}$ geteilt.</div>
+</div>
+
+<!-- Q17 -->
+<div class="card" id="c17">
+  <div class="q-head"><span class="q-num">17</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s17"></span></div>
+  <div class="q-text">Aus einer Stichprobe von $n=400$ Personen wurde ein mittleres Alter von $\bar{x}=42{,}5$ Jahren geschätzt, mit einer Stichprobenstandardabweichung von $S_n=12$ Jahren (Varianz in der Grundgesamtheit unbekannt). Bestimmen Sie das 99&thinsp;%-Konfidenzintervall.</div>
+  <div class="options">
+    <label><input type="radio" name="q17" value="a"> a) $[40{,}95;\ 44{,}05]$</label>
+    <label><input type="radio" name="q17" value="b"> b) $[41{,}32;\ 43{,}68]$</label>
+    <label><input type="radio" name="q17" value="c"> c) $[11{,}54;\ 73{,}46]$</label>
+    <label><input type="radio" name="q17" value="d"> d) $[41{,}90;\ 43{,}10]$</label>
+  </div>
+  <div class="hint" id="h17">Korrekt: <strong>a</strong>. Standardfehler: $S_n/\sqrt{n}=12/\sqrt{400}=12/20=0{,}6$. $z_{0{,}995}=2{,}58$. $KI=42{,}5\pm2{,}58\cdot0{,}6=42{,}5\pm1{,}548=[40{,}95;\,44{,}05]$. Falle b): falsches Quantil ($z_{0{,}975}=1{,}96$ statt $z_{0{,}995}=2{,}58$ &mdash; 95&thinsp;%- statt 99&thinsp;%-Quantil). Falle c): $S_n$ direkt statt des Standardfehlers $S_n/\sqrt{n}$ verwendet. Falle d): das Quantil vergessen, nur $\pm$ Standardfehler gerechnet.</div>
+</div>
+
+<!-- Q18 -->
+<div class="card" id="c18">
+  <div class="q-head"><span class="q-num">18</span><span class="q-type">Verständnis</span><span class="status" id="s18"></span></div>
+  <div class="q-text">Für das Einkommen aus Frage 16 wurde das 95&thinsp;%-Konfidenzintervall $[1780{,}40;\ 1819{,}60]$&thinsp;&euro; berechnet. Welche Interpretation dieses Konfidenzintervalls ist korrekt?</div>
+  <div class="options">
+    <label><input type="radio" name="q18" value="a"> a) Der wahre Mittelwert liegt mit 95&thinsp;%iger Wahrscheinlichkeit zwischen 1780,40&thinsp;&euro; und 1819,60&thinsp;&euro;.</label>
+    <label><input type="radio" name="q18" value="b"> b) Wenn man dieses Verfahren mit vielen verschiedenen Stichproben gleicher Größe wiederholt, würden etwa 95&thinsp;% der so konstruierten Intervalle den wahren Mittelwert enthalten.</label>
+    <label><input type="radio" name="q18" value="c"> c) 95&thinsp;% der befragten Personen haben ein Einkommen zwischen 1780,40&thinsp;&euro; und 1819,60&thinsp;&euro;.</label>
+    <label><input type="radio" name="q18" value="d"> d) Es besteht eine 5&thinsp;%ige Wahrscheinlichkeit, dass der Stichprobenmittelwert falsch berechnet wurde.</label>
+  </div>
+  <div class="hint" id="h18">Korrekt: <strong>b</strong>. Der wahre Mittelwert ist eine feste (wenn auch unbekannte) Größe &mdash; er liegt entweder im Intervall oder nicht, es gibt dafür keine "Wahrscheinlichkeit". Die korrekte Interpretation bezieht sich auf das Wiederholen des Stichprobenverfahrens: Bei vielen Wiederholungen würden 95&thinsp;% der so konstruierten Intervalle den wahren Wert überdecken. Falle a): der klassische, in der Klausur explizit falsche Interpretationsfehler &mdash; unbedingt vermeiden! Falle c): verwechselt das Konfidenzintervall für den Mittelwert mit der Verteilung der Einzelwerte in der Population. Falle d): eine sinnlose, erfundene Aussage.</div>
+</div>
+
+<!-- Q19 -->
+<div class="card" id="c19">
+  <div class="q-head"><span class="q-num">19</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s19"></span></div>
+  <div class="q-text">Bei der aktuellen Sonntagsfrage geben in einer Stichprobe von $n=1500$ Befragten 225 Personen an, die Grünen zu wählen. Bestimmen Sie das 95&thinsp;%-Konfidenzintervall für den wahren Stimmenanteil der Grünen &mdash; die berühmte "Sonntagsfrage-Schwankung".</div>
+  <div class="options">
+    <label><input type="radio" name="q19" value="a"> a) $[13{,}19\,\%;\ 16{,}81\,\%]$</label>
+    <label><input type="radio" name="q19" value="b"> b) $[13{,}49\,\%;\ 16{,}51\,\%]$</label>
+    <label><input type="radio" name="q19" value="c"> c) $[13{,}04\,\%;\ 16{,}96\,\%]$</label>
+    <label><input type="radio" name="q19" value="d"> d) $[14{,}99\,\%;\ 15{,}01\,\%]$</label>
+  </div>
+  <div class="hint" id="h19">Korrekt: <strong>a</strong>. $\hat{\pi}=225/1500=0{,}15$. Standardfehler: $\sqrt{\hat{\pi}(1-\hat{\pi})/n}=\sqrt{0{,}15\cdot0{,}85/1500}=\sqrt{0{,}000085}\approx0{,}00922$. $KI=0{,}15\pm1{,}96\cdot0{,}00922=0{,}15\pm0{,}0181=[0{,}1319;\,0{,}1681]$, also $[13{,}19\,\%;\,16{,}81\,\%]$. Genau diese $\pm$ knapp 1,8&thinsp;Prozentpunkte sind die typische "Schwankungsbreite", die bei Wahlumfragen als Fehlerbalken angegeben wird. Falle b): falsches Quantil ($z_{0{,}95}=1{,}64$ statt $z_{0{,}975}=1{,}96$). Falle c): den Faktor $(1-\hat{\pi})$ unter der Wurzel vergessen (nur $\hat{\pi}/n$ statt $\hat{\pi}(1-\hat{\pi})/n$). Falle d): die Wurzel vergessen und die Varianz $\hat{\pi}(1-\hat{\pi})/n$ direkt als Fehlerspanne verwendet &mdash; das Intervall wäre dann unplausibel schmal (Plausibilitätscheck!).</div>
+</div>
+
+<!-- Q20 -->
+<div class="card" id="c20">
+  <div class="q-head"><span class="q-num">20</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s20"></span></div>
+  <div class="q-text">Fünf Haushalte haben folgende (bereits aufsteigend sortierte) Monatseinkommen: <strong>1.000&thinsp;&euro;, 1.600&thinsp;&euro;, 2.400&thinsp;&euro;, 3.200&thinsp;&euro;, 6.800&thinsp;&euro;</strong> (Gesamt: 15.000&thinsp;&euro;). Welchen <strong>Anteil am Gesamteinkommen</strong> halten die ärmsten 60&thinsp;% der Haushalte (diese Größe wird auch in der <strong>Lorenzkurve</strong> abgetragen)?</div>
+  <div class="options">
+    <label><input type="radio" name="q20" value="a"> a) 33,3&thinsp;%</label>
+    <label><input type="radio" name="q20" value="b"> b) 60,0&thinsp;%</label>
+    <label><input type="radio" name="q20" value="c"> c) 82,7&thinsp;%</label>
+    <label><input type="radio" name="q20" value="d"> d) 48,0&thinsp;%</label>
+  </div>
+  <div class="hint" id="h20">Korrekt: <strong>a</strong>. Die ärmsten 60&thinsp;% sind (bei aufsteigend sortierten Daten) die drei einkommensschwächsten Haushalte: $1000+1600+2400=5000$&thinsp;&euro;. Ihr Anteil am Gesamteinkommen: $5000/15000\approx33{,}3\,\%$. Falle b): das ist der <em>Bevölkerungsanteil</em> $F_3=3/5=60\,\%$, nicht der Einkommensanteil &mdash; genau diese beiden Größen (Bevölkerungsanteil auf der x-Achse, Einkommensanteil auf der y-Achse) bilden zusammen die Lorenzkurve. Falle c): stattdessen die drei <em>reichsten</em> Haushalte summiert ($2400+3200+6800=12400$). Falle d): den kleinsten Wert (1000&thinsp;&euro;) vergessen und nur die mittleren drei Werte addiert.</div>
+</div>
+
+<!-- Q21 -->
+<div class="card" id="c21">
+  <div class="q-head"><span class="q-num">21</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s21"></span></div>
+  <div class="q-text">Gleiche Einkommensverteilung wie zuvor (1.000&thinsp;&euro;, 1.600&thinsp;&euro;, 2.400&thinsp;&euro;, 3.200&thinsp;&euro;, 6.800&thinsp;&euro;; Gesamt 15.000&thinsp;&euro;). Berechnen Sie den (unnormierten) <strong>Gini-Koeffizienten</strong> $G$.</div>
+  <div class="options">
+    <label><input type="radio" name="q21" value="a"> a) $G = 0{,}352$</label>
+    <label><input type="radio" name="q21" value="b"> b) $G = 0{,}440$</label>
+    <label><input type="radio" name="q21" value="c"> c) $G = 0{,}246$</label>
+    <label><input type="radio" name="q21" value="d"> d) $G = 0{,}800$</label>
+  </div>
+  <div class="hint" id="h21">Korrekt: <strong>a</strong>. $\sum i\cdot x_i=1\cdot1000+2\cdot1600+3\cdot2400+4\cdot3200+5\cdot6800=1000+3200+7200+12800+34000=58200$. $G=\dfrac{2\cdot58200}{5\cdot15000}-\dfrac{5+1}{5}=\dfrac{116400}{75000}-1{,}2=1{,}552-1{,}2=0{,}352$. Falle b): das ist der <em>normierte</em> Gini $G^*$, nicht $G$ selbst. Falle d): das ist $G_\text{max}=(n-1)/n=4/5=0{,}8$, nicht $G$.</div>
+</div>
+
+<!-- Q22 -->
+<div class="card" id="c22">
+  <div class="q-head"><span class="q-num">22</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s22"></span></div>
+  <div class="q-text">Gleiche Einkommensverteilung wie zuvor. Berechnen Sie den <strong>normierten Gini-Koeffizienten</strong> $G^*$ und interpretieren Sie das Ergebnis.</div>
+  <div class="options">
+    <label><input type="radio" name="q22" value="a"> a) $G^*\approx0{,}44$ &mdash; mittelstarke Ungleichheit, deutlich über dem deutschen Referenzwert (rund 0,30).</label>
+    <label><input type="radio" name="q22" value="b"> b) $G^*\approx0{,}44$ &mdash; sehr geringe Ungleichheit, nahe der Gleichverteilung.</label>
+    <label><input type="radio" name="q22" value="c"> c) $G^*\approx0{,}80$ &mdash; extreme Konzentration, fast das theoretische Maximum.</label>
+    <label><input type="radio" name="q22" value="d"> d) $G^*\approx0{,}35$ &mdash; das ist tatsächlich der unnormierte Gini-Koeffizient $G$, nicht $G^*$.</label>
+  </div>
+  <div class="hint" id="h22">Korrekt: <strong>a</strong>. $G_\text{max}=(n-1)/n=4/5=0{,}8$. $G^*=G/G_\text{max}=0{,}352/0{,}8=0{,}44$. Ein Wert von 0,44 liegt deutlich über dem deutschen Referenzwert (~0,30) und signalisiert eine mittelstarke bis moderate Einkommensungleichheit &mdash; aber deutlich unter Extremwerten wie Brasilien (~0,53). Falle b): falsche Interpretationsrichtung, 0,44 ist keine geringe Ungleichheit. Falle c) und d): Verwechslung von $G^*$ mit $G_\text{max}$ bzw. mit dem unnormierten $G$.</div>
+</div>
+
+<!-- Q23 -->
+<div class="card" id="c23">
+  <div class="q-head"><span class="q-num">23</span><span class="q-type">Verständnis</span><span class="status" id="s23"></span></div>
+  <div class="q-text">Ein Ort hatte gestern eine Temperatur von 10&thinsp;&deg;C, heute sind es 20&thinsp;&deg;C. Welche der folgenden Aussagen ist eine <strong>korrekte Interpretation</strong> dieser intervallskalierten Werte?</div>
+  <div class="options">
+    <label><input type="radio" name="q23" value="a"> a) Es ist heute doppelt so warm wie gestern.</label>
+    <label><input type="radio" name="q23" value="b"> b) Der Temperaturunterschied zwischen heute und gestern beträgt 10&thinsp;&deg;C.</label>
+    <label><input type="radio" name="q23" value="c"> c) Bei 0&thinsp;&deg;C herrscht überhaupt keine Wärme.</label>
+    <label><input type="radio" name="q23" value="d"> d) Steigt die Temperatur morgen auf 40&thinsp;&deg;C, ist es dann doppelt so warm wie heute.</label>
+  </div>
+  <div class="hint" id="h23">Korrekt: <strong>b</strong>. Auf der Intervallskala sind Abstände (Differenzen) sinnvoll interpretierbar &mdash; ein Unterschied von 10&thinsp;&deg;C ist eine zulässige Aussage. Falle a) und d): Verhältnisaussagen ("doppelt so viel") sind auf der Intervallskala <em>nicht</em> zulässig, da der Nullpunkt willkürlich gesetzt ist. Falle c): 0&thinsp;&deg;C ist nur der Gefrierpunkt von Wasser, kein "Fehlen von Wärme" &mdash; ein echter Nullpunkt wäre der absolute Nullpunkt (0 Kelvin).</div>
+</div>
+
+<!-- Q24 -->
+<div class="card" id="c24">
+  <div class="q-head"><span class="q-num">24</span><span class="q-type">Verständnis</span><span class="status" id="s24"></span></div>
+  <div class="q-text">Schulnoten sind ordinalskaliert (1 = sehr gut bis 6 = ungenügend). Johannes hat in drei Klausuren die Noten 1, 1 und 2 erhalten. Ein Lehrer sagt: "Johannes' durchschnittliche Note ist 1,3." Welche Einschätzung dieser Aussage ist korrekt?</div>
+  <div class="options">
+    <label><input type="radio" name="q24" value="a"> a) Die Aussage ist unproblematisch, da der Mittelwert bei metrischen und ordinalen Variablen genau gleich berechnet und interpretiert wird.</label>
+    <label><input type="radio" name="q24" value="b"> b) Die Aussage ist methodisch fragwürdig, da bei ordinalskalierten Variablen die Abstände zwischen den Notenstufen nicht garantiert gleich groß sind &mdash; der Mittelwert unterstellt eine Gleichabständigkeit, die nicht gegeben ist.</label>
+    <label><input type="radio" name="q24" value="c"> c) Die Aussage ist korrekt, weil Schulnoten ratioskaliert sind.</label>
+    <label><input type="radio" name="q24" value="d"> d) Die Aussage ist grundsätzlich falsch, weil Schulnoten nominalskaliert sind und daher überhaupt kein Lagemaß berechnet werden darf.</label>
+  </div>
+  <div class="hint" id="h24">Korrekt: <strong>b</strong>. Der arithmetische Mittelwert setzt voraus, dass die Abstände zwischen den Ausprägungen gleich groß und interpretierbar sind &mdash; das ist bei Schulnoten (ordinal) nicht garantiert (der "Abstand" zwischen Note 1 und 2 muss inhaltlich nicht derselbe sein wie zwischen 4 und 5). Rein rechnerisch lässt sich ein Mittelwert bilden, methodisch korrekt wäre aber der Median. Falle c): Schulnoten sind ordinal, nicht ratioskaliert. Falle d): Auch für ordinale Variablen ist zumindest der Modus <em>und</em> der Median zulässig &mdash; nur der Mittelwert ist das eigentliche Problem, nicht jedes Lagemaß.</div>
+</div>
+
+<!-- Q25 -->
+<div class="card" id="c25">
+  <div class="q-head"><span class="q-num">25</span><span class="q-type">Verständnis</span><span class="status" id="s25"></span></div>
+  <div class="q-text">Ein Politikwissenschaftler kodiert die Parteipräferenz um: CDU=1 wird zu CDU=100, SPD=2 wird zu SPD=200, Grüne=3 wird zu Grüne=300 (jede Kategorie wird mit 100 multipliziert). Welche Aussage zu dieser Transformation ist korrekt?</div>
+  <div class="options">
+    <label><input type="radio" name="q25" value="a"> a) Durch die Multiplikation mit 100 ändert sich die inhaltliche Aussage der Variable, da Parteipräferenz ordinalskaliert ist.</label>
+    <label><input type="radio" name="q25" value="b"> b) Die Transformation ist unproblematisch: Parteipräferenz ist nominalskaliert, und jede eineindeutige (bijektive) Umkodierung der Kategorien ist zulässig, solange weiterhin nur "gleich" oder "verschieden" unterschieden werden kann.</label>
+    <label><input type="radio" name="q25" value="c"> c) Die Transformation ist unzulässig, weil sich dadurch die Rangfolge der Parteien ändert.</label>
+    <label><input type="radio" name="q25" value="d"> d) Die Transformation ist unzulässig, weil sich dadurch die Abstände zwischen den Kategorien ändern.</label>
+  </div>
+  <div class="hint" id="h25">Korrekt: <strong>b</strong>. Bei nominalskalierten Variablen sind alle eineindeutigen (bijektiven) Transformationen zulässig, weil nur die Information "gleich/verschieden" erhalten bleiben muss &mdash; die konkreten Zahlenwerte selbst sind beliebig (reine Labels). Falle a): Parteipräferenz ist nominal, nicht ordinal &mdash; es gibt gar keine Rangfolge, die sich ändern könnte. Falle c) und d): Diese Einwände wären nur relevant, wenn die Variable ordinal- bzw. intervallskaliert wäre; bei einer nominalskalierten Variable gibt es weder eine Rangfolge noch interpretierbare Abstände, die verändert werden könnten.</div>
+</div>
+
+<!-- Q26 -->
+<div class="card" id="c26">
+  <div class="q-head"><span class="q-num">26</span><span class="q-type">Verständnis</span><span class="status" id="s26"></span></div>
+  <div class="q-text">Was versteht man unter einem <strong>p-Quantil</strong>?</div>
+  <div class="options">
+    <label><input type="radio" name="q26" value="a"> a) Das p-Quantil entspricht dem Wert xₚ, für den gilt: Anteil p der Daten &le; xₚ und Anteil (1&minus;p) der Daten &ge; xₚ.</label>
+    <label><input type="radio" name="q26" value="b"> b) Das p-Quantil teilt die Daten in der Mitte: die Hälfte der Daten &le; xₚ und die Hälfte der Daten &ge; xₚ.</label>
+    <label><input type="radio" name="q26" value="c"> c) Das p-Quantil teilt die Daten in fünf Bereiche, die jeweils 20&thinsp;% der Daten entsprechen.</label>
+    <label><input type="radio" name="q26" value="d"> d) Das p-Quantil gibt die Wahrscheinlichkeit aller Beobachtungen an, im Bereich des p-ten Quantils zu liegen.</label>
+  </div>
+  <div class="hint" id="h26">Korrekt: <strong>a</strong>. Die allgemeine Definition gilt für jedes p zwischen 0 und 1: der Anteil p liegt &le; xₚ, der Rest-Anteil (1&minus;p) liegt &ge; xₚ. Option b) beschreibt nur den Spezialfall p&thinsp;=&thinsp;0,5 (Median). Option c) beschreibt Quintile, einen weiteren Spezialfall. Option d) verwechselt das Quantil mit einer Wahrscheinlichkeitsaussage.</div>
+</div>
+
+<!-- Q27 -->
+<div class="card" id="c27">
+  <div class="q-head"><span class="q-num">27</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s27"></span></div>
+  <div class="q-text">Bestimmen Sie den <strong>Modus</strong> der folgenden geordneten Urliste ($n=10$): <strong>2, 3, 3, 5, 5, 5, 5, 7, 8, 9</strong>.</div>
+  <div class="options">
+    <label><input type="radio" name="q27" value="a"> a) 5</label>
+    <label><input type="radio" name="q27" value="b"> b) 5,5</label>
+    <label><input type="radio" name="q27" value="c"> c) 7</label>
+    <label><input type="radio" name="q27" value="d"> d) 4</label>
+  </div>
+  <div class="hint" id="h27">Korrekt: <strong>a</strong>. Der Wert 5 kommt viermal vor &mdash; häufiger als jede andere Ausprägung (3 kommt nur zweimal vor). Modus = 5. Falle b): der Modus ist immer eine tatsächlich vorkommende Ausprägung, kein Mittelwert zweier Werte. Falle d): das ist die Häufigkeit des Modus, nicht der Modus selbst.</div>
+</div>
+
+<!-- Q28 -->
+<div class="card" id="c28">
+  <div class="q-head"><span class="q-num">28</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s28"></span></div>
+  <div class="q-text">Bestimmen Sie den <strong>Median</strong> der folgenden geordneten Urliste ($n=7$): <strong>4, 6, 7, 7, 9, 11, 15</strong>.</div>
+  <div class="options">
+    <label><input type="radio" name="q28" value="a"> a) 7</label>
+    <label><input type="radio" name="q28" value="b"> b) 9</label>
+    <label><input type="radio" name="q28" value="c"> c) 6</label>
+    <label><input type="radio" name="q28" value="d"> d) 8</label>
+  </div>
+  <div class="hint" id="h28">Korrekt: <strong>a</strong>. Bei $n=7$ (ungerade) liegt der Median an Position $(7+1)/2=4$. Der 4. Wert in der geordneten Liste ist 7. Falle d): fälschlich den 4. und 5. Wert gemittelt ($(7+9)/2=8$) &mdash; das ist bei ungeradem $n$ nicht nötig, es gibt genau einen mittleren Wert.</div>
+</div>
+
+<!-- Q29 -->
+<div class="card" id="c29">
+  <div class="q-head"><span class="q-num">29</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s29"></span></div>
+  <div class="q-text">Bestimmen Sie den <strong>Median</strong> der folgenden geordneten Urliste ($n=6$): <strong>3, 5, 8, 10, 12, 14</strong>.</div>
+  <div class="options">
+    <label><input type="radio" name="q29" value="a"> a) 9</label>
+    <label><input type="radio" name="q29" value="b"> b) 8</label>
+    <label><input type="radio" name="q29" value="c"> c) 10</label>
+    <label><input type="radio" name="q29" value="d"> d) 8,5</label>
+  </div>
+  <div class="hint" id="h29">Korrekt: <strong>a</strong>. Bei $n=6$ (gerade) gibt es keinen einzelnen mittleren Wert &mdash; der Median ist das Mittel der beiden mittleren Werte an Position 3 und 4: $(8+10)/2=9$. Falle b) und c): jeweils nur einen der beiden mittleren Werte genommen, ohne zu mitteln. Falle d): falsche Positionen gemittelt.</div>
+</div>
+
+<!-- Q30 -->
+<div class="card" id="c30">
+  <div class="q-head"><span class="q-num">30</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s30"></span></div>
+  <div class="q-text">Bestimmen Sie das <strong>0,30-Quantil</strong> der folgenden geordneten Urliste ($n=9$): <strong>1, 3, 4, 6, 8, 9, 12, 15, 18</strong>.</div>
+  <div class="options">
+    <label><input type="radio" name="q30" value="a"> a) 4</label>
+    <label><input type="radio" name="q30" value="b"> b) 3</label>
+    <label><input type="radio" name="q30" value="c"> c) 6</label>
+    <label><input type="radio" name="q30" value="d"> d) 5,4</label>
+  </div>
+  <div class="hint" id="h30">Korrekt: <strong>a</strong>. $n\cdot p=9\cdot0{,}30=2{,}7$ &mdash; nicht ganzzahlig. Nach der Formelsammlung gilt dann: $x_p=x_{([np]_G+1)}$, wobei $[np]_G$ die nächstkleinere ganze Zahl ist ($[2{,}7]_G=2$). Also Position $2+1=3$: $x_{(3)}=4$. Falle b): fälschlich Position $[np]_G=2$ (ohne $+1$) verwendet: $x_{(2)}=3$. Falle c): Position $4$ verwendet (Rundung aufgerundet statt der Formelsammlung-Regel). Falle d): es wird <em>nicht</em> linear interpoliert (wie bei manchen anderen Quantil-Definitionen üblich) &mdash; diese Vorlesung verwendet die Rundungsregel aus der Formelsammlung, kein Interpolieren zwischen Werten.</div>
+</div>
+
+<!-- Q31 -->
+<div class="card" id="c31">
+  <div class="q-head"><span class="q-num">31</span><span class="q-type">Verständnis</span><span class="status" id="s31"></span></div>
+  <div class="q-text">Ein Politikwissenschaftler vermutet, dass der Anteil der Nichtwähler bei der kommenden Wahl <strong>größer als 30&thinsp;%</strong> ist. Wie lauten $H_0$ und $H_1$ korrekt?</div>
+  <div class="options">
+    <label><input type="radio" name="q31" value="a"> a) $H_0\colon \pi \leq 0{,}30$; $H_1\colon \pi \gt 0{,}30$</label>
+    <label><input type="radio" name="q31" value="b"> b) $H_0\colon \pi \geq 0{,}30$; $H_1\colon \pi \lt 0{,}30$</label>
+    <label><input type="radio" name="q31" value="c"> c) $H_0\colon \pi = 0{,}30$; $H_1\colon \pi \neq 0{,}30$</label>
+    <label><input type="radio" name="q31" value="d"> d) $H_0\colon \pi \gt 0{,}30$; $H_1\colon \pi \leq 0{,}30$</label>
+  </div>
+  <div class="hint" id="h31">Korrekt: <strong>a</strong>. Die Forschungshypothese ("Anteil ist größer als 30&thinsp;%") wird zur Alternativhypothese $H_1$. Die Nullhypothese ist das logische Komplement: $H_0\colon \pi\leq0{,}30$. Damit handelt es sich um einen rechtsseitigen Test. Falle b): das wäre die Hypothesenstruktur für die gegenteilige Forschungshypothese ("kleiner als"). Falle c): das wäre ein zweiseitiger Test, passt aber nicht zur gerichteten Forschungshypothese. Falle d): $H_0$ und $H_1$ vertauscht &mdash; die Forschungshypothese steht nie in $H_0$.</div>
+</div>
+
+<!-- Q32 -->
+<div class="card" id="c32">
+  <div class="q-head"><span class="q-num">32</span><span class="q-type">Verständnis</span><span class="status" id="s32"></span></div>
+  <div class="q-text">Ein Gerichtsverfahren testet $H_0$: "Der Angeklagte ist unschuldig" gegen $H_1$: "Der Angeklagte ist schuldig". Welche Aussage beschreibt den <strong>Fehler 1. Art</strong> korrekt?</div>
+  <div class="options">
+    <label><input type="radio" name="q32" value="a"> a) Ein tatsächlich Unschuldiger wird verurteilt ($H_0$ wird verworfen, obwohl sie wahr ist).</label>
+    <label><input type="radio" name="q32" value="b"> b) Ein tatsächlich Schuldiger wird freigesprochen ($H_0$ wird nicht verworfen, obwohl sie falsch ist).</label>
+    <label><input type="radio" name="q32" value="c"> c) Der Angeklagte wird korrekt freigesprochen.</label>
+    <label><input type="radio" name="q32" value="d"> d) Der Angeklagte wird korrekt verurteilt.</label>
+  </div>
+  <div class="hint" id="h32">Korrekt: <strong>a</strong>. Der Fehler 1. Art ($\alpha$-Fehler) liegt vor, wenn $H_0$ fälschlich verworfen wird, obwohl sie in Wirklichkeit wahr ist &mdash; hier: ein Unschuldiger wird verurteilt. Option b) beschreibt den <strong>Fehler 2. Art</strong> ($\beta$-Fehler): $H_0$ wird fälschlich <em>nicht</em> verworfen, obwohl sie falsch ist. Optionen c) und d) beschreiben korrekte Entscheidungen, also gar keinen Fehler.</div>
+</div>
+
+<!-- Q33 -->
+<div class="card" id="c33">
+  <div class="q-head"><span class="q-num">33</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s33"></span></div>
+  <div class="q-text">Forschungshypothese: Studierende konsumieren im Schnitt <strong>mehr als 5 Stunden</strong> pro Woche politische Nachrichten. Stichprobe: $n=49$, $\bar{X}_n=5{,}7$ Std., $\sigma=1{,}4$ Std. (bekannt). Test mit $\alpha=0{,}05$.</div>
+  <div class="options">
+    <label><input type="radio" name="q33" value="a"> a) $H_0$ kann abgelehnt werden; $Z=3{,}5$; kritischer Wert $1{,}64$.</label>
+    <label><input type="radio" name="q33" value="b"> b) $H_0$ kann nicht abgelehnt werden; $Z=3{,}5$; kritischer Wert $1{,}96$.</label>
+    <label><input type="radio" name="q33" value="c"> c) $H_0$ kann abgelehnt werden; $Z=0{,}5$; kritischer Wert $1{,}64$.</label>
+    <label><input type="radio" name="q33" value="d"> d) $H_0$ kann nicht abgelehnt werden; $Z=3{,}5$; kritischer Wert $1{,}64$.</label>
+  </div>
+  <div class="hint" id="h33">Korrekt: <strong>a</strong>. $SE=\sigma/\sqrt{n}=1{,}4/\sqrt{49}=1{,}4/7=0{,}2$. $Z=(5{,}7-5)/0{,}2=3{,}5$. Rechtsseitiger Test bei $\alpha=0{,}05$: kritischer Wert $=1{,}64$. Da $Z=3{,}5\gt 1{,}64$, wird $H_0$ verworfen. Falle b): das $1{,}96$-Quantil gilt für zweiseitige Tests, hier ist der Test aber einseitig. Falle c): $\sigma$ direkt statt des Standardfehlers $\sigma/\sqrt{n}$ verwendet ($0{,}7/1{,}4=0{,}5$).</div>
+</div>
+
+<!-- Q34 -->
+<div class="card" id="c34">
+  <div class="q-head"><span class="q-num">34</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s34"></span></div>
+  <div class="q-text">Forschungshypothese: die mittlere Parteispende ist <strong>kleiner als 200&thinsp;&euro;</strong>. Stichprobe: $n=36$, $\bar{X}_n=180$&thinsp;&euro;, $S_n=45$&thinsp;&euro; (Varianz unbekannt). Test mit $\alpha=0{,}05$.</div>
+  <div class="options">
+    <label><input type="radio" name="q34" value="a"> a) $H_0$ kann abgelehnt werden; $T\approx-2{,}67$; kritischer Wert $-1{,}64$.</label>
+    <label><input type="radio" name="q34" value="b"> b) $H_0$ kann nicht abgelehnt werden; $T\approx-2{,}67$; kritischer Wert $-1{,}64$.</label>
+    <label><input type="radio" name="q34" value="c"> c) $H_0$ kann abgelehnt werden; $T\approx-2{,}67$; kritischer Wert $1{,}64$.</label>
+    <label><input type="radio" name="q34" value="d"> d) $H_0$ kann abgelehnt werden; $T\approx2{,}67$; kritischer Wert $-1{,}64$.</label>
+  </div>
+  <div class="hint" id="h34">Korrekt: <strong>a</strong>. $SE=S_n/\sqrt{n}=45/6=7{,}5$. $T=(180-200)/7{,}5\approx-2{,}67$. Die Forschungshypothese ($\mu\lt200$) macht dies zu einem linksseitigen Test: kritischer Wert $=-1{,}64$ (ab $n\geq30$ wird die Standardnormalverteilung als Approximation verwendet). Da $T\approx-2{,}67\lt-1{,}64$, wird $H_0$ verworfen. Falle c): falsches Vorzeichen beim kritischen Wert &mdash; bei linksseitigen Tests ist der kritische Wert negativ. Falle d): Vorzeichenfehler bei $T$ selbst.</div>
+</div>
+
+<!-- Q35 -->
+<div class="card" id="c35">
+  <div class="q-head"><span class="q-num">35</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s35"></span></div>
+  <div class="q-text">Forschungshypothese: der Anteil der EU-Befürworter ist <strong>größer als 55&thinsp;%</strong>. Stichprobe: $n=100$, $\hat{\pi}=0{,}62$. <strong>Approximativer Binomialtest</strong> mit $\alpha=0{,}05$.</div>
+  <div class="options">
+    <label><input type="radio" name="q35" value="a"> a) $H_0$ kann nicht abgelehnt werden; $Z\approx1{,}41$; kritischer Wert $1{,}64$.</label>
+    <label><input type="radio" name="q35" value="b"> b) $H_0$ kann abgelehnt werden; $Z\approx1{,}41$; kritischer Wert $1{,}64$.</label>
+    <label><input type="radio" name="q35" value="c"> c) $H_0$ kann abgelehnt werden; $Z\approx1{,}75$; kritischer Wert $1{,}64$.</label>
+    <label><input type="radio" name="q35" value="d"> d) $H_0$ kann nicht abgelehnt werden; $Z\approx0{,}07$; kritischer Wert $1{,}64$.</label>
+  </div>
+  <div class="hint" id="h35">Korrekt: <strong>a</strong>. $SE=\sqrt{\pi_0(1-\pi_0)/n}=\sqrt{0{,}55\cdot0{,}45/100}=\sqrt{0{,}002475}\approx0{,}0498$. $Z=(0{,}62-0{,}55)/0{,}0498\approx1{,}41$. Rechtsseitiger Test bei $\alpha=0{,}05$: kritischer Wert $=1{,}64$. Da $Z\approx1{,}41\lt1{,}64$, kann $H_0$ <em>nicht</em> verworfen werden &mdash; trotz eines auf den ersten Blick deutlich höheren Stichprobenanteils (62&thinsp;% vs. 55&thinsp;%) reicht die statistische Evidenz bei $n=100$ nicht aus. Falle d): den Standardfehler vergessen und nur die rohe Differenz $0{,}07$ als $Z$-Wert verwendet.</div>
+</div>
+
+<!-- Q36 -->
+<div class="card" id="c36">
+  <div class="q-head"><span class="q-num">36</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s36"></span></div>
+  <div class="q-text">Vergleich der Demokratiezufriedenheit zwischen West- und Ostdeutschland. West: $n_1=600$, $\bar{X}_1=6{,}3$, $S_1=1{,}5$. Ost: $n_2=400$, $\bar{X}_2=5{,}8$, $S_2=1{,}6$. Forschungshypothese: Westdeutsche sind im Schnitt zufriedener als Ostdeutsche. Test mit $\alpha=0{,}01$.</div>
+  <div class="options">
+    <label><input type="radio" name="q36" value="a"> a) $H_0$ kann abgelehnt werden; $T\approx4{,}97$; kritischer Wert $2{,}33$.</label>
+    <label><input type="radio" name="q36" value="b"> b) $H_0$ kann nicht abgelehnt werden; $T\approx4{,}97$; kritischer Wert $2{,}33$.</label>
+    <label><input type="radio" name="q36" value="c"> c) $H_0$ kann abgelehnt werden; $T\approx0{,}50$; kritischer Wert $2{,}33$.</label>
+    <label><input type="radio" name="q36" value="d"> d) $H_0$ kann abgelehnt werden; $T\approx4{,}97$; kritischer Wert $-2{,}33$.</label>
+  </div>
+  <div class="hint" id="h36">Korrekt: <strong>a</strong>. $SE=\sqrt{S_1^2/n_1+S_2^2/n_2}=\sqrt{1{,}5^2/600+1{,}6^2/400}=\sqrt{0{,}00375+0{,}0064}=\sqrt{0{,}01015}\approx0{,}1007$. $T=(6{,}3-5{,}8)/0{,}1007\approx4{,}97$. Rechtsseitiger Test (West zufriedener als Ost) bei $\alpha=0{,}01$: kritischer Wert $=+2{,}33$ (nicht negativ, da rechtsseitig!). $T\approx4{,}97\gt2{,}33$, also wird $H_0$ verworfen. Falle c): den Standardfehler vergessen und nur die rohe Mittelwertdifferenz $0{,}50$ als $T$-Wert verwendet.</div>
+</div>
+
+<!-- Q37 -->
+<div class="card" id="c37">
+  <div class="q-head"><span class="q-num">37</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s37"></span></div>
+  <div class="q-text">800 Befragte wurden nach ihrem Bildungsniveau und der Nutzung von Social Media für Politik-Informationen gefragt.</div>
+  <table class="kt">
+    <tr><th rowspan="2">Nutzung Social Media</th><th colspan="2">Bildungsniveau</th><th rowspan="2">Gesamt</th></tr>
+    <tr><th>Niedrig</th><th>Hoch</th></tr>
+    <tr><td>Ja</td><td>180</td><td>270</td><td>450</td></tr>
+    <tr><td>Nein</td><td>220</td><td>130</td><td>350</td></tr>
+    <tr><td><strong>Gesamt</strong></td><td>400</td><td>400</td><td>800</td></tr>
+  </table>
+  <div class="q-text">Wie hoch ist die <strong>gemeinsame relative Häufigkeit</strong> von "Nutzung ja" <strong>und</strong> "Bildung Hoch"?</div>
+  <div class="options">
+    <label><input type="radio" name="q37" value="a"> a) 33,75&thinsp;%</label>
+    <label><input type="radio" name="q37" value="b"> b) 67,5&thinsp;%</label>
+    <label><input type="radio" name="q37" value="c"> c) 60,0&thinsp;%</label>
+    <label><input type="radio" name="q37" value="d"> d) 16,25&thinsp;%</label>
+  </div>
+  <div class="hint" id="h37">Korrekt: <strong>a</strong>. Die gemeinsame relative Häufigkeit teilt die Zelle durch die Gesamtstichprobe $n$: $270/800=0{,}3375=33{,}75\,\%$. Falle b): das ist der <em>Spaltenprozentsatz</em> ($270/400=67{,}5\,\%$). Falle c): das ist der <em>Zeilenprozentsatz</em> ($270/450=60{,}0\,\%$). Falle d): richtige Rechenlogik, aber falsche Zelle (Nein &times; Hoch: $130/800=16{,}25\,\%$).</div>
+</div>
+
+<!-- Q38 -->
+<div class="card" id="c38">
+  <div class="q-head"><span class="q-num">38</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s38"></span></div>
+  <div class="q-text">Gleiche Tabelle wie zuvor. Wie hoch ist der <strong>Spaltenprozentsatz</strong> für "Nutzung ja" unter den Personen mit <strong>hohem</strong> Bildungsniveau, und was bedeutet dieser Wert inhaltlich?</div>
+  <table class="kt">
+    <tr><th rowspan="2">Nutzung Social Media</th><th colspan="2">Bildungsniveau</th><th rowspan="2">Gesamt</th></tr>
+    <tr><th>Niedrig</th><th>Hoch</th></tr>
+    <tr><td>Ja</td><td>180</td><td>270</td><td>450</td></tr>
+    <tr><td>Nein</td><td>220</td><td>130</td><td>350</td></tr>
+    <tr><td><strong>Gesamt</strong></td><td>400</td><td>400</td><td>800</td></tr>
+  </table>
+  <div class="options">
+    <label><input type="radio" name="q38" value="a"> a) 67,5&thinsp;%; 67,5&thinsp;% der Personen mit hohem Bildungsniveau nutzen Social Media für Politik-Infos.</label>
+    <label><input type="radio" name="q38" value="b"> b) 33,75&thinsp;%; das ist der Anteil an der Gesamtstichprobe.</label>
+    <label><input type="radio" name="q38" value="c"> c) 60,0&thinsp;%; 60&thinsp;% der Nutzer haben ein hohes Bildungsniveau.</label>
+    <label><input type="radio" name="q38" value="d"> d) 67,5&thinsp;%; 67,5&thinsp;% der Nutzer haben ein hohes Bildungsniveau.</label>
+  </div>
+  <div class="hint" id="h38">Korrekt: <strong>a</strong>. Spaltenprozent $=270/400=67{,}5\,\%$ &mdash; man teilt durch die <em>Spaltensumme</em> (Bildung Hoch, $n=400$). Lesart: "Unter den Personen mit hohem Bildungsniveau nutzen 67,5&thinsp;% Social Media." Falle b): das ist die gemeinsame relative Häufigkeit, kein Spaltenprozent. Falle c): das ist tatsächlich der <em>Zeilenprozentsatz</em> ($270/450=60\,\%$), nicht der gefragte Spaltenprozentsatz. Falle d): die Zahl 67,5&thinsp;% ist korrekt, aber die Interpretationsrichtung ist vertauscht &mdash; "67,5&thinsp;% der Nutzer haben hohes Bildungsniveau" wäre eine Zeilenprozent-Aussage (und entspräche zudem einem anderen Wert, $60\,\%$). Genau diese Verwechslung der Richtung ist die klassische Klausurfalle.</div>
+</div>
+
+<!-- Q39 -->
+<div class="card" id="c39">
+  <div class="q-head"><span class="q-num">39</span><span class="q-type">Rechenaufgabe</span><span class="status" id="s39"></span></div>
+  <div class="q-text">Gleiche Tabelle wie zuvor. Wie hoch ist der <strong>Zeilenprozentsatz</strong> für "Bildung Hoch" unter den Nutzern ("Nutzung ja")?</div>
+  <table class="kt">
+    <tr><th rowspan="2">Nutzung Social Media</th><th colspan="2">Bildungsniveau</th><th rowspan="2">Gesamt</th></tr>
+    <tr><th>Niedrig</th><th>Hoch</th></tr>
+    <tr><td>Ja</td><td>180</td><td>270</td><td>450</td></tr>
+    <tr><td>Nein</td><td>220</td><td>130</td><td>350</td></tr>
+    <tr><td><strong>Gesamt</strong></td><td>400</td><td>400</td><td>800</td></tr>
+  </table>
+  <div class="options">
+    <label><input type="radio" name="q39" value="a"> a) 60,0&thinsp;%</label>
+    <label><input type="radio" name="q39" value="b"> b) 67,5&thinsp;%</label>
+    <label><input type="radio" name="q39" value="c"> c) 33,75&thinsp;%</label>
+    <label><input type="radio" name="q39" value="d"> d) 40,0&thinsp;%</label>
+  </div>
+  <div class="hint" id="h39">Korrekt: <strong>a</strong>. Zeilenprozent $=270/450=0{,}60=60{,}0\,\%$ &mdash; man teilt durch die <em>Zeilensumme</em> (Nutzung ja, $n=450$). Lesart: "Unter den Nutzern haben 60&thinsp;% ein hohes Bildungsniveau." Falle b): das ist der Spaltenprozentsatz ($270/400$), nicht der Zeilenprozentsatz. Falle c): das ist die gemeinsame relative Häufigkeit ($270/800$). Falle d): das Komplement innerhalb der Zeile ($180/450=40\,\%$, also "Bildung Niedrig" statt "Bildung Hoch").</div>
+</div>
+
+<!-- Q40 -->
+<div class="card" id="c40">
+  <div class="q-head"><span class="q-num">40</span><span class="q-type">Verständnis</span><span class="status" id="s40"></span></div>
+  <div class="q-text">Gleiche Tabelle wie zuvor. Ein Student berechnet für die Zelle "Nutzung ja, Bildung Niedrig" den Wert $180/400=45\,\%$. Um welche Prozentart handelt es sich, und wie lautet die korrekte Lesart?</div>
+  <table class="kt">
+    <tr><th rowspan="2">Nutzung Social Media</th><th colspan="2">Bildungsniveau</th><th rowspan="2">Gesamt</th></tr>
+    <tr><th>Niedrig</th><th>Hoch</th></tr>
+    <tr><td>Ja</td><td>180</td><td>270</td><td>450</td></tr>
+    <tr><td>Nein</td><td>220</td><td>130</td><td>350</td></tr>
+    <tr><td><strong>Gesamt</strong></td><td>400</td><td>400</td><td>800</td></tr>
+  </table>
+  <div class="options">
+    <label><input type="radio" name="q40" value="a"> a) Spaltenprozent: 45&thinsp;% der Personen mit niedrigem Bildungsniveau nutzen Social Media für Politik-Infos.</label>
+    <label><input type="radio" name="q40" value="b"> b) Zeilenprozent: 45&thinsp;% der Social-Media-Nutzer haben ein niedriges Bildungsniveau.</label>
+    <label><input type="radio" name="q40" value="c"> c) Gemeinsame relative Häufigkeit: 45&thinsp;% aller Befragten haben ein niedriges Bildungsniveau und nutzen Social Media.</label>
+    <label><input type="radio" name="q40" value="d"> d) Spaltenprozent: 45&thinsp;% der Social-Media-Nutzer haben ein niedriges Bildungsniveau.</label>
+  </div>
+  <div class="hint" id="h40">Korrekt: <strong>a</strong>. $180/400$ teilt durch die Spaltensumme (Bildung Niedrig, $n=400$) &mdash; das ist per Definition ein <strong>Spaltenprozent</strong>, und die Lesart lautet entsprechend "unter den Personen mit niedrigem Bildungsniveau". Falle b): falsches Label (Zeilenprozent) &mdash; der tatsächliche Zeilenprozentsatz wäre $180/450=40\,\%$, nicht $45\,\%$. Falle c): falsches Label (gemeinsame relative Häufigkeit) &mdash; die wäre $180/800=22{,}5\,\%$, nicht $45\,\%$. Falle d): das Label "Spaltenprozent" ist korrekt, aber die Lesart bezieht sich fälschlich auf die Nutzer statt auf die Personen mit niedrigem Bildungsniveau &mdash; genau diese Vertauschung der Bezugsgruppe ist der Klassiker unter den Klausurfehlern bei Kreuztabellen.</div>
+</div>
+
+<div class="btn-wrap">
+  <button id="btn-submit">Auswerten</button>
+  <button id="btn-reset">Neu starten</button>
+</div>
+</main>
+
+<script>
+const ANSWERS = {
+  1:'a', 2:'b', 3:'c', 4:'a', 5:'a', 6:'a', 7:'a', 8:'b',
+  9:'a', 10:'a', 11:'a', 12:'a', 13:'a', 14:'a', 15:'a',
+  16:'a', 17:'a', 18:'b', 19:'a', 20:'a', 21:'a', 22:'a',
+  23:'b', 24:'b', 25:'b', 26:'a', 27:'a', 28:'a', 29:'a', 30:'a',
+  31:'a', 32:'a', 33:'a', 34:'a', 35:'a', 36:'a',
+  37:'a', 38:'a', 39:'a', 40:'a'
+};
+const N = 40;
+let timerInt = null;
+let secs = 80 * 60;
+
+function pad(n){ return n < 10 ? '0' + n : '' + n; }
+
+function startTimer(){
+  timerInt = setInterval(function(){
+    secs--;
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    const el = document.getElementById('timer');
+    el.textContent = pad(m) + ':' + pad(s);
+    if(secs <= 300) el.classList.add('warn');
+    if(secs <= 0){ clearInterval(timerInt); evaluate(); }
+  }, 1000);
+}
+
+function updateProgress(){
+  let answered = 0;
+  for(let i = 1; i <= N; i++){
+    if(document.querySelector('input[name="q'+i+'"]:checked')) answered++;
+  }
+  document.getElementById('progress-text').textContent = answered + ' / ' + N + ' beantwortet';
+  document.getElementById('progress-bar').style.width = Math.round(answered / N * 100) + '%';
+}
+
+document.querySelectorAll('input[type=radio]').forEach(function(r){
+  r.addEventListener('change', function(){
+    const name = this.name;
+    document.querySelectorAll('input[name="'+name+'"]').forEach(function(o){
+      o.parentElement.classList.remove('sel');
+    });
+    this.parentElement.classList.add('sel');
+    updateProgress();
+  });
+});
+
+function evaluate(){
+  try {
+    clearInterval(timerInt);
+    let correct = 0, answered = 0;
+    for(let i = 1; i <= N; i++){
+      const sel = document.querySelector('input[name="q'+i+'"]:checked');
+      const card = document.getElementById('c'+i);
+      const opts = document.querySelectorAll('input[name="q'+i+'"]');
+      opts.forEach(function(o){ o.disabled = true; });
+      if(!sel) continue;
+      answered++;
+      const correctEl = document.querySelector('input[name="q'+i+'"][value="'+ANSWERS[i]+'"]');
+      if(correctEl) correctEl.parentElement.classList.add('right');
+      if(sel.value === ANSWERS[i]){
+        correct++;
+        if(card) card.classList.add('ok');
+        const si = document.getElementById('s'+i);
+        if(si){ si.textContent = '✓'; si.className = 'status ok-s'; }
+      } else {
+        if(card) card.classList.add('err');
+        sel.parentElement.classList.remove('sel');
+        sel.parentElement.classList.add('struck');
+        const si = document.getElementById('s'+i);
+        if(si){ si.textContent = '✗'; si.className = 'status err-s'; }
+        const h = document.getElementById('h'+i);
+        if(h) h.style.display = 'block';
+      }
+    }
+    const pct = Math.round(correct / N * 100);
+    const pass = pct >= 50;
+    const banner = document.getElementById('score');
+    banner.className = pass ? 'pass' : 'fail';
+    banner.innerHTML = '<strong>Ergebnis</strong><div class="num">' + correct + '/' + N + ' &nbsp;(' + pct + '&thinsp;%)</div>' +
+      '<div style="font-size:.9rem;margin-top:4px">' + (pass ? '&#10003; Bestanden' : '&#10007; Nicht bestanden') +
+      ' &nbsp;&middot;&nbsp; ' + answered + ' von ' + N + ' Fragen beantwortet</div>';
+    banner.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    document.getElementById('btn-submit').style.display = 'none';
+    document.getElementById('btn-reset').style.display = 'block';
+  } catch(e) {
+    const msg = e ? (e.message || String(e)) : 'Unbekannt';
+    const scoreEl = document.getElementById('score');
+    if(scoreEl){
+      scoreEl.className = 'fail';
+      scoreEl.innerHTML = '<strong>Fehler bei Auswertung:</strong><br>' + msg;
+      scoreEl.style.display = 'block';
+    }
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+}
+
+function resetQuiz(){
+  for(let i = 1; i <= N; i++){
+    const opts = document.querySelectorAll('input[name="q'+i+'"]');
+    opts.forEach(function(o){
+      o.checked = false;
+      o.disabled = false;
+      o.parentElement.classList.remove('sel','right','struck');
+    });
+    const card = document.getElementById('c'+i);
+    if(card){ card.classList.remove('ok','err'); }
+    const si = document.getElementById('s'+i);
+    if(si){ si.textContent = ''; si.className = 'status'; }
+    const h = document.getElementById('h'+i);
+    if(h){ h.style.display = 'none'; }
+  }
+  const banner = document.getElementById('score');
+  banner.style.display = 'none';
+  banner.className = '';
+  clearInterval(timerInt);
+  secs = 80 * 60;
+  const timerEl = document.getElementById('timer');
+  timerEl.textContent = '80:00';
+  timerEl.classList.remove('warn');
+  startTimer();
+  document.getElementById('btn-submit').style.display = 'block';
+  document.getElementById('btn-reset').style.display = 'none';
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+document.getElementById('btn-submit').addEventListener('click', evaluate);
+document.getElementById('btn-reset').addEventListener('click', resetQuiz);
+
+startTimer();
+</script>
+</body>
+</html>
