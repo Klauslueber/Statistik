@@ -320,7 +320,7 @@ button{padding:12px 36px;font-size:1rem;font-weight:700;border:none;border-radiu
     <label><input type="radio" name="q17" value="c"> c) $Z = 1{,}60$; $H_0$ kann nicht abgelehnt werden.</label>
     <label><input type="radio" name="q17" value="d"> d) $Z = 1{,}20$; $H_0$ kann nicht abgelehnt werden.</label>
   </div>
-  <div class="hint" id="h17">Korrekt: <strong>b</strong>. $SE = \sqrt{0{,}5 \cdot 0{,}5 / 100} = \sqrt{0{,}0025} = 0{,}05$. $Z = (0{,}60 - 0{,}50)/0{,}05 = 2{,}00$. $|2{,}00| > 1{,}96$ &rarr; $H_0$ verwerfen. Im Gegensatz zu PK-5 Q18 (dort $\hat{\pi}=0{,}54$, $Z=1{,}60$, nicht signifikant) ist hier der Unterschied groß genug.</div>
+  <div class="hint" id="h17">Korrekt: <strong>b</strong>. $SE = \sqrt{0{,}5 \cdot 0{,}5 / 100} = \sqrt{0{,}0025} = 0{,}05$. $Z = (0{,}60 - 0{,}50)/0{,}05 = 2{,}00$. $|2{,}00| \gt  1{,}96$ &rarr; $H_0$ verwerfen. Im Gegensatz zu PK-5 Q18 (dort $\hat{\pi}=0{,}54$, $Z=1{,}60$, nicht signifikant) ist hier der Unterschied groß genug.</div>
 </div>
 
 <!-- Q18 (Stata: T-Test) -->
@@ -341,12 +341,12 @@ politikvert. |     36     5.400       0.200       1.200       4.995       5.805
    Ha: mean &lt; 5           Ha: mean != 5           Ha: mean &gt; 5
 Pr(T &lt; t) = 0.9732   Pr(|T| &gt; |t|) = 0.0534   Pr(T &gt; t) = 0.0268</div>
   <div class="options">
-    <label><input type="radio" name="q18" value="a"> a) Bei zweiseitigem Test ($\alpha = 0{,}05$) wird $H_0$ ($\mu = 5$) abgelehnt, da $t = 2{,}000 > 1{,}96$.</label>
-    <label><input type="radio" name="q18" value="b"> b) Bei zweiseitigem Test ($\alpha = 0{,}05$) wird $H_0$ nicht abgelehnt, da $p = 0{,}0534 > 0{,}05$.</label>
+    <label><input type="radio" name="q18" value="a"> a) Bei zweiseitigem Test ($\alpha = 0{,}05$) wird $H_0$ ($\mu = 5$) abgelehnt, da $t = 2{,}000 \gt  1{,}96$.</label>
+    <label><input type="radio" name="q18" value="b"> b) Bei zweiseitigem Test ($\alpha = 0{,}05$) wird $H_0$ nicht abgelehnt, da $p = 0{,}0534 \gt  0{,}05$.</label>
     <label><input type="radio" name="q18" value="c"> c) Das 95&thinsp;%-Konfidenzintervall $[4{,}995;\; 5{,}805]$ schließt den Wert 5 nicht ein &mdash; daher wird $H_0$ abgelehnt.</label>
     <label><input type="radio" name="q18" value="d"> d) Der Standardfehler beträgt 1,200.</label>
   </div>
-  <div class="hint" id="h18">Korrekt: <strong>b</strong>. Der zweiseitige p-Wert $= 0{,}0534 > 0{,}05$ &rarr; $H_0$ nicht verwerfen. Falle zu a: Der kritische t-Wert bei $df = 35$ beträgt $t_{35;\,0{,}975} \approx 2{,}030$ (nicht 1,96 wie bei der Z-Verteilung!) &mdash; damit ist $t = 2{,}000 < 2{,}030$, also kein Verwerfen. Falle zu c: Das KI $[4{,}995;\; 5{,}805]$ schließt $\mu_0 = 5$ ein (4,995 &lt; 5 &lt; 5,805). Falle zu d: 1,200 ist die Standardabweichung ($s$); der Standardfehler ist 0,200.</div>
+  <div class="hint" id="h18">Korrekt: <strong>b</strong>. Der zweiseitige p-Wert $= 0{,}0534 \gt  0{,}05$ &rarr; $H_0$ nicht verwerfen. Falle zu a: Der kritische t-Wert bei $df = 35$ beträgt $t_{35;\,0{,}975} \approx 2{,}030$ (nicht 1,96 wie bei der Z-Verteilung!) &mdash; damit ist $t = 2{,}000 \lt  2{,}030$, also kein Verwerfen. Falle zu c: Das KI $[4{,}995;\; 5{,}805]$ schließt $\mu_0 = 5$ ein (4,995 &lt; 5 &lt; 5,805). Falle zu d: 1,200 ist die Standardabweichung ($s$); der Standardfehler ist 0,200.</div>
 </div>
 
 <!-- Q19 -->
@@ -359,7 +359,7 @@ Pr(T &lt; t) = 0.9732   Pr(|T| &gt; |t|) = 0.0534   Pr(T &gt; t) = 0.0268</div>
     <label><input type="radio" name="q19" value="c"> c) $Z = -1{,}00$; $H_0$ kann nicht abgelehnt werden.</label>
     <label><input type="radio" name="q19" value="d"> d) $Z = 2{,}50$; $H_0$ kann abgelehnt werden.</label>
   </div>
-  <div class="hint" id="h19">Korrekt: <strong>a</strong>. $SE = 1{,}60/\sqrt{64} = 1{,}60/8 = 0{,}20$. $Z = (4{,}60-5{,}00)/0{,}20 = -2{,}00$. $|{-}2{,}00| = 2{,}00 < 2{,}576$ &rarr; $H_0$ nicht verwerfen (bei $\alpha = 0{,}01$). Falle: Bei $\alpha = 0{,}05$ wäre $|Z| = 2{,}00 > 1{,}96$ und $H_0$ würde verworfen &mdash; das Signifikanzniveau ist entscheidend!</div>
+  <div class="hint" id="h19">Korrekt: <strong>a</strong>. $SE = 1{,}60/\sqrt{64} = 1{,}60/8 = 0{,}20$. $Z = (4{,}60-5{,}00)/0{,}20 = -2{,}00$. $|{-}2{,}00| = 2{,}00 \lt  2{,}576$ &rarr; $H_0$ nicht verwerfen (bei $\alpha = 0{,}01$). Falle: Bei $\alpha = 0{,}05$ wäre $|Z| = 2{,}00 \gt  1{,}96$ und $H_0$ würde verworfen &mdash; das Signifikanzniveau ist entscheidend!</div>
 </div>
 
 <!-- Q20 (Stata: OLS) -->
@@ -387,9 +387,9 @@ politikvert. |      Coef.   Std. Err.      t    P&gt;|t|   [95% Conf. Interval]
     <label><input type="radio" name="q20" value="a"> a) Alter hat einen positiven Einfluss auf Politikvertrauen und ist auf dem 5&thinsp;%-Niveau signifikant ($p = 0{,}426$).</label>
     <label><input type="radio" name="q20" value="b"> b) $R^2 = 0{,}667$: Bildung und Alter erklären gemeinsam 66,7&thinsp;% der Varianz im Politikvertrauen.</label>
     <label><input type="radio" name="q20" value="c"> c) Für eine Person mit 10 Bildungsjahren und Alter 30 ist der vorhergesagte Wert $\hat{y} = 8{,}5$.</label>
-    <label><input type="radio" name="q20" value="d"> d) Der Achsenabschnitt (_cons = 2,500) ist auf dem 5&thinsp;%-Niveau nicht signifikant, da $p = 0{,}040 > 0{,}05$.</label>
+    <label><input type="radio" name="q20" value="d"> d) Der Achsenabschnitt (_cons = 2,500) ist auf dem 5&thinsp;%-Niveau nicht signifikant, da $p = 0{,}040 \gt  0{,}05$.</label>
   </div>
-  <div class="hint" id="h20">Korrekt: <strong>b</strong>. $R^2 = 0{,}667$: 66,7&thinsp;% der Varianz erklärt. Zu den Fallen: Alter hat einen <em>negativen</em> Koeffizienten ($-0{,}040$) und ist <em>nicht</em> signifikant ($p = 0{,}426 \gg 0{,}05$). Vorhergesagter Wert: $\hat{y} = 2{,}500 + 0{,}600 \cdot 10 + (-0{,}040) \cdot 30 = 2{,}5 + 6{,}0 - 1{,}2 = 7{,}3$ (nicht 8,5 &mdash; wer 8,5 erhält, hat den Alter-Term vergessen). _cons: $p = 0{,}040 < 0{,}05$ &rarr; signifikant.</div>
+  <div class="hint" id="h20">Korrekt: <strong>b</strong>. $R^2 = 0{,}667$: 66,7&thinsp;% der Varianz erklärt. Zu den Fallen: Alter hat einen <em>negativen</em> Koeffizienten ($-0{,}040$) und ist <em>nicht</em> signifikant ($p = 0{,}426 \gg 0{,}05$). Vorhergesagter Wert: $\hat{y} = 2{,}500 + 0{,}600 \cdot 10 + (-0{,}040) \cdot 30 = 2{,}5 + 6{,}0 - 1{,}2 = 7{,}3$ (nicht 8,5 &mdash; wer 8,5 erhält, hat den Alter-Term vergessen). _cons: $p = 0{,}040 \lt  0{,}05$ &rarr; signifikant.</div>
 </div>
 
 <div class="btn-wrap">
